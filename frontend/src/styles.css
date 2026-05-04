@@ -1,0 +1,421 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #111827;
+  background: #f3f4f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 34rem),
+    radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.10), transparent 30rem),
+    #f6f7fb;
+}
+
+.topbar {
+  min-height: 72px;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(18px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  gap: 14px;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 260px;
+}
+
+.brandIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: #111827;
+  color: white;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 14px 30px rgba(17, 24, 39, 0.18);
+}
+
+.brandTitle {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.brandSub {
+  color: #6b7280;
+  font-size: 13px;
+  margin-top: 2px;
+  max-width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.statusPill {
+  height: 34px;
+  padding: 0 11px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #4b5563;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 750;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+}
+
+.statusPill[data-status="online"] {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.statusPill[data-status="offline"] {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.uploadBtn,
+.primaryBtn,
+.ghostBtn,
+.smallBtn,
+.select {
+  height: 38px;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: white;
+  border-radius: 12px;
+  padding: 0 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #111827;
+}
+
+.uploadBtn {
+  position: relative;
+  font-weight: 650;
+}
+
+.uploadBtn input {
+  display: none;
+}
+
+.primaryBtn {
+  background: #111827;
+  color: white;
+  border-color: #111827;
+  font-weight: 700;
+  box-shadow: 0 12px 22px rgba(17, 24, 39, 0.18);
+}
+
+.ghostBtn {
+  font-weight: 650;
+}
+
+button:disabled,
+select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.layout {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: 16px;
+  padding: 16px;
+}
+
+.docArea {
+  min-width: 0;
+  min-height: 0;
+}
+
+.editorWrap {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: white;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(17, 24, 39, 0.08);
+}
+
+.editorWrap > * {
+  height: 100%;
+}
+
+.editorEmpty {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(17, 24, 39, 0.18);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.dropCard {
+  max-width: 520px;
+  text-align: center;
+  padding: 36px;
+  background: white;
+  border-radius: 24px;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: 0 24px 70px rgba(17, 24, 39, 0.08);
+}
+
+.dropCard h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: -0.04em;
+}
+
+.dropCard p {
+  color: #6b7280;
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+.editorLoading {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #6b7280;
+}
+
+.issuePanel {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 24px;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: 0 24px 60px rgba(17, 24, 39, 0.08);
+}
+
+.panelHeader {
+  padding: 18px 18px 12px;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+}
+
+.panelHeader h2 {
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.panelHeader p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.emptyState {
+  margin: auto;
+  padding: 26px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.emptyState h3 {
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.issueList {
+  flex: 1;
+  min-height: 0;
+  padding: 14px;
+  overflow: auto;
+}
+
+.issueCard {
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 12px;
+  background: #ffffff;
+  transition: 0.18s ease;
+}
+
+.issueCard:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 32px rgba(17, 24, 39, 0.08);
+}
+
+.issueCard.accepted {
+  opacity: 0.68;
+  background: #f0fdf4;
+}
+
+.issueCard.ignored {
+  opacity: 0.68;
+  background: #f9fafb;
+}
+
+.issueTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.badge,
+.confidence {
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-weight: 650;
+}
+
+.confidence.high {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.confidence.medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.confidence.low {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.correction {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.wrong {
+  text-decoration: line-through;
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.suggestion {
+  color: #059669;
+  font-weight: 800;
+}
+
+.arrow {
+  color: #9ca3af;
+}
+
+.reason {
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+
+.issueExcerpt {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.issueActions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.smallBtn {
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.smallBtn.success {
+  color: #047857;
+  background: #ecfdf5;
+}
+
+.smallBtn.danger {
+  color: #b91c1c;
+  background: #fef2f2;
+}
+
+.statusText {
+  margin-top: 10px;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 1180px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .issuePanel {
+    min-height: 320px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .toolbar {
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "latest",
+    "multer": "latest",
+    "cors": "latest",
+    "openai": "latest",
+    "dotenv": "latest",
+    "mammoth": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "tsx": "latest",
+    "typescript": "latest",
+    "@types/express": "latest",
+    "@types/multer": "latest",
+    "@types/cors": "latest",
+    "@types/node": "latest"
+  }
+}
