@@ -1,0 +1,2829 @@
+{
+  "documentId": "doc_e2e683ee",
+  "createdAt": "2026-05-04T08:38:22.046Z",
+  "updatedAt": "2026-05-04T08:41:09.229Z",
+  "originalFileName": "file-test-sai-chinh-ta-15-trang (1).docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_e2e683ee\\original.docx",
+  "issues": [
+    {
+      "id": "issue_001",
+      "documentId": "doc_e2e683ee",
+      "wrong": "Kiễm",
+      "suggestion": "Kiểm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000010",
+        "blockType": "paragraph",
+        "path": "body.paragraph[15]",
+        "startOffset": 0,
+        "endOffset": 4,
+        "searchText": "Kiễm",
+        "beforeContext": "Kiễm tra upload DOCX",
+        "afterContext": "và mở bằng SuperDoc ở chương 1.",
+        "anchorId": "anchor_doc_e2e683ee_1",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000010",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000010",
+            "offset": 4
+          }
+        },
+        "commentId": "cf7edc6b-c3fe-4622-9902-dcdf752e600b"
+      }
+    },
+    {
+      "id": "issue_002",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000011",
+        "blockType": "paragraph",
+        "path": "body.paragraph[16]",
+        "startOffset": 29,
+        "endOffset": 39,
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_2",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000011",
+            "offset": 29
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000011",
+            "offset": 39
+          }
+        },
+        "commentId": "d32411f5-9666-4fa9-bce8-2f9b94a826ee"
+      }
+    },
+    {
+      "id": "issue_003",
+      "documentId": "doc_e2e683ee",
+      "wrong": "dử liệu",
+      "suggestion": "dữ liệu",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000012",
+        "blockType": "paragraph",
+        "path": "body.paragraph[17]",
+        "searchText": "dử liệu",
+        "beforeContext": "khách hàng, sản phẫm và dử liệu",
+        "afterContext": "nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_3",
+        "commentId": "cb525133-3ba3-4159-83c0-9db36e0daf24"
+      }
+    },
+    {
+      "id": "issue_004",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000013",
+        "blockType": "paragraph",
+        "path": "body.paragraph[18]",
+        "startOffset": 15,
+        "endOffset": 23,
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_4",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000013",
+            "offset": 15
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000013",
+            "offset": 23
+          }
+        },
+        "commentId": "21ed2e02-a82f-433c-9659-59e9328c9347"
+      }
+    },
+    {
+      "id": "issue_005",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000014",
+        "blockType": "paragraph",
+        "path": "body.paragraph[19]",
+        "startOffset": 53,
+        "endOffset": 62,
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_5",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000014",
+            "offset": 53
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000014",
+            "offset": 62
+          }
+        },
+        "commentId": "8b85b50c-08f4-4b39-8eff-b6931c710f5e"
+      }
+    },
+    {
+      "id": "issue_006",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000016",
+        "blockType": "paragraph",
+        "path": "body.paragraph[21]",
+        "startOffset": 34,
+        "endOffset": 42,
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_6",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000016",
+            "offset": 34
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000016",
+            "offset": 42
+          }
+        },
+        "commentId": "9af4f58a-5dda-451e-903e-f5a99a2f74b9"
+      }
+    },
+    {
+      "id": "issue_007",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "needs_review",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000017",
+        "blockType": "paragraph",
+        "path": "body.paragraph[22]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_7"
+      }
+    },
+    {
+      "id": "issue_008",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000018",
+        "blockType": "heading",
+        "path": "body.heading[23]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_8",
+        "commentId": "6c8a88a6-efef-491d-8c5d-75bd8f5d4761"
+      }
+    },
+    {
+      "id": "issue_009",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000019",
+        "blockType": "paragraph",
+        "path": "body.paragraph[24]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_9",
+        "commentId": "96eb9703-e9fc-4753-a18c-ab9546153a7e"
+      }
+    },
+    {
+      "id": "issue_010",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001A",
+        "blockType": "heading",
+        "path": "body.heading[25]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 2.",
+        "anchorId": "anchor_doc_e2e683ee_10",
+        "commentId": "628a7a32-44fc-415a-956c-fb69b1b3c8bd"
+      }
+    },
+    {
+      "id": "issue_011",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001B",
+        "blockType": "paragraph",
+        "path": "body.paragraph[26]",
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_11",
+        "commentId": "dbc5bf5f-b70a-4aa8-9b92-6e1579978a08"
+      }
+    },
+    {
+      "id": "issue_012",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001C",
+        "blockType": "paragraph",
+        "path": "body.paragraph[27]",
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_12",
+        "commentId": "f1628290-e322-4012-97a9-92be5510a362"
+      }
+    },
+    {
+      "id": "issue_013",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001D",
+        "blockType": "paragraph",
+        "path": "body.paragraph[28]",
+        "startOffset": 219,
+        "endOffset": 228,
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_13",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000001D",
+            "offset": 219
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000001D",
+            "offset": 228
+          }
+        },
+        "commentId": "4f8b8175-c07e-4cfe-8401-8a607ec6cac9"
+      }
+    },
+    {
+      "id": "issue_014",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001E",
+        "blockType": "paragraph",
+        "path": "body.paragraph[29]",
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_14",
+        "commentId": "a6b6df21-36a6-4614-a035-85c2586fcf89"
+      }
+    },
+    {
+      "id": "issue_015",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001F",
+        "blockType": "paragraph",
+        "path": "body.paragraph[30]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_15",
+        "commentId": "2877a46c-2307-4f23-905a-b7b9a18b789c"
+      }
+    },
+    {
+      "id": "issue_016",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000020",
+        "blockType": "heading",
+        "path": "body.heading[31]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_16",
+        "commentId": "395fc899-f7be-48e4-b748-db5ba1cc4add"
+      }
+    },
+    {
+      "id": "issue_017",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000021",
+        "blockType": "paragraph",
+        "path": "body.paragraph[32]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_17",
+        "commentId": "62ff2521-4fd6-4ec1-8034-93b0115500e8"
+      }
+    },
+    {
+      "id": "issue_018",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000022",
+        "blockType": "paragraph",
+        "path": "body.paragraph[33]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 3.",
+        "anchorId": "anchor_doc_e2e683ee_18",
+        "commentId": "3b41e41b-23df-403d-aed8-53860f5cc8ae"
+      }
+    },
+    {
+      "id": "issue_019",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000023",
+        "blockType": "paragraph",
+        "path": "body.paragraph[34]",
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_19",
+        "commentId": "e7fea4fd-fba3-4de4-a0c1-93745d02a476"
+      }
+    },
+    {
+      "id": "issue_020",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000024",
+        "blockType": "paragraph",
+        "path": "body.paragraph[35]",
+        "startOffset": 15,
+        "endOffset": 23,
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_20",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000024",
+            "offset": 15
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000024",
+            "offset": 23
+          }
+        },
+        "commentId": "5cae6b9d-f3ae-4a97-9549-ba5cfd92fe3c"
+      }
+    },
+    {
+      "id": "issue_021",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000025",
+        "blockType": "paragraph",
+        "path": "body.paragraph[36]",
+        "startOffset": 53,
+        "endOffset": 62,
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_21",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000025",
+            "offset": 53
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000025",
+            "offset": 62
+          }
+        },
+        "commentId": "36f108df-94af-48c4-b81f-99d04822f1b8"
+      }
+    },
+    {
+      "id": "issue_022",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000026",
+        "blockType": "heading",
+        "path": "body.heading[37]",
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_22",
+        "commentId": "d8f467cf-c434-421d-9d8c-1fb2ffbde5d0"
+      }
+    },
+    {
+      "id": "issue_024",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000028",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[0].cell[0]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_24",
+        "commentId": "77e9a746-961d-4ef9-bbd0-4f8fdd148388"
+      }
+    },
+    {
+      "id": "issue_025",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000029",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[0].cell[1]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_25",
+        "commentId": "b766e5ff-7876-4832-a719-ce2d8d0dafe3"
+      }
+    },
+    {
+      "id": "issue_026",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000002A",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[0].cell[2]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 4.",
+        "anchorId": "anchor_doc_e2e683ee_26",
+        "commentId": "2f127563-99f3-40ec-b518-bfa9e51e7882"
+      }
+    },
+    {
+      "id": "issue_027",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000002B",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[0].cell[3]",
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_27",
+        "commentId": "ab2d8446-f90d-4fec-a758-4bcef99daea1"
+      }
+    },
+    {
+      "id": "issue_029",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000002D",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[1].cell[0]",
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_29",
+        "commentId": "d0dc98ab-0eb8-440f-9084-7c4a051d1659"
+      }
+    },
+    {
+      "id": "issue_030",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000002E",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[1].cell[1]",
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_30",
+        "commentId": "64ca45aa-2512-4934-ab7a-2e88060fdd80"
+      }
+    },
+    {
+      "id": "issue_031",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000002F",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[1].cell[2]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_31",
+        "commentId": "cd41dad4-dd6c-4826-bd80-5678ffd6b7d2"
+      }
+    },
+    {
+      "id": "issue_032",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000030",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[1].cell[3]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_32",
+        "commentId": "50ec7ebf-4c16-4664-90de-a9a9eae68300"
+      }
+    },
+    {
+      "id": "issue_034",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000032",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[2].cell[0]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 5.",
+        "anchorId": "anchor_doc_e2e683ee_34",
+        "commentId": "77495d6e-ccf9-4386-b4ff-2ba0e8a36aad"
+      }
+    },
+    {
+      "id": "issue_035",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000033",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[2].cell[1]",
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_35",
+        "commentId": "53601c90-7a82-412d-81fc-b763d25600b6"
+      }
+    },
+    {
+      "id": "issue_036",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000034",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[2].cell[2]",
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_36",
+        "commentId": "5b90ef65-1775-4a0d-a169-e2da300537ad"
+      }
+    },
+    {
+      "id": "issue_037",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000035",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[2].cell[3]",
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_37",
+        "commentId": "1785a7b9-9ccf-4797-b865-3fae713f9304"
+      }
+    },
+    {
+      "id": "issue_039",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000037",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[3].cell[0]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_39",
+        "commentId": "292a0d05-6f6f-48ee-b57d-3afffddc090d"
+      }
+    },
+    {
+      "id": "issue_040",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000038",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[3].cell[1]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_40",
+        "commentId": "fefb942c-f612-4333-ad43-6d65417005cd"
+      }
+    },
+    {
+      "id": "issue_041",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000039",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[3].cell[2]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_41",
+        "commentId": "5152fbd5-41c8-45e8-b207-dee4fd1a0ece"
+      }
+    },
+    {
+      "id": "issue_042",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000003A",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[3].cell[3]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 6.",
+        "anchorId": "anchor_doc_e2e683ee_42",
+        "commentId": "259fe871-f956-4f11-97bc-a3e1b064df0e"
+      }
+    },
+    {
+      "id": "issue_044",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000003C",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[4].cell[0]",
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_44",
+        "commentId": "fdbaaa64-4fd1-4fe2-9ba8-56eb16d18eb5"
+      }
+    },
+    {
+      "id": "issue_045",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000003D",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[4].cell[1]",
+        "startOffset": 25,
+        "endOffset": 34,
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_45",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000003D",
+            "offset": 25
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000003D",
+            "offset": 34
+          }
+        },
+        "commentId": "a2ed818b-7694-46cd-be41-cd5f59e944fa"
+      }
+    },
+    {
+      "id": "issue_046",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000003E",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[4].cell[2]",
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_46",
+        "commentId": "c7f161a7-a322-4fd8-ba6c-79375f4fb0fa"
+      }
+    },
+    {
+      "id": "issue_047",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000003F",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[4].cell[3]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_47",
+        "commentId": "ebc271f9-af17-4c84-8cd3-30fad565c2f4"
+      }
+    },
+    {
+      "id": "issue_048",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000040",
+        "blockType": "paragraph",
+        "path": "body.paragraph[58]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_48",
+        "commentId": "25d3c7c6-53ba-4dea-b753-7d59c0f3f025"
+      }
+    },
+    {
+      "id": "issue_049",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000041",
+        "blockType": "heading",
+        "path": "body.heading[59]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_49",
+        "commentId": "ff160917-afc6-493f-abb5-b077aac0b13c"
+      }
+    },
+    {
+      "id": "issue_050",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000042",
+        "blockType": "paragraph",
+        "path": "body.paragraph[60]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 7.",
+        "anchorId": "anchor_doc_e2e683ee_50",
+        "commentId": "381b5a23-c5ee-4039-881c-400ef3dccb36"
+      }
+    },
+    {
+      "id": "issue_051",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "needs_review",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000043",
+        "blockType": "paragraph",
+        "path": "body.paragraph[61]",
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_51"
+      }
+    },
+    {
+      "id": "issue_052",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000044",
+        "blockType": "heading",
+        "path": "body.heading[62]",
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_52",
+        "commentId": "951c1e8f-c032-4cb5-84ff-addf03ab8e40"
+      }
+    },
+    {
+      "id": "issue_053",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000045",
+        "blockType": "paragraph",
+        "path": "body.paragraph[63]",
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_53",
+        "commentId": "2be2efe6-fd80-4bf2-b86d-609fb3f124d7"
+      }
+    },
+    {
+      "id": "issue_054",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000046",
+        "blockType": "heading",
+        "path": "body.heading[64]",
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_54",
+        "commentId": "eb28d1e9-6071-49af-8339-e2da80516bdd"
+      }
+    },
+    {
+      "id": "issue_055",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000047",
+        "blockType": "paragraph",
+        "path": "body.paragraph[65]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_55",
+        "commentId": "27b01cfb-a820-470a-ae26-15f4ec755c48"
+      }
+    },
+    {
+      "id": "issue_056",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000048",
+        "blockType": "paragraph",
+        "path": "body.paragraph[66]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_56",
+        "commentId": "5ed10dff-e9c3-4921-8c43-f2a0afd606cf"
+      }
+    },
+    {
+      "id": "issue_057",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000049",
+        "blockType": "paragraph",
+        "path": "body.paragraph[67]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_57",
+        "commentId": "04f3ebc6-ca2b-418c-8f94-c59b335654d0"
+      }
+    },
+    {
+      "id": "issue_058",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000004A",
+        "blockType": "paragraph",
+        "path": "body.paragraph[68]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 8.",
+        "anchorId": "anchor_doc_e2e683ee_58",
+        "commentId": "bbfa741b-9bdc-4eff-a3fe-17184d598c56"
+      }
+    },
+    {
+      "id": "issue_059",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000004B",
+        "blockType": "paragraph",
+        "path": "body.paragraph[69]",
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_59",
+        "commentId": "86c3244d-d16e-4a68-a04d-eff56f8e8703"
+      }
+    },
+    {
+      "id": "issue_060",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000004C",
+        "blockType": "heading",
+        "path": "body.heading[70]",
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_60",
+        "commentId": "800543bf-0b75-457a-989d-79d8c1a576b6"
+      }
+    },
+    {
+      "id": "issue_061",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000004D",
+        "blockType": "paragraph",
+        "path": "body.paragraph[71]",
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_61",
+        "commentId": "10dabac7-cec4-46fe-b659-183a702e476f"
+      }
+    },
+    {
+      "id": "issue_062",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000004E",
+        "blockType": "paragraph",
+        "path": "body.paragraph[72]",
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_62",
+        "commentId": "ef180610-1535-455a-bd3a-c60bde3e97e7"
+      }
+    },
+    {
+      "id": "issue_063",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000004F",
+        "blockType": "paragraph",
+        "path": "body.paragraph[73]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_63",
+        "commentId": "51235958-9cdb-4fb2-b346-5021495dc074"
+      }
+    },
+    {
+      "id": "issue_064",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000050",
+        "blockType": "paragraph",
+        "path": "body.paragraph[74]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_64",
+        "commentId": "ae10fff2-7c50-41b1-a943-c3498ba3dd0b"
+      }
+    },
+    {
+      "id": "issue_065",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000051",
+        "blockType": "paragraph",
+        "path": "body.paragraph[75]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_65",
+        "commentId": "2d4e31a6-e00b-4e27-9be5-4e3a244d916c"
+      }
+    },
+    {
+      "id": "issue_066",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000052",
+        "blockType": "heading",
+        "path": "body.heading[76]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 9.",
+        "anchorId": "anchor_doc_e2e683ee_66",
+        "commentId": "1bb3960e-bc6c-4deb-8d0b-a5f7b4f98b13"
+      }
+    },
+    {
+      "id": "issue_067",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000053",
+        "blockType": "paragraph",
+        "path": "body.paragraph[77]",
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_67",
+        "commentId": "38283fe5-8c17-4715-8d60-1e70531d53d5"
+      }
+    },
+    {
+      "id": "issue_068",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "needs_review",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000054",
+        "blockType": "paragraph",
+        "path": "body.paragraph[78]",
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_68"
+      }
+    },
+    {
+      "id": "issue_069",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000055",
+        "blockType": "heading",
+        "path": "body.heading[79]",
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_69",
+        "commentId": "ddaad175-583e-407c-b7e0-cf757936c5e0"
+      }
+    },
+    {
+      "id": "issue_070",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000056",
+        "blockType": "paragraph",
+        "path": "body.paragraph[80]",
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_70",
+        "commentId": "bbc0ad84-b6b2-4750-aef1-b0779e6f44b0"
+      }
+    },
+    {
+      "id": "issue_071",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000057",
+        "blockType": "heading",
+        "path": "body.heading[81]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_71",
+        "commentId": "6547ae75-2426-43f6-ae87-218064d54bd4"
+      }
+    },
+    {
+      "id": "issue_072",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000058",
+        "blockType": "paragraph",
+        "path": "body.paragraph[82]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_72",
+        "commentId": "c82982d7-82b1-49af-be00-9fadfc658edb"
+      }
+    },
+    {
+      "id": "issue_073",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000059",
+        "blockType": "paragraph",
+        "path": "body.paragraph[83]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_73",
+        "commentId": "fe0f7575-04d5-49a2-9017-90d39366a5c4"
+      }
+    },
+    {
+      "id": "issue_074",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000005A",
+        "blockType": "paragraph",
+        "path": "body.paragraph[84]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 10.",
+        "anchorId": "anchor_doc_e2e683ee_74",
+        "commentId": "f1548fad-6a49-46ba-af25-3a839b94f484"
+      }
+    },
+    {
+      "id": "issue_075",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000005B",
+        "blockType": "paragraph",
+        "path": "body.paragraph[85]",
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_75",
+        "commentId": "cb6300d9-91df-433e-bcf4-5a920dc4bc83"
+      }
+    },
+    {
+      "id": "issue_076",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000005C",
+        "blockType": "paragraph",
+        "path": "body.paragraph[86]",
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_76",
+        "commentId": "99cd35f0-0379-4cd9-bb9b-cee93454d937"
+      }
+    },
+    {
+      "id": "issue_077",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000005D",
+        "blockType": "heading",
+        "path": "body.heading[87]",
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_77",
+        "commentId": "15eb683d-ece4-4e8f-9617-c7c335d50e36"
+      }
+    },
+    {
+      "id": "issue_078",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000005E",
+        "blockType": "paragraph",
+        "path": "body.paragraph[88]",
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_78",
+        "commentId": "733efb5b-0afa-4680-a9ef-ad78681cf77e"
+      }
+    },
+    {
+      "id": "issue_079",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000005F",
+        "blockType": "paragraph",
+        "path": "body.paragraph[89]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_79",
+        "commentId": "ca38d3a1-05c4-4719-b09d-3ba75c240302"
+      }
+    },
+    {
+      "id": "issue_080",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000060",
+        "blockType": "paragraph",
+        "path": "body.paragraph[90]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_80",
+        "commentId": "42426f1b-5295-470c-868a-2467a7ac2332"
+      }
+    },
+    {
+      "id": "issue_081",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000061",
+        "blockType": "paragraph",
+        "path": "body.paragraph[91]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_81",
+        "commentId": "ba6b499f-b270-4d5f-84d4-254c58b079c8"
+      }
+    },
+    {
+      "id": "issue_082",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000062",
+        "blockType": "paragraph",
+        "path": "body.paragraph[92]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 11.",
+        "anchorId": "anchor_doc_e2e683ee_82",
+        "commentId": "e3be791a-7711-4705-903f-62ce000e58c3"
+      }
+    },
+    {
+      "id": "issue_083",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000063",
+        "blockType": "heading",
+        "path": "body.heading[93]",
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_83",
+        "commentId": "437bf1aa-d95a-4177-8425-f95028853c33"
+      }
+    },
+    {
+      "id": "issue_085",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000065",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[0].cell[0]",
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_85",
+        "commentId": "915407d2-0440-4fa6-85d3-e32a174af4e7"
+      }
+    },
+    {
+      "id": "issue_086",
+      "documentId": "doc_e2e683ee",
+      "wrong": "phẩn mềm",
+      "suggestion": "phần mềm",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000066",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[0].cell[1]",
+        "searchText": "phẩn mềm",
+        "beforeContext": "Ghi chú: Phần này cố ý có lỗi như phẩn mềm,",
+        "afterContext": "quản lí, xử lí và thanh tóan để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_86",
+        "commentId": "f6dd58a8-bbd8-464f-8004-24347582d74a"
+      }
+    },
+    {
+      "id": "issue_087",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000067",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[0].cell[2]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_87",
+        "commentId": "1d536620-c214-4ba7-a377-dbf8da52a81f"
+      }
+    },
+    {
+      "id": "issue_088",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000068",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[0].cell[3]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_88",
+        "commentId": "1e984c01-23a1-4193-beb0-4bad16329a13"
+      }
+    },
+    {
+      "id": "issue_090",
+      "documentId": "doc_e2e683ee",
+      "wrong": "kiễm tra",
+      "suggestion": "kiểm tra",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000006A",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[1].cell[0]",
+        "searchText": "kiễm tra",
+        "beforeContext": "Kiễm tra upload DOCX và mở bằng SuperDoc",
+        "afterContext": "ở chương 12.",
+        "anchorId": "anchor_doc_e2e683ee_90",
+        "commentId": "0d010b57-62fa-4e80-8e77-39cc46ccd0d3"
+      }
+    },
+    {
+      "id": "issue_091",
+      "documentId": "doc_e2e683ee",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt",
+      "type": "accent",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000006B",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[1].cell[1]",
+        "startOffset": 0,
+        "endOffset": 10,
+        "searchText": "khách hang",
+        "beforeContext": "Đảm bảo issue panel hiển thị",
+        "afterContext": "và dử liệu nếu xuất hiện.",
+        "anchorId": "anchor_doc_e2e683ee_91",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000006B",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000006B",
+            "offset": 10
+          }
+        },
+        "commentId": "9695451b-3b13-427b-ba0e-d53712d49b16"
+      }
+    },
+    {
+      "id": "issue_092",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hệ thông",
+      "suggestion": "hệ thống",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000006C",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[1].cell[2]",
+        "searchText": "hệ thông",
+        "beforeContext": "Khi bấm issue, hệ thông",
+        "afterContext": "phải focus đúng vị trí trong tài liêu.",
+        "anchorId": "anchor_doc_e2e683ee_92",
+        "commentId": "6f388fff-cbc1-4b4a-9b8b-c0c2dd4e0e13"
+      }
+    },
+    {
+      "id": "issue_093",
+      "documentId": "doc_e2e683ee",
+      "wrong": "hoạt đông",
+      "suggestion": "hoạt động",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000006D",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[1].cell[3]",
+        "searchText": "hoạt đông",
+        "beforeContext": "Xuất reviewed.docx và kiểm tra comment/highlight còn",
+        "afterContext": ".",
+        "anchorId": "anchor_doc_e2e683ee_93",
+        "commentId": "8aa4a228-aa7a-4fff-a36b-1e053eb151f4"
+      }
+    },
+    {
+      "id": "issue_095",
+      "documentId": "doc_e2e683ee",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000006F",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[2].cell[0]",
+        "searchText": "quản lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan",
+        "afterContext": "để kiểm tra khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_95",
+        "commentId": "e5b04983-baed-4905-b0f8-2d32b231c409"
+      }
+    },
+    {
+      "id": "issue_096",
+      "documentId": "doc_e2e683ee",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000070",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[2].cell[1]",
+        "searchText": "xử lí",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_96",
+        "commentId": "40875179-b101-4ff9-b2c7-91d1bb2d3b61"
+      }
+    },
+    {
+      "id": "issue_097",
+      "documentId": "doc_e2e683ee",
+      "wrong": "thanh tóan",
+      "suggestion": "thanh toán",
+      "reason": "Lỗi chính tả",
+      "type": "spelling",
+      "confidence": "high",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000071",
+        "blockType": "tableCell",
+        "path": "body.table[1].row[2].cell[2]",
+        "searchText": "thanh tóan",
+        "beforeContext": "quản lí, xử lí và thanh tóan để kiểm tra",
+        "afterContext": "khả năng phát hiện trong nhiều ngữ cảnh khác nhau.",
+        "anchorId": "anchor_doc_e2e683ee_97",
+        "commentId": "4f201c29-314b-4f07-bc4e-e109446a8d5d"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": "cf7edc6b-c3fe-4622-9902-dcdf752e600b",
+      "issueId": "issue_001",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"Kiễm\"\nGợi ý: \"Kiểm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:06.964Z",
+      "targetText": "Kiễm",
+      "status": "open"
+    },
+    {
+      "id": "d32411f5-9666-4fa9-bce8-2f9b94a826ee",
+      "issueId": "issue_002",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.039Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "cb525133-3ba3-4159-83c0-9db36e0daf24",
+      "issueId": "issue_003",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"dử liệu\"\nGợi ý: \"dữ liệu\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.095Z",
+      "targetText": "dử liệu",
+      "status": "open"
+    },
+    {
+      "id": "21ed2e02-a82f-433c-9659-59e9328c9347",
+      "issueId": "issue_004",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hệ thông\"\nGợi ý: \"hệ thống\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.125Z",
+      "targetText": "hệ thông",
+      "status": "open"
+    },
+    {
+      "id": "8b85b50c-08f4-4b39-8eff-b6931c710f5e",
+      "issueId": "issue_005",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.173Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "9af4f58a-5dda-451e-903e-f5a99a2f74b9",
+      "issueId": "issue_006",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.213Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "6c8a88a6-efef-491d-8c5d-75bd8f5d4761",
+      "issueId": "issue_008",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.252Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "96eb9703-e9fc-4753-a18c-ab9546153a7e",
+      "issueId": "issue_009",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.272Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    },
+    {
+      "id": "628a7a32-44fc-415a-956c-fb69b1b3c8bd",
+      "issueId": "issue_010",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.289Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "dbc5bf5f-b70a-4aa8-9b92-6e1579978a08",
+      "issueId": "issue_011",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.345Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "f1628290-e322-4012-97a9-92be5510a362",
+      "issueId": "issue_012",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hệ thông\"\nGợi ý: \"hệ thống\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.380Z",
+      "targetText": "hệ thông",
+      "status": "open"
+    },
+    {
+      "id": "4f8b8175-c07e-4cfe-8401-8a607ec6cac9",
+      "issueId": "issue_013",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.416Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "a6b6df21-36a6-4614-a035-85c2586fcf89",
+      "issueId": "issue_014",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.460Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "2877a46c-2307-4f23-905a-b7b9a18b789c",
+      "issueId": "issue_015",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.484Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "395fc899-f7be-48e4-b748-db5ba1cc4add",
+      "issueId": "issue_016",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.500Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "62ff2521-4fd6-4ec1-8034-93b0115500e8",
+      "issueId": "issue_017",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.527Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    },
+    {
+      "id": "3b41e41b-23df-403d-aed8-53860f5cc8ae",
+      "issueId": "issue_018",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.554Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "e7fea4fd-fba3-4de4-a0c1-93745d02a476",
+      "issueId": "issue_019",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.586Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "5cae6b9d-f3ae-4a97-9549-ba5cfd92fe3c",
+      "issueId": "issue_020",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hệ thông\"\nGợi ý: \"hệ thống\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.619Z",
+      "targetText": "hệ thông",
+      "status": "open"
+    },
+    {
+      "id": "36f108df-94af-48c4-b81f-99d04822f1b8",
+      "issueId": "issue_021",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.677Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "d8f467cf-c434-421d-9d8c-1fb2ffbde5d0",
+      "issueId": "issue_022",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.734Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "77e9a746-961d-4ef9-bbd0-4f8fdd148388",
+      "issueId": "issue_024",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.754Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "b766e5ff-7876-4832-a719-ce2d8d0dafe3",
+      "issueId": "issue_025",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.770Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    },
+    {
+      "id": "2f127563-99f3-40ec-b518-bfa9e51e7882",
+      "issueId": "issue_026",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.788Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "ab2d8446-f90d-4fec-a758-4bcef99daea1",
+      "issueId": "issue_027",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.805Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "d0dc98ab-0eb8-440f-9084-7c4a051d1659",
+      "issueId": "issue_029",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.820Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "64ca45aa-2512-4934-ab7a-2e88060fdd80",
+      "issueId": "issue_030",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.834Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "cd41dad4-dd6c-4826-bd80-5678ffd6b7d2",
+      "issueId": "issue_031",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.847Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "50ec7ebf-4c16-4664-90de-a9a9eae68300",
+      "issueId": "issue_032",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.863Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "77495d6e-ccf9-4386-b4ff-2ba0e8a36aad",
+      "issueId": "issue_034",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.877Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "53601c90-7a82-412d-81fc-b763d25600b6",
+      "issueId": "issue_035",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.891Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "5b90ef65-1775-4a0d-a169-e2da300537ad",
+      "issueId": "issue_036",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hệ thông\"\nGợi ý: \"hệ thống\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.904Z",
+      "targetText": "hệ thông",
+      "status": "open"
+    },
+    {
+      "id": "1785a7b9-9ccf-4797-b865-3fae713f9304",
+      "issueId": "issue_037",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.917Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "292a0d05-6f6f-48ee-b57d-3afffddc090d",
+      "issueId": "issue_039",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.939Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "fefb942c-f612-4333-ad43-6d65417005cd",
+      "issueId": "issue_040",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.956Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "5152fbd5-41c8-45e8-b207-dee4fd1a0ece",
+      "issueId": "issue_041",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.972Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    },
+    {
+      "id": "259fe871-f956-4f11-97bc-a3e1b064df0e",
+      "issueId": "issue_042",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:07.992Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "fdbaaa64-4fd1-4fe2-9ba8-56eb16d18eb5",
+      "issueId": "issue_044",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hệ thông\"\nGợi ý: \"hệ thống\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.005Z",
+      "targetText": "hệ thông",
+      "status": "open"
+    },
+    {
+      "id": "a2ed818b-7694-46cd-be41-cd5f59e944fa",
+      "issueId": "issue_045",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.022Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "c7f161a7-a322-4fd8-ba6c-79375f4fb0fa",
+      "issueId": "issue_046",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.056Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "ebc271f9-af17-4c84-8cd3-30fad565c2f4",
+      "issueId": "issue_047",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.070Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "25d3c7c6-53ba-4dea-b753-7d59c0f3f025",
+      "issueId": "issue_048",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.084Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "ff160917-afc6-493f-abb5-b077aac0b13c",
+      "issueId": "issue_049",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.103Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    },
+    {
+      "id": "381b5a23-c5ee-4039-881c-400ef3dccb36",
+      "issueId": "issue_050",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.116Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "951c1e8f-c032-4cb5-84ff-addf03ab8e40",
+      "issueId": "issue_052",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hệ thông\"\nGợi ý: \"hệ thống\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.130Z",
+      "targetText": "hệ thông",
+      "status": "open"
+    },
+    {
+      "id": "2be2efe6-fd80-4bf2-b86d-609fb3f124d7",
+      "issueId": "issue_053",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.151Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "eb28d1e9-6071-49af-8339-e2da80516bdd",
+      "issueId": "issue_054",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.166Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "27b01cfb-a820-470a-ae26-15f4ec755c48",
+      "issueId": "issue_055",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.186Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "5ed10dff-e9c3-4921-8c43-f2a0afd606cf",
+      "issueId": "issue_056",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.205Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "04f3ebc6-ca2b-418c-8f94-c59b335654d0",
+      "issueId": "issue_057",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.230Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    },
+    {
+      "id": "bbfa741b-9bdc-4eff-a3fe-17184d598c56",
+      "issueId": "issue_058",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.257Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "86c3244d-d16e-4a68-a04d-eff56f8e8703",
+      "issueId": "issue_059",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.284Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "800543bf-0b75-457a-989d-79d8c1a576b6",
+      "issueId": "issue_060",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hệ thông\"\nGợi ý: \"hệ thống\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.299Z",
+      "targetText": "hệ thông",
+      "status": "open"
+    },
+    {
+      "id": "10dabac7-cec4-46fe-b659-183a702e476f",
+      "issueId": "issue_061",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.328Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "ef180610-1535-455a-bd3a-c60bde3e97e7",
+      "issueId": "issue_062",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.360Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "51235958-9cdb-4fb2-b346-5021495dc074",
+      "issueId": "issue_063",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.390Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "ae10fff2-7c50-41b1-a943-c3498ba3dd0b",
+      "issueId": "issue_064",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.422Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "2d4e31a6-e00b-4e27-9be5-4e3a244d916c",
+      "issueId": "issue_065",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.447Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    },
+    {
+      "id": "1bb3960e-bc6c-4deb-8d0b-a5f7b4f98b13",
+      "issueId": "issue_066",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.463Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "38283fe5-8c17-4715-8d60-1e70531d53d5",
+      "issueId": "issue_067",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.478Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "ddaad175-583e-407c-b7e0-cf757936c5e0",
+      "issueId": "issue_069",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.492Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "bbc0ad84-b6b2-4750-aef1-b0779e6f44b0",
+      "issueId": "issue_070",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.513Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "6547ae75-2426-43f6-ae87-218064d54bd4",
+      "issueId": "issue_071",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.530Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "c82982d7-82b1-49af-be00-9fadfc658edb",
+      "issueId": "issue_072",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.550Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "fe0f7575-04d5-49a2-9017-90d39366a5c4",
+      "issueId": "issue_073",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.575Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    },
+    {
+      "id": "f1548fad-6a49-46ba-af25-3a839b94f484",
+      "issueId": "issue_074",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.597Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "cb6300d9-91df-433e-bcf4-5a920dc4bc83",
+      "issueId": "issue_075",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.619Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "99cd35f0-0379-4cd9-bb9b-cee93454d937",
+      "issueId": "issue_076",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hệ thông\"\nGợi ý: \"hệ thống\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.639Z",
+      "targetText": "hệ thông",
+      "status": "open"
+    },
+    {
+      "id": "15eb683d-ece4-4e8f-9617-c7c335d50e36",
+      "issueId": "issue_077",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.654Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "733efb5b-0afa-4680-a9ef-ad78681cf77e",
+      "issueId": "issue_078",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.683Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "ca38d3a1-05c4-4719-b09d-3ba75c240302",
+      "issueId": "issue_079",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.710Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "42426f1b-5295-470c-868a-2467a7ac2332",
+      "issueId": "issue_080",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.738Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "ba6b499f-b270-4d5f-84d4-254c58b079c8",
+      "issueId": "issue_081",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.763Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    },
+    {
+      "id": "e3be791a-7711-4705-903f-62ce000e58c3",
+      "issueId": "issue_082",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.801Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "437bf1aa-d95a-4177-8425-f95028853c33",
+      "issueId": "issue_083",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.820Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "915407d2-0440-4fa6-85d3-e32a174af4e7",
+      "issueId": "issue_085",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.834Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "f6dd58a8-bbd8-464f-8004-24347582d74a",
+      "issueId": "issue_086",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"phẩn mềm\"\nGợi ý: \"phần mềm\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.845Z",
+      "targetText": "phẩn mềm",
+      "status": "open"
+    },
+    {
+      "id": "1d536620-c214-4ba7-a377-dbf8da52a81f",
+      "issueId": "issue_087",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.857Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "1e984c01-23a1-4193-beb0-4bad16329a13",
+      "issueId": "issue_088",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.868Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "0d010b57-62fa-4e80-8e77-39cc46ccd0d3",
+      "issueId": "issue_090",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"kiễm tra\"\nGợi ý: \"kiểm tra\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.881Z",
+      "targetText": "kiễm tra",
+      "status": "open"
+    },
+    {
+      "id": "9695451b-3b13-427b-ba0e-d53712d49b16",
+      "issueId": "issue_091",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.897Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "6f388fff-cbc1-4b4a-9b8b-c0c2dd4e0e13",
+      "issueId": "issue_092",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hệ thông\"\nGợi ý: \"hệ thống\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.959Z",
+      "targetText": "hệ thông",
+      "status": "open"
+    },
+    {
+      "id": "8aa4a228-aa7a-4fff-a36b-1e053eb151f4",
+      "issueId": "issue_093",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"hoạt đông\"\nGợi ý: \"hoạt động\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:08.977Z",
+      "targetText": "hoạt đông",
+      "status": "open"
+    },
+    {
+      "id": "e5b04983-baed-4905-b0f8-2d32b231c409",
+      "issueId": "issue_095",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:09.000Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "40875179-b101-4ff9-b2c7-91d1bb2d3b61",
+      "issueId": "issue_096",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:09.022Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "4f201c29-314b-4f07-bc4e-e109446a8d5d",
+      "issueId": "issue_097",
+      "author": "AI Spelling Checker",
+      "text": "AI phát hiện lỗi chính tả.\nTừ/cụm từ: \"thanh tóan\"\nGợi ý: \"thanh toán\"\nLý do: Lỗi chính tả\nĐộ chắc chắn: high",
+      "createdAt": "2026-05-04T08:41:09.042Z",
+      "targetText": "thanh tóan",
+      "status": "open"
+    }
+  ],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1777883902046",
+      "type": "imported",
+      "message": "Imported DOCX file-test-sai-chinh-ta-15-trang (1).docx",
+      "createdAt": "2026-05-04T08:38:22.046Z"
+    },
+    {
+      "id": "hist_1777884069228_bwvbm",
+      "type": "analyzed",
+      "message": "Ran spelling checker and found 89 issues.",
+      "createdAt": "2026-05-04T08:41:09.228Z"
+    },
+    {
+      "id": "hist_1777884069228_1mzn8",
+      "type": "commented",
+      "message": "Added 86 AI comments.",
+      "createdAt": "2026-05-04T08:41:09.228Z"
+    },
+    {
+      "id": "hist_1777884069228_8yaqz",
+      "type": "highlighted",
+      "message": "Highlighted spelling issues in reviewed.docx.",
+      "createdAt": "2026-05-04T08:41:09.228Z"
+    }
+  ],
+  "reviewedPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_e2e683ee\\reviewed.docx"
+}

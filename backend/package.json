@@ -1,25 +1,30 @@
 {
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "start": "tsx src/index.ts",
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test src/**/*.test.ts",
+    "generate:sample": "node scripts/generate-sample-docx.mjs"
   },
   "dependencies": {
-    "express": "latest",
-    "multer": "latest",
+    "@superdoc-dev/sdk": "^1.8.0",
     "cors": "latest",
-    "openai": "latest",
+    "docx": "^9.6.1",
     "dotenv": "latest",
+    "express": "latest",
     "mammoth": "latest",
+    "multer": "latest",
+    "openai": "latest",
     "zod": "latest"
   },
   "devDependencies": {
-    "tsx": "latest",
-    "typescript": "latest",
+    "@types/cors": "latest",
     "@types/express": "latest",
     "@types/multer": "latest",
-    "@types/cors": "latest",
-    "@types/node": "latest"
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
   }
 }

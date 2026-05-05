@@ -1,30 +1,49 @@
-# SuperDoc AI Checker — Standard FE/BE
+# SuperDoc AI DOCX Checker
 
-Bản chuẩn tách riêng:
+Mục tiêu của repo này là bám sát demo SuperDoc cho luồng review DOCX bằng AI:
+
+`Import DOCX -> render bằng SuperDoc -> backend chạy spelling review -> ghi comment/highlight/track changes vào reviewed.docx -> frontend reload reviewed.docx -> click issue thì focus đúng chữ sai -> export lại DOCX/report`.
+
+## Stack
+
+- `frontend/`: Vite + React + TypeScript + `@superdoc-dev/react`
+- `backend/`: Node.js + Express + TypeScript + `@superdoc-dev/sdk`
+- LLM chỉ được gọi ở backend; frontend không giữ API key.
+- Kết quả LLM được validate bằng `zod`.
+
+## Tính năng đã triển khai
+
+- Import `.docx` qua `POST /api/documents`
+- SuperDoc editor workspace với built-in toolbar mount vào `DocumentToolbar`
+- Right review sidebar với 4 tab: `AI Issues`, `Comments`, `Changes`, `History`
+- AI command bar ở đáy màn hình
+- Agents menu để chạy spelling/grammar/style/format agent
+- Backend dùng SuperDoc SDK để:
+  - mở DOCX
+  - extract block text
+  - resolve range lỗi theo `blockId + wrong + context`
+  - thêm comment đúng range
+  - highlight đúng range
+  - tạo tracked changes
+  - lưu `reviewed.docx`
+- Frontend reload `reviewed.docx` sau khi backend xử lý
+- Click issue gọi `/focus` rồi dùng search/focus API của SuperDoc để nhảy tới lỗi
+- Export `original.docx`, `reviewed.docx`, `final.docx`, `issues.json`, `issues.csv`
+- Custom dictionary để tránh sửa tên riêng/thương hiệu
+- Fallback heuristic khi chưa cấu hình `LOCAL_LLM_API_KEY`
+
+## Cấu trúc repo
 
 ```txt
 superdoc-ai-checker-standard/
-├─ frontend/   # Vite + React + SuperDoc Editor
-└─ backend/    # Express API + DOCX extract + OpenAI/local LLM
+├─ frontend/
+├─ backend/
+├─ examples/
+│  └─ sample-spelling-review.docx
+└─ HUONG_DAN_HOAN_THIEN_SUPERDOC_AI_DOCX_CHECKER_FULL_FEATURES.md
 ```
 
-## Chức năng hiện có
-
-- Upload `.docx` trên frontend
-- Hiển thị DOCX bằng SuperDoc
-- Frontend gọi backend qua `VITE_API_BASE_URL`
-- Backend extract text từ DOCX bằng `mammoth`
-- Backend gọi LLM qua OpenAI-compatible API:
-  - OpenAI API
-  - LM Studio
-  - Ollama
-- Backend trả danh sách lỗi về panel bên phải
-
-> Bản này mới hiển thị lỗi ở panel. Chưa ghi comment/track changes ngược vào DOCX. Bước tiếp theo mới thêm SuperDoc SDK backend để tạo file `reviewed.docx`.
-
----
-
-## 1. Chạy backend
+## Chạy backend
 
 ```bash
 cd backend
@@ -33,77 +52,27 @@ cp .env.example .env
 npm run dev
 ```
 
-Backend chạy tại:
+API mặc định: [http://localhost:8787/api/health](http://localhost:8787/api/health)
 
-```txt
-http://localhost:8787
-```
-
-Test:
-
-```txt
-http://localhost:8787/api/health
-```
-
----
-
-## 2. Cấu hình OpenAI API
-
-Trong `backend/.env`:
+Biến môi trường chính:
 
 ```env
 API_PORT=8787
 FRONTEND_ORIGIN=http://localhost:5173
+STORAGE_DIR=./storage
 
 LOCAL_LLM_BASE_URL=https://api.openai.com/v1
 LOCAL_LLM_API_KEY=sk-your-openai-api-key
 LOCAL_LLM_MODEL=gpt-4o-mini
+
+SUPERDOC_USER_NAME=AI Spelling Checker
+SUPERDOC_USER_EMAIL=ai-checker@example.com
+CUSTOM_DICTIONARY=SuperDoc,React,Vite,DOCX
 ```
 
----
+Nếu không khai báo `LOCAL_LLM_API_KEY`, backend vẫn chạy được bằng heuristic fallback để demo flow end-to-end. Khi có API key thì backend gọi LLM thật và vẫn bắt buộc parse JSON bằng Zod.
 
-## 3. Cấu hình LM Studio
-
-Trong `backend/.env`:
-
-```env
-API_PORT=8787
-FRONTEND_ORIGIN=http://localhost:5173
-
-LOCAL_LLM_BASE_URL=http://localhost:1234/v1
-LOCAL_LLM_API_KEY=local
-LOCAL_LLM_MODEL=qwen2.5-7b-instruct
-```
-
-Tên model phải đúng với model LM Studio đang serve.
-
----
-
-## 4. Cấu hình Ollama
-
-Chạy:
-
-```bash
-ollama pull qwen2.5:7b
-ollama serve
-```
-
-Trong `backend/.env`:
-
-```env
-API_PORT=8787
-FRONTEND_ORIGIN=http://localhost:5173
-
-LOCAL_LLM_BASE_URL=http://localhost:11434/v1
-LOCAL_LLM_API_KEY=ollama
-LOCAL_LLM_MODEL=qwen2.5:7b
-```
-
----
-
-## 5. Chạy frontend
-
-Mở terminal khác:
+## Chạy frontend
 
 ```bash
 cd frontend
@@ -112,95 +81,72 @@ cp .env.example .env
 npm run dev
 ```
 
-Frontend chạy tại:
-
-```txt
-http://localhost:5173
-```
-
-Trong `frontend/.env`:
+Frontend mặc định: [http://localhost:5173](http://localhost:5173)
 
 ```env
 VITE_API_BASE_URL=http://localhost:8787
+VITE_APP_VERSION=2.0.0
 ```
 
----
+## Sample DOCX
 
-## 6. Luồng hệ thống
+File mẫu có lỗi chính tả nằm ở:
 
-```txt
-Frontend
-Upload DOCX
-↓
-POST /api/documents/analyze-spelling
-↓
-Backend
-Extract text bằng mammoth
-↓
-OpenAI-compatible LLM
-OpenAI / LM Studio / Ollama
-↓
-Backend nhận JSON lỗi
-↓
-Frontend hiển thị lỗi ở panel phải
+- [examples/sample-spelling-review.docx](/D:/inres/superdoc-ai-checker-standard/examples/sample-spelling-review.docx)
+
+Sinh lại file mẫu:
+
+```bash
+cd backend
+npm run generate:sample
 ```
 
----
+## Luồng demo nên test
 
-## 7. Deploy gợi ý
+1. Import [examples/sample-spelling-review.docx](/D:/inres/superdoc-ai-checker-standard/examples/sample-spelling-review.docx)
+2. Bấm `Check spelling` hoặc chạy `Vietnamese Spelling Checker`
+3. Chờ backend tạo `reviewed.docx`
+4. Xem `AI Issues` / `Comments` / `Changes`
+5. Bấm `Go to issue`
+6. Bấm `Apply` hoặc `Ignore`
+7. Export `reviewed.docx`
 
-### Frontend
+## API chính
 
-Build:
+- `GET /api/health`
+- `POST /api/documents`
+- `POST /api/documents/:documentId/analyze-spelling`
+- `GET /api/documents/:documentId/issues/:issueId/focus`
+- `POST /api/documents/:documentId/issues/:issueId/apply`
+- `POST /api/documents/:documentId/issues/:issueId/ignore`
+- `POST /api/documents/:documentId/issues/apply-high-confidence`
+- `GET /api/documents/:documentId/comments`
+- `GET /api/documents/:documentId/changes`
+- `GET /api/documents/:documentId/history`
+- `GET /api/documents/:documentId/export?type=original|reviewed|final|report-json|report-csv`
+- `POST /api/documents/:documentId/ai-command`
+- `POST /api/documents/:documentId/agents/:agentId/run`
+
+## Kiểm tra đã chạy
+
+Backend:
+
+```bash
+cd backend
+npm test
+npm run typecheck
+npm run build
+```
+
+Frontend:
 
 ```bash
 cd frontend
 npm run build
 ```
 
-Deploy thư mục:
+## TODO còn lại
 
-```txt
-frontend/dist
-```
+Xem file:
 
-Ví dụ Vercel/Netlify/Nginx.
-
-### Backend
-
-Chạy Node server:
-
-```bash
-cd backend
-npm install
-npm run start
-```
-
-Set env thật trên server:
-
-```env
-API_PORT=8787
-FRONTEND_ORIGIN=https://your-frontend-domain.com
-LOCAL_LLM_BASE_URL=https://api.openai.com/v1
-LOCAL_LLM_API_KEY=sk-...
-LOCAL_LLM_MODEL=gpt-4o-mini
-```
-
-Nếu dùng local LLM trên server riêng, đổi `LOCAL_LLM_BASE_URL` sang endpoint của server đó.
-
----
-
-## 8. Bước tiếp theo nên làm
-
-Bước nâng cấp tiếp theo:
-
-```txt
-LLM trả lỗi
-→ Backend tìm lại vị trí trong DOCX
-→ SuperDoc SDK thêm comment/track changes
-→ Backend lưu reviewed.docx
-→ Backend trả reviewedFileUrl
-→ Frontend reload reviewed.docx
-```
-
-Khi đó người dùng sẽ thấy lỗi nằm trực tiếp trong file Word, không chỉ ở panel.
+- [TODO_SUPERDOC_GAPS.md](/D:/inres/superdoc-ai-checker-standard/TODO_SUPERDOC_GAPS.md)

@@ -1,0 +1,18 @@
+{
+  "documentId": "doc_24f429bd",
+  "createdAt": "2026-05-04T09:45:31.999Z",
+  "updatedAt": "2026-05-04T09:45:31.999Z",
+  "originalFileName": "file-test-sai-chinh-ta.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_24f429bd\\original.docx",
+  "issues": [],
+  "comments": [],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1777887931999",
+      "type": "imported",
+      "message": "Imported DOCX file-test-sai-chinh-ta.docx",
+      "createdAt": "2026-05-04T09:45:31.999Z"
+    }
+  ]
+}
