@@ -1,0 +1,1546 @@
+{
+  "documentId": "doc_9dd01147",
+  "createdAt": "2026-05-07T07:24:16.833Z",
+  "request": {
+    "checks": [
+      "spelling",
+      "format",
+      "terminology",
+      "translation",
+      "tone",
+      "entity",
+      "date_number"
+    ],
+    "mode": "comment_and_highlight",
+    "useLLM": true,
+    "useRuleEngine": true,
+    "maxIssues": 1000,
+    "debugTrace": true
+  },
+  "summary": {
+    "detectedByDetector": 28,
+    "afterDedup": 28,
+    "afterSelection": 28,
+    "annotatedInDocx": 28,
+    "returnedToUi": 28,
+    "rangeNotFound": 0,
+    "droppedByBudget": 0,
+    "duplicatesRemoved": 0,
+    "resolvedExact": 28,
+    "resolvedFuzzy": 0,
+    "resolvedAmbiguous": 0,
+    "resolvedNotFound": 0,
+    "commentCreated": 28,
+    "highlightApplied": 28,
+    "trackedChangeCreated": 0,
+    "skippedAnnotation": 0,
+    "confirmedErrorCount": 26,
+    "needsReviewCount": 2,
+    "detectorBySource": {
+      "rule_engine": 26,
+      "llm": 0,
+      "hybrid": 2
+    }
+  },
+  "stages": {
+    "inputBlocks": {
+      "blocks": 41,
+      "uniqueTemplates": 41,
+      "representativeChunks": 2
+    },
+    "detectorOutput": {
+      "ruleIssues": 26,
+      "dictionarySuspicionIssues": 2,
+      "llmIssues": 0,
+      "mergedIssues": 28,
+      "bySource": {
+        "rule_engine": 26,
+        "llm": 0,
+        "hybrid": 2
+      },
+      "needsReviewCount": 2,
+      "confirmedErrorCount": 26
+    },
+    "postPipeline": {
+      "beforeDedup": 28,
+      "afterDedup": 28,
+      "afterSelection": 28,
+      "duplicatesRemoved": 0,
+      "droppedByBudget": 0
+    },
+    "rangeResolution": {
+      "exact": 28,
+      "fuzzy": 0,
+      "ambiguous": 0,
+      "notFound": 0
+    },
+    "annotation": {
+      "commentCreated": 28,
+      "highlightApplied": 28,
+      "trackedChangeCreated": 0,
+      "annotatedInDocx": 28,
+      "skippedAnnotation": 0
+    },
+    "responsePayload": {
+      "returnedToUi": 28
+    }
+  },
+  "issues": [
+    {
+      "traceId": "trace_0001_1",
+      "wrong": "hổ trợ",
+      "suggestion": "hỗ trợ",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000004",
+      "path": "body.paragraph[3]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:36.663Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:36.743Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000004_000",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0002_1",
+      "wrong": "chính tã",
+      "suggestion": "chính tả",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000004",
+      "path": "body.paragraph[3]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:36.801Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:36.974Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000004_001",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0003_1",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000005",
+      "path": "body.paragraph[4]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:37.133Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:37.259Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000005_002",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0004_1",
+      "wrong": "dử liệu",
+      "suggestion": "dữ liệu",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000005",
+      "path": "body.paragraph[4]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:37.318Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:37.434Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000005_003",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0005_1",
+      "wrong": "nhân viêng",
+      "suggestion": "nhân viên",
+      "type": "typo",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000005",
+      "path": "body.paragraph[4]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:37.534Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:37.626Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000005_004",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0006_1",
+      "wrong": "sản phẫm",
+      "suggestion": "sản phẩm",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000005",
+      "path": "body.paragraph[4]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:37.728Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:37.777Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000005_005",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0007_1",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000008",
+      "path": "body.listItem[7]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:37.845Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:37.905Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000008_006",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0008_1",
+      "wrong": "thong tin",
+      "suggestion": "thông tin",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000008",
+      "path": "body.listItem[7]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:38.026Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:38.099Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000008_007",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0009_1",
+      "wrong": "du lieu",
+      "suggestion": "dữ liệu",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000008",
+      "path": "body.listItem[7]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:38.156Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:38.243Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000008_008",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0010_1",
+      "wrong": "nhân viêng",
+      "suggestion": "nhân viên",
+      "type": "typo",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000009",
+      "path": "body.listItem[8]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.430Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:38.289Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:38.343Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000009_009",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0011_1",
+      "wrong": "sản phẫm",
+      "suggestion": "sản phẩm",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000009",
+      "path": "body.listItem[8]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:38.398Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:38.468Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000009_010",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0012_1",
+      "wrong": "chinh tả",
+      "suggestion": "chính tả",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000009",
+      "path": "body.listItem[8]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.428Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:38.629Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:38.695Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000009_011",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0013_1",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "0000000C",
+      "path": "body.listItem[11]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:38.754Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:38.821Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_0000000C_012",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0014_1",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "medium",
+      "status": "commented",
+      "blockId": "0000000C",
+      "path": "body.listItem[11]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:38.914Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:39.134Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_0000000C_013",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0015_1",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000015",
+      "path": "body.table[0].row[1].cell[1]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:39.176Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:39.236Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000015_014",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0016_1",
+      "wrong": "hổ trợ",
+      "suggestion": "hỗ trợ",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000015",
+      "path": "body.table[0].row[1].cell[1]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:39.312Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:39.370Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000015_015",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0017_1",
+      "wrong": "dử liệu",
+      "suggestion": "dữ liệu",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "0000001A",
+      "path": "body.table[0].row[2].cell[1]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:39.471Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:39.531Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_0000001A_016",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0018_1",
+      "wrong": "nhân viêng",
+      "suggestion": "nhân viên",
+      "type": "typo",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "0000001A",
+      "path": "body.table[0].row[2].cell[1]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:39.607Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:39.684Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_0000001A_017",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0019_1",
+      "wrong": "sản phẫm",
+      "suggestion": "sản phẩm",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "0000001F",
+      "path": "body.table[0].row[3].cell[1]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:39.784Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:39.864Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_0000001F_018",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0020_1",
+      "wrong": "cập nhập",
+      "suggestion": "cập nhật",
+      "type": "spelling",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "0000001F",
+      "path": "body.table[0].row[3].cell[1]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:39.938Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:40.115Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_0000001F_019",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0021_1",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000024",
+      "path": "body.table[0].row[4].cell[1]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:40.180Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:40.247Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000024_020",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0022_1",
+      "wrong": "phản hổi",
+      "suggestion": "phản hồi",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000024",
+      "path": "body.table[0].row[4].cell[1]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:40.292Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:40.369Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000024_021",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0023_1",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000028",
+      "path": "body.paragraph[34]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:40.445Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:40.557Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000028_022",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0024_1",
+      "wrong": "dử liệu",
+      "suggestion": "dữ liệu",
+      "type": "accent",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000028",
+      "path": "body.paragraph[34]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:40.643Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:40.778Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000028_023",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0025_1",
+      "wrong": "nhân viêng",
+      "suggestion": "nhân viên",
+      "type": "typo",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000028",
+      "path": "body.paragraph[34]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:40.848Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:41.018Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000028_024",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0026_1",
+      "wrong": "cập nhập",
+      "suggestion": "cập nhật",
+      "type": "spelling",
+      "source": "rule_engine",
+      "confidence": "high",
+      "status": "commented",
+      "blockId": "00000028",
+      "path": "body.paragraph[34]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.431Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:41.109Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:41.162Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000028_025",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0027_1",
+      "wrong": "hóa",
+      "suggestion": "hóa",
+      "type": "spelling",
+      "source": "hybrid",
+      "confidence": "low",
+      "status": "needs_review",
+      "blockId": "0000000C",
+      "path": "body.listItem[11]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:41.311Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:41.422Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_0000000C_026",
+      "returnedToUi": true
+    },
+    {
+      "traceId": "trace_0028_1",
+      "wrong": "hóa",
+      "suggestion": "hóa",
+      "type": "spelling",
+      "source": "hybrid",
+      "confidence": "low",
+      "status": "needs_review",
+      "blockId": "00000026",
+      "path": "body.table[0].row[4].cell[3]",
+      "events": [
+        {
+          "stage": "detector_output",
+          "decision": "spelling_output",
+          "createdAt": "2026-05-07T07:24:36.429Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "kept_after_dedup",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "post_pipeline",
+          "decision": "selected_for_annotation",
+          "createdAt": "2026-05-07T07:24:36.432Z"
+        },
+        {
+          "stage": "range_resolution",
+          "decision": "range_exact",
+          "createdAt": "2026-05-07T07:24:41.648Z"
+        },
+        {
+          "stage": "annotation",
+          "decision": "annotated_comment_and_highlight",
+          "detail": "comment_created, highlight_applied",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        },
+        {
+          "stage": "response_payload",
+          "decision": "returned_to_ui",
+          "createdAt": "2026-05-07T07:24:41.772Z"
+        }
+      ],
+      "resolution": "exact",
+      "annotated": {
+        "commentCreated": true,
+        "highlightApplied": true,
+        "trackedChangeCreated": false
+      },
+      "issueId": "spell_00000026_027",
+      "returnedToUi": true
+    }
+  ]
+}

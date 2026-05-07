@@ -34,6 +34,9 @@ const DEFAULT_DICTIONARY = [
   "shadcn/ui",
   "Vite",
   "React",
+  "OpenAI",
+  "TypeScript",
+  "Node.js",
   "DOCX",
   "Cold Brew",
   "Cascara",
@@ -51,6 +54,7 @@ export const CUSTOM_DICTIONARY = [
 ];
 
 export const FILES_ROOT = path.join(STORAGE_DIR, "documents");
+export const ANALYSIS_CACHE_ROOT = path.join(STORAGE_DIR, "analysis-cache");
 export const CONFIG_ROOT = path.join(STORAGE_DIR, "config");
 export const PROMPTS_DIR = path.join(CONFIG_ROOT, "prompts");
 export const GLOBAL_GLOSSARY_PATH = path.join(CONFIG_ROOT, "glossary", "global-glossary.json");

@@ -9,15 +9,18 @@ import {
   CUSTOM_DICTIONARY,
   DEFAULT_MAX_ISSUES,
   FILES_ROOT,
+  ANALYSIS_CACHE_ROOT,
   FRONTEND_ORIGIN,
   MODEL,
   PROMPTS_DIR,
 } from "./config.js";
 import type { AnalyzeConsistencyRequest, ReviewMode } from "./domain/types.js";
 import { FileDocumentSessionStore } from "./services/storage/documentSessionStore.js";
+import { FileAnalysisCacheStore } from "./services/storage/analysisCacheStore.js";
 import { DocumentReviewService } from "./services/review/documentReviewService.js";
 import { exportIssuesCsv } from "./services/report/reportExporter.js";
 import { PromptTemplateService } from "./prompts/promptTemplateService.js";
+import { hashFileBuffer } from "./services/hash/fileHash.js";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -27,7 +30,8 @@ const upload = multer({
 });
 
 const sessionStore = new FileDocumentSessionStore(FILES_ROOT);
-const reviewService = new DocumentReviewService(sessionStore);
+const analysisCacheStore = new FileAnalysisCacheStore(ANALYSIS_CACHE_ROOT);
+const reviewService = new DocumentReviewService(sessionStore, analysisCacheStore);
 const promptService = new PromptTemplateService(PROMPTS_DIR);
 
 async function ensureDocFile(documentId: string, filename: string, buffer: Buffer) {
@@ -58,6 +62,7 @@ function jsonModeFromInput(value: unknown): ReviewMode {
 }
 
 function normalizeAnalyzeRequest(body: any): AnalyzeConsistencyRequest {
+  const normalizedMaxIssues = Number(body?.maxIssues || DEFAULT_MAX_ISSUES);
   return {
     checks: Array.isArray(body?.checks) && body.checks.length > 0
       ? body.checks
@@ -65,7 +70,13 @@ function normalizeAnalyzeRequest(body: any): AnalyzeConsistencyRequest {
     mode: jsonModeFromInput(body?.mode),
     useLLM: body?.useLLM !== false,
     useRuleEngine: body?.useRuleEngine !== false,
-    maxIssues: Number(body?.maxIssues || DEFAULT_MAX_ISSUES),
+    maxIssues: normalizedMaxIssues,
+    maxAnnotatedIssues: Number(body?.maxAnnotatedIssues || normalizedMaxIssues),
+    maxReturnedIssues: body?.maxReturnedIssues ? Number(body.maxReturnedIssues) : Number.MAX_SAFE_INTEGER,
+    debugTrace: body?.debugTrace !== false,
+    useCache: body?.useCache !== false,
+    forceReanalyze: Boolean(body?.forceReanalyze),
+    annotateFromCache: body?.annotateFromCache !== false,
   };
 }
 
@@ -103,6 +114,7 @@ export function createApp() {
       }
 
       const documentId = `doc_${randomUUID().slice(0, 8)}`;
+      const fileHash = hashFileBuffer(req.file.buffer);
       const tempPath = await ensureDocFile(documentId, "upload.tmp", req.file.buffer);
       const originalPath = path.join(sessionStore.getDocumentDir(documentId), "original.docx");
       await rename(tempPath, originalPath);
@@ -111,11 +123,13 @@ export function createApp() {
         documentId,
         originalFileName: req.file.originalname,
         originalPath,
+        fileHash,
       });
 
       return res.json({
         documentId,
         originalFileUrl: getFileUrl(documentId, "original.docx"),
+        fileHash,
         status: "uploaded",
       });
     } catch (error: any) {
@@ -179,17 +193,29 @@ export function createApp() {
         mode: jsonModeFromInput(req.body?.mode),
         highlightColor:
           typeof req.body?.highlightColor === "string" ? req.body.highlightColor : "yellow",
-        maxIssues: Number(req.body?.maxIssues || 200),
+        maxIssues: Number(req.body?.maxIssues || DEFAULT_MAX_ISSUES),
         applyHighConfidence: Boolean(req.body?.applyHighConfidence),
+        debugTrace: req.body?.debugTrace !== false,
+        useCache: req.body?.useCache !== false,
+        forceReanalyze: Boolean(req.body?.forceReanalyze),
+        annotateFromCache: req.body?.annotateFromCache !== false,
       });
 
       return res.json({
         documentId: result.session.documentId,
         status: "reviewed",
         issues: result.session.issues,
+        annotatedIssues: result.session.issues.filter((issue) => result.session.annotatedIssueIds?.includes(issue.id)),
         comments: result.session.comments,
         changes: result.session.changes,
         history: result.session.history,
+        summary: result.summary,
+        traceEnabled: result.traceEnabled,
+        traceSummary: result.traceSummary,
+        traceFileUrl: result.traceEnabled
+          ? getFileUrl(result.session.documentId, "analysis-trace.json")
+          : null,
+        cacheInfo: result.cacheInfo ?? reviewService.buildCacheInfo(result.session),
         todos: result.todos,
         reviewedFileUrl: result.session.reviewedPath
           ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
@@ -214,9 +240,17 @@ export function createApp() {
         documentId: result.session.documentId,
         status: "reviewed",
         issues: result.session.issues,
+        annotatedIssues: result.session.issues.filter((issue) => result.session.annotatedIssueIds?.includes(issue.id)),
         comments: result.session.comments,
         changes: result.session.changes,
         history: result.session.history,
+        summary: result.summary,
+        traceEnabled: result.traceEnabled,
+        traceSummary: result.traceSummary,
+        traceFileUrl: result.traceEnabled
+          ? getFileUrl(result.session.documentId, "analysis-trace.json")
+          : null,
+        cacheInfo: result.cacheInfo ?? reviewService.buildCacheInfo(result.session),
         todos: result.todos,
         context: result.contextMemory,
         reviewedFileUrl: result.session.reviewedPath
@@ -327,12 +361,67 @@ export function createApp() {
     }
   });
 
+  app.get("/api/documents/:documentId/issues", async (req, res) => {
+    try {
+      const result = await reviewService.listIssues(req.params.documentId, {
+        page: typeof req.query.page === "string" ? Number(req.query.page) : undefined,
+        pageSize: typeof req.query.pageSize === "string" ? Number(req.query.pageSize) : undefined,
+        annotated:
+          req.query.annotated === "true" || req.query.annotated === "false"
+            ? req.query.annotated
+            : undefined,
+        status: typeof req.query.status === "string" ? req.query.status : undefined,
+        source: typeof req.query.source === "string" ? req.query.source : undefined,
+        type: typeof req.query.type === "string" ? req.query.type : undefined,
+      });
+      return res.json(result);
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không lấy được danh sách issue",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.post("/api/documents/:documentId/issues/annotate", async (req, res) => {
+    try {
+      const result = await reviewService.annotateMoreIssues({
+        documentId: req.params.documentId,
+        mode: jsonModeFromInput(req.body?.mode),
+        count: typeof req.body?.count === "number" ? req.body.count : undefined,
+        all: Boolean(req.body?.all),
+        issueIds: Array.isArray(req.body?.issueIds)
+          ? req.body.issueIds.filter((issueId: unknown) => typeof issueId === "string")
+          : undefined,
+      });
+      return res.json({
+        ok: true,
+        issues: result.session.issues,
+        annotatedIssues: result.session.issues.filter((issue) => result.session.annotatedIssueIds?.includes(issue.id)),
+        comments: result.session.comments,
+        changes: result.session.changes,
+        summary: result.session.analysisSummary,
+        cacheInfo: reviewService.buildCacheInfo(result.session),
+        todos: result.todos,
+        reviewedFileUrl: result.session.reviewedPath
+          ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
+          : null,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không annotate thêm được issue",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
   app.post("/api/documents/:documentId/issues/:issueId/apply", async (req, res) => {
     try {
       const result = await reviewService.applyIssue(req.params.documentId, req.params.issueId);
       return res.json({
         ok: true,
         issues: result.session.issues,
+        annotatedIssues: result.session.issues.filter((issue) => result.session.annotatedIssueIds?.includes(issue.id)),
         changes: result.session.changes,
         todos: result.todos,
         appliedIssueId: req.params.issueId,
@@ -355,6 +444,7 @@ export function createApp() {
       return res.json({
         ok: true,
         issues: result.session.issues,
+        annotatedIssues: result.session.issues.filter((issue) => result.session.annotatedIssueIds?.includes(issue.id)),
         changes: result.session.changes,
         todos: result.todos,
         reviewedFileUrl: result.session.reviewedPath
@@ -375,6 +465,7 @@ export function createApp() {
       return res.json({
         ok: true,
         issues: session.issues,
+        annotatedIssues: session.issues.filter((issue) => session.annotatedIssueIds?.includes(issue.id)),
         changes: session.changes,
         reviewedFileUrl: session.reviewedPath
           ? getFileUrl(session.documentId, path.basename(session.reviewedPath))
@@ -403,15 +494,42 @@ export function createApp() {
     res.json({ history: session.history });
   });
 
+  app.get("/api/documents/:documentId/trace", async (req, res) => {
+    try {
+      const session = await reviewService.requireSession(req.params.documentId);
+      const trace = session.tracePath
+        ? await reviewService.getTrace(req.params.documentId)
+        : null;
+      return res.json({
+        traceEnabled: Boolean(session.traceEnabled && trace),
+        traceSummary: session.traceSummary,
+        traceFileUrl:
+          session.traceEnabled && session.tracePath
+            ? getFileUrl(session.documentId, path.basename(session.tracePath))
+            : null,
+        trace,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không lấy được debug trace",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
   app.get("/api/documents/:documentId/export", async (req, res) => {
     try {
       const session = await reviewService.requireSession(req.params.documentId);
       const type = String(req.query.type || "reviewed");
 
       if (type === "report-json") {
+        const allIssues = session.allIssuesPath
+          ? await reviewService.getAllIssues(req.params.documentId)
+          : session.issues;
         return res.json({
           documentId: session.documentId,
-          issues: session.issues,
+          issues: allIssues,
+          summary: session.analysisSummary,
           comments: session.comments,
           changes: session.changes,
         });
@@ -419,7 +537,10 @@ export function createApp() {
 
       if (type === "report-csv") {
         res.setHeader("Content-Type", "text/csv; charset=utf-8");
-        return res.send(exportIssuesCsv(session.issues));
+        const allIssues = session.allIssuesPath
+          ? await reviewService.getAllIssues(req.params.documentId)
+          : session.issues;
+        return res.send(exportIssuesCsv(allIssues));
       }
 
       const fileMap = {
@@ -463,8 +584,16 @@ export function createApp() {
       return res.json({
         message: `Đã cập nhật ${result.session.issues.length} lỗi theo AI command.`,
         issues: result.session.issues,
+        annotatedIssues: result.session.issues.filter((issue) => result.session.annotatedIssueIds?.includes(issue.id)),
         comments: result.session.comments,
         changes: result.session.changes,
+        summary: result.summary,
+        traceEnabled: result.traceEnabled,
+        traceSummary: result.traceSummary,
+        traceFileUrl: result.traceEnabled
+          ? getFileUrl(result.session.documentId, "analysis-trace.json")
+          : null,
+        cacheInfo: result.cacheInfo ?? reviewService.buildCacheInfo(result.session),
         todos: result.todos,
         reviewedFileUrl: result.session.reviewedPath
           ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
@@ -498,14 +627,23 @@ export function createApp() {
         request: normalizeAnalyzeRequest({
           mode: req.params.agentId === "format-cleaner" ? "track_changes" : "comment_and_highlight",
           checks: agentChecksMap[req.params.agentId] || ["spelling"],
+          debugTrace: req.body?.debugTrace !== false,
         }),
       });
 
       return res.json({
         agentId: req.params.agentId,
         issues: result.session.issues,
+        annotatedIssues: result.session.issues.filter((issue) => result.session.annotatedIssueIds?.includes(issue.id)),
         comments: result.session.comments,
         changes: result.session.changes,
+        summary: result.summary,
+        traceEnabled: result.traceEnabled,
+        traceSummary: result.traceSummary,
+        traceFileUrl: result.traceEnabled
+          ? getFileUrl(result.session.documentId, "analysis-trace.json")
+          : null,
+        cacheInfo: result.cacheInfo ?? reviewService.buildCacheInfo(result.session),
         todos: result.todos,
         reviewedFileUrl: result.session.reviewedPath
           ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))

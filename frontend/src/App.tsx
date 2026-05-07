@@ -1,10 +1,12 @@
 import { startTransition, useMemo, useRef, useState } from "react";
 import {
   analyzeDocument,
+  annotateIssues,
   applyHighConfidence,
   applyIssue,
   buildContext,
   focusIssue,
+  getAnalysisTrace,
   getApiHealth,
   getContext,
   getExportUrl,
@@ -20,8 +22,13 @@ import {
   uploadDocument,
 } from "./lib/api";
 import type {
+  AnalysisSummary,
+  AnalysisCacheInfo,
+  AnalysisTraceArtifact,
+  AnalysisTraceSummary,
   AgentOption,
   ChangeRecord,
+  ClientTraceEvent,
   CommentRecord,
   DocumentContextMemory,
   DocumentMode,
@@ -48,6 +55,7 @@ import { vi } from "./i18n";
 import pkg from "../package.json";
 import { ContextMemoryPanel } from "./components/review/ContextMemoryPanel";
 import { PromptSettingsPanel } from "./components/review/PromptSettingsPanel";
+import { TraceDebugPanel } from "./components/review/TraceDebugPanel";
 
 const TOOLBAR_ID = "superdoc-toolbar-surface";
 const COMMENTS_ID = "superdoc-comments-surface";
@@ -103,17 +111,51 @@ function mergeResponse(
     changes: ChangeRecord[];
     history: HistoryRecord[];
     issues: Issue[];
+    annotatedIssues?: Issue[];
+    summary?: AnalysisSummary | null;
+    traceEnabled?: boolean;
+    traceSummary?: AnalysisTraceSummary | null;
+    traceFileUrl?: string | null;
+    cacheInfo?: AnalysisCacheInfo | null;
   },
   next: ReviewResponse
 ) {
+  const nextTraceEnabled = next.traceEnabled ?? previous.traceEnabled ?? false;
   return {
     issues: next.issues || previous.issues,
+    annotatedIssues: next.annotatedIssues || previous.annotatedIssues || [],
     comments: next.comments || previous.comments,
     changes: next.changes || previous.changes,
     history: next.history || previous.history,
     reviewedFileUrl: next.reviewedFileUrl || null,
     context: next.context || null,
+    summary: next.summary || previous.summary || null,
+    traceEnabled: nextTraceEnabled,
+    traceSummary: nextTraceEnabled ? next.traceSummary || previous.traceSummary || null : null,
+    traceFileUrl: nextTraceEnabled ? next.traceFileUrl || previous.traceFileUrl || null : null,
+    cacheInfo: next.cacheInfo || previous.cacheInfo || null,
   };
+}
+
+function buildTraceInsightLabel(
+  traceSummary: AnalysisTraceSummary | null,
+  clientEvents: ClientTraceEvent[]
+) {
+  if (!traceSummary) return null;
+  const focusFailures = clientEvents.filter((event) => event.decision === "focus_display_failed").length;
+  if (traceSummary.droppedByBudget > 0) {
+    return `Trace: ${traceSummary.droppedByBudget.toLocaleString("vi-VN")} chưa annotate do giới hạn`;
+  }
+  if (traceSummary.rangeNotFound > 0) {
+    return `Trace: ${traceSummary.rangeNotFound.toLocaleString("vi-VN")} lỗi không map được vị trí`;
+  }
+  if (traceSummary.skippedAnnotation > 0) {
+    return `Trace: ${traceSummary.skippedAnnotation.toLocaleString("vi-VN")} lỗi không annotate được`;
+  }
+  if (focusFailures > 0) {
+    return `Trace: ${focusFailures.toLocaleString("vi-VN")} lần focus/display lỗi`;
+  }
+  return `Trace: detector ${traceSummary.detectedByDetector.toLocaleString("vi-VN")} -> UI ${traceSummary.returnedToUi.toLocaleString("vi-VN")}`;
 }
 
 export default function App() {
@@ -125,9 +167,18 @@ export default function App() {
   const [apiStatus, setApiStatus] = useState<"checking" | "online" | "offline">("checking");
   const [modelName, setModelName] = useState("gpt-4o-mini");
   const [issues, setIssues] = useState<Issue[]>([]);
+  const [annotatedIssues, setAnnotatedIssues] = useState<Issue[]>([]);
   const [comments, setComments] = useState<CommentRecord[]>([]);
   const [changes, setChanges] = useState<ChangeRecord[]>([]);
   const [history, setHistory] = useState<HistoryRecord[]>([]);
+  const [analysisSummary, setAnalysisSummary] = useState<AnalysisSummary | null>(null);
+  const [traceEnabled, setTraceEnabled] = useState(true);
+  const [traceSummary, setTraceSummary] = useState<AnalysisTraceSummary | null>(null);
+  const [traceFileUrl, setTraceFileUrl] = useState<string | null>(null);
+  const [cacheInfo, setCacheInfo] = useState<AnalysisCacheInfo | null>(null);
+  const [traceData, setTraceData] = useState<AnalysisTraceArtifact | null>(null);
+  const [traceLoading, setTraceLoading] = useState(false);
+  const [clientTraceEvents, setClientTraceEvents] = useState<ClientTraceEvent[]>([]);
   const [hasReviewResult, setHasReviewResult] = useState(false);
   const [applyingIssueId, setApplyingIssueId] = useState<string | null>(null);
   const [pendingFocusLocation, setPendingFocusLocation] = useState<IssueLocation | null>(null);
@@ -148,7 +199,18 @@ export default function App() {
   const [todoNotes, setTodoNotes] = useState<string[]>([]);
   const [contextMemory, setContextMemory] = useState<DocumentContextMemory | null>(null);
   const [prompts, setPrompts] = useState<PromptTemplate[]>([]);
-  const [rightPanel, setRightPanel] = useState<"review" | "context" | "prompts">("review");
+  const [rightPanel, setRightPanel] = useState<"review" | "context" | "prompts" | "trace">("review");
+
+  function pushClientTraceEvent(event: Omit<ClientTraceEvent, "id" | "createdAt">) {
+    setClientTraceEvents((current) => [
+      ...current.slice(-59),
+      {
+        id: `client_trace_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        createdAt: new Date().toISOString(),
+        ...event,
+      },
+    ]);
+  }
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -222,6 +284,10 @@ export default function App() {
       ? `${totalSeconds.toFixed(1)} giây`
       : `${totalSeconds.toFixed(2)} giây`;
   }, [analysisElapsedMs, isAnalyzing, lastAnalysisDurationMs]);
+  const traceInsightLabel = useMemo(
+    () => buildTraceInsightLabel(traceSummary, clientTraceEvents),
+    [clientTraceEvents, traceSummary]
+  );
 
   async function refreshContext(documentId: string) {
     const loaded = await getContext(documentId);
@@ -239,9 +305,17 @@ export default function App() {
         setComments([]);
         setChanges([]);
         setHistory([]);
+        setAnnotatedIssues([]);
+        setAnalysisSummary(null);
         setHasReviewResult(false);
         setTodoNotes([]);
         setContextMemory(null);
+        setTraceSummary(null);
+        setTraceFileUrl(null);
+        setTraceData(null);
+        setCacheInfo(null);
+        setClientTraceEvents([]);
+        setTraceEnabled(true);
         setDocumentVersion((value) => value + 1);
       });
     } finally {
@@ -251,11 +325,31 @@ export default function App() {
 
   function applyReviewState(next: ReviewResponse) {
     startTransition(() => {
-      const merged = mergeResponse({ issues, comments, changes, history }, next);
+      const merged = mergeResponse({
+        issues,
+        annotatedIssues,
+        comments,
+        changes,
+        history,
+        summary: analysisSummary,
+        traceEnabled,
+        traceSummary,
+        traceFileUrl,
+        cacheInfo,
+      }, next);
       setIssues(merged.issues);
+      setAnnotatedIssues(merged.annotatedIssues);
       setComments(merged.comments);
       setChanges(merged.changes);
       setHistory(merged.history);
+      setAnalysisSummary(merged.summary);
+      setTraceEnabled(merged.traceEnabled);
+      setTraceSummary(merged.traceSummary);
+      setTraceFileUrl(merged.traceFileUrl);
+      setCacheInfo(merged.cacheInfo);
+      if (!merged.traceEnabled) {
+        setTraceData(null);
+      }
       setTodoNotes(next.todos || []);
       if (merged.context) setContextMemory(merged.context);
       if (merged.reviewedFileUrl) {
@@ -263,9 +357,39 @@ export default function App() {
         setDocumentVersion((value) => value + 1);
       }
     });
+    pushClientTraceEvent({
+      stage: "client",
+      decision: "apply_review_state",
+      detail: `response issues=${next.issues?.length ?? 0}, summary selected=${next.summary?.selectedIssues ?? "n/a"}, traceEnabled=${String(next.traceEnabled ?? false)}`,
+    });
   }
 
-  async function handleAnalyze() {
+  async function refreshTrace(documentId: string) {
+    setTraceLoading(true);
+    try {
+      const response = await getAnalysisTrace(documentId);
+      setTraceEnabled(response.traceEnabled);
+      setTraceSummary(response.traceSummary ?? null);
+      setTraceFileUrl(response.traceFileUrl ?? null);
+      setTraceData(response.trace ?? null);
+      pushClientTraceEvent({
+        stage: "client",
+        decision: "trace_refreshed",
+        detail: `traceEnabled=${String(response.traceEnabled)}, issues=${response.trace?.issues.length ?? 0}`,
+      });
+    } catch (error: any) {
+      pushClientTraceEvent({
+        stage: "client",
+        decision: "trace_refresh_failed",
+        detail: error?.message || String(error),
+      });
+      throw error;
+    } finally {
+      setTraceLoading(false);
+    }
+  }
+
+  async function handleAnalyze(options: { forceReanalyze?: boolean; useCache?: boolean } = {}) {
     if (!currentDocument) return;
     setLoading(true);
     const startedAt = Date.now();
@@ -278,11 +402,21 @@ export default function App() {
         mode: reviewMode,
         checks: ["spelling", "format", "terminology", "translation", "tone", "entity", "date_number"],
         highlightColor: "yellow",
+        debugTrace: traceEnabled,
+        useCache: options.useCache ?? true,
+        forceReanalyze: Boolean(options.forceReanalyze),
+        annotateFromCache: true,
       });
       applyReviewState(response);
+      if (response.traceEnabled) {
+        await refreshTrace(currentDocument.documentId).catch(() => undefined);
+        setRightPanel("trace");
+        setReviewPanelOpen(true);
+      } else {
+        setTraceData(null);
+      }
       setHasReviewResult(true);
       setActiveTab("issues");
-      setRightPanel("review");
     } finally {
       const finishedAt = Date.now();
       setIsAnalyzing(false);
@@ -320,15 +454,71 @@ export default function App() {
     }
   }
 
-  async function handleRunAgent() {
+  async function handleAnnotateMore(count: number) {
     if (!currentDocument) return;
     setLoading(true);
     try {
-      const response = await runAgent(currentDocument.documentId, currentAgentId);
+      const response = await annotateIssues(currentDocument.documentId, {
+        mode: reviewMode,
+        count,
+      });
       applyReviewState(response);
       setHasReviewResult(true);
       setActiveTab("issues");
       setRightPanel("review");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleAnnotateAll() {
+    if (!currentDocument) return;
+    setLoading(true);
+    try {
+      const response = await annotateIssues(currentDocument.documentId, {
+        mode: reviewMode,
+        all: true,
+      });
+      applyReviewState(response);
+      setHasReviewResult(true);
+      setActiveTab("issues");
+      setRightPanel("review");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleAnnotateIssue(issue: Issue) {
+    if (!currentDocument) return;
+    setApplyingIssueId(issue.id);
+    try {
+      const response = await annotateIssues(currentDocument.documentId, {
+        mode: reviewMode,
+        issueIds: [issue.id],
+        count: 1,
+      });
+      applyReviewState(response);
+      setHasReviewResult(true);
+      setActiveTab("issues");
+      setRightPanel("review");
+    } finally {
+      setApplyingIssueId(null);
+    }
+  }
+
+  async function handleRunAgent() {
+    if (!currentDocument) return;
+    setLoading(true);
+    try {
+      const response = await runAgent(currentDocument.documentId, currentAgentId, traceEnabled);
+      applyReviewState(response);
+      if (response.traceEnabled) {
+        await refreshTrace(currentDocument.documentId).catch(() => undefined);
+        setRightPanel("trace");
+        setReviewPanelOpen(true);
+      }
+      setHasReviewResult(true);
+      setActiveTab("issues");
     } finally {
       setLoading(false);
     }
@@ -341,12 +531,17 @@ export default function App() {
       const response = await runAiCommand(
         currentDocument.documentId,
         command,
-        reviewMode
+        reviewMode,
+        traceEnabled
       );
       applyReviewState(response);
+      if (response.traceEnabled) {
+        await refreshTrace(currentDocument.documentId).catch(() => undefined);
+        setRightPanel("trace");
+        setReviewPanelOpen(true);
+      }
       setHasReviewResult(true);
       setActiveTab("issues");
-      setRightPanel("review");
     } finally {
       setLoading(false);
     }
@@ -355,7 +550,13 @@ export default function App() {
   async function handleFocusIssue(issue: Issue) {
     if (!currentDocument) return;
     const focusData = await focusIssue(currentDocument.documentId, issue.id);
-    await workspaceRef.current?.focusIssue(focusData.location);
+    const ok = await workspaceRef.current?.focusIssue(focusData.location);
+    pushClientTraceEvent({
+      stage: "client",
+      decision: ok ? "focus_display_success" : "focus_display_failed",
+      detail: `issueId=${issue.id}, blockId=${focusData.location.blockId}`,
+      issueId: issue.id,
+    });
   }
 
   async function handleApplyIssue(issue: Issue) {
@@ -391,6 +592,8 @@ export default function App() {
     navigator.clipboard.writeText(url.toString()).catch(() => undefined);
   }
 
+  const traceAvailable = Boolean(traceSummary || traceFileUrl || traceData);
+
   const appVersionLabel = pkg.version ? `v${pkg.version}` : undefined;
 
   return (
@@ -404,13 +607,33 @@ export default function App() {
         modelName={modelName}
         theme={theme}
         chatVisible={chatVisible}
-        issueCount={issues.length}
+        issueCount={analysisSummary?.detectedIssues ?? issues.length}
         reviewPanelOpen={reviewPanelOpen}
         analysisDurationLabel={analysisDurationLabel}
+        traceSummary={traceSummary}
+        traceInsightLabel={traceInsightLabel}
+        cacheInfo={cacheInfo}
         agentOptions={AGENTS}
         currentAgentId={currentAgentId}
+        debugTraceEnabled={traceEnabled}
+        traceAvailable={traceAvailable}
         appVersionLabel={appVersionLabel}
         onBuildContext={handleBuildContext}
+        onOpenTracePanel={() => {
+          if (currentDocument) {
+            void refreshTrace(currentDocument.documentId);
+          }
+          setRightPanel("trace");
+          setReviewPanelOpen(true);
+        }}
+        onToggleDebugTrace={() => {
+          setTraceEnabled(true);
+          pushClientTraceEvent({
+            stage: "client",
+            decision: "debug_trace_forced_on",
+            detail: "trace mặc định luôn bật cho mọi lần phân tích",
+          });
+        }}
         onOpenContextPanel={() => {
           setRightPanel("context");
           setReviewPanelOpen(true);
@@ -421,7 +644,9 @@ export default function App() {
         }}
         onModeChange={setMode}
         onUpload={handleUpload}
-        onAnalyze={handleAnalyze}
+        onAnalyze={() => void handleAnalyze({ useCache: true })}
+        onAnalyzeWithCache={() => void handleAnalyze({ useCache: true })}
+        onForceReanalyze={() => void handleAnalyze({ useCache: false, forceReanalyze: true })}
         onApplyHighConfidence={handleApplyHighConfidence}
         onCopyShareLink={handleCopyShareLink}
         onToggleTheme={() => setTheme((value) => (value === "light" ? "dark" : "light"))}
@@ -447,10 +672,17 @@ export default function App() {
                   commentsElementId={COMMENTS_ID}
                   documentVersion={documentVersion}
                   applyingIssueId={applyingIssueId}
-                  issues={issues}
+                  issues={annotatedIssues}
+                  totalIssueCount={issues.length}
                   onFocusIssue={handleFocusIssue}
                   onApplyIssue={handleApplyIssue}
                   onIgnoreIssue={handleIgnoreIssue}
+                  onOpenAllIssues={() => {
+                    setRightPanel("review");
+                    setActiveTab("issues");
+                    setActiveFilter("all");
+                    setReviewPanelOpen(true);
+                  }}
                 />
 
                 <AiCommandBar
@@ -490,7 +722,10 @@ export default function App() {
             activeFilter={activeFilter}
             hasReviewResult={hasReviewResult}
             applyingIssueId={applyingIssueId}
+            analysisSummary={analysisSummary}
+            cacheInfo={cacheInfo}
             issues={issues}
+            annotatedIssues={annotatedIssues}
             comments={comments}
             changes={changes}
             history={history}
@@ -499,6 +734,13 @@ export default function App() {
             onFocusIssue={handleFocusIssue}
             onApplyIssue={handleApplyIssue}
             onIgnoreIssue={handleIgnoreIssue}
+            onAnnotateIssue={handleAnnotateIssue}
+            onAnnotateMore={() => void handleAnnotateMore(500)}
+            onAnnotateAll={() => void handleAnnotateAll()}
+            onExportAllIssues={() => {
+              if (!currentDocument) return;
+              window.open(getExportUrl(currentDocument.documentId, "report-json"), "_blank");
+            }}
             onClose={() => setReviewPanelOpen(false)}
           />
         ) : rightPanel === "context" ? (
@@ -509,6 +751,20 @@ export default function App() {
               if (!currentDocument) return;
               await handleBuildContext();
             }}
+          />
+        ) : rightPanel === "trace" ? (
+          <TraceDebugPanel
+            traceEnabled={traceEnabled}
+            traceSummary={traceSummary}
+            traceFileUrl={traceFileUrl}
+            trace={traceData}
+            clientEvents={clientTraceEvents}
+            loading={traceLoading}
+            onRefresh={async () => {
+              if (!currentDocument) return;
+              await refreshTrace(currentDocument.documentId);
+            }}
+            onClose={() => setReviewPanelOpen(false)}
           />
         ) : (
           <PromptSettingsPanel

@@ -1,0 +1,3 @@
+This package includes data derived from duyet/vietnamese-wordlist, licensed under GPL-2.0.
+Source: https://github.com/duyet/vietnamese-wordlist
+The original README states that Viet74K contains about 74,000 Vietnamese words and phrases.

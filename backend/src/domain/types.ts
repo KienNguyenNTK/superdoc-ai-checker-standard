@@ -251,6 +251,161 @@ export type DocumentContextMemory = {
   entityRules: EntityRule[];
 };
 
+export type AnalysisSummary = {
+  detectedIssues: number;
+  selectedIssues: number;
+  annotatedIssues: number;
+  returnedIssues: number;
+  maxIssues: number;
+  maxAnnotatedIssues: number;
+  maxReturnedIssues: number;
+  confirmedErrorCount: number;
+  needsReviewCount: number;
+  blocksAnalyzed: number;
+  blocksWithIssues: number;
+  uniqueBlockTemplates?: number;
+  cacheHit?: boolean;
+  cacheKey?: string;
+  cachedAt?: string;
+  analysisDurationMs?: number;
+  skippedAnalysisBecauseCacheHit?: boolean;
+};
+
+export type AnalysisTraceStage =
+  | "input_blocks"
+  | "detector_output"
+  | "post_pipeline"
+  | "range_resolution"
+  | "annotation"
+  | "response_payload"
+  | "client";
+
+export type AnalysisTraceSummary = {
+  detectedByDetector: number;
+  afterDedup: number;
+  afterSelection: number;
+  annotatedInDocx: number;
+  returnedToUi: number;
+  rangeNotFound: number;
+  droppedByBudget: number;
+  duplicatesRemoved: number;
+  resolvedExact: number;
+  resolvedFuzzy: number;
+  resolvedAmbiguous: number;
+  resolvedNotFound: number;
+  commentCreated: number;
+  highlightApplied: number;
+  trackedChangeCreated: number;
+  skippedAnnotation: number;
+  confirmedErrorCount: number;
+  needsReviewCount: number;
+  detectorBySource: {
+    rule_engine: number;
+    llm: number;
+    hybrid: number;
+  };
+  cacheHit?: boolean;
+  cacheKey?: string;
+  cachedAt?: string;
+  forceReanalyze?: boolean;
+};
+
+export type AnalysisTraceEvent = {
+  stage: AnalysisTraceStage;
+  decision: string;
+  detail?: string;
+  createdAt: string;
+};
+
+export type AnalysisTraceIssueRecord = {
+  traceId: string;
+  issueId?: string;
+  wrong: string;
+  suggestion: string;
+  type: IssueType;
+  source: IssueSource;
+  confidence: Confidence;
+  status: IssueStatus;
+  blockId: string;
+  path?: string;
+  dropped?: boolean;
+  dropReason?: string;
+  resolution?: ResolvedRangeConfidence;
+  returnedToUi?: boolean;
+  annotated?: {
+    commentCreated: boolean;
+    highlightApplied: boolean;
+    trackedChangeCreated: boolean;
+  };
+  events: AnalysisTraceEvent[];
+};
+
+export type AnalysisTraceArtifact = {
+  documentId: string;
+  createdAt: string;
+  request: {
+    checks: AnalyzeConsistencyRequest["checks"];
+    mode: ReviewMode;
+    useLLM: boolean;
+    useRuleEngine: boolean;
+    maxIssues: number;
+    maxAnnotatedIssues: number;
+    maxReturnedIssues: number;
+    debugTrace: boolean;
+    useCache?: boolean;
+    forceReanalyze?: boolean;
+    annotateFromCache?: boolean;
+  };
+  cache?: {
+    cacheHit: boolean;
+    cacheKey?: string;
+    cachedAt?: string;
+    forceReanalyze?: boolean;
+    skippedAnalysisBecauseCacheHit?: boolean;
+  };
+  summary: AnalysisTraceSummary;
+  stages: {
+    inputBlocks: {
+      blocks: number;
+      uniqueTemplates: number;
+      representativeChunks: number;
+    };
+    detectorOutput: {
+      ruleIssues: number;
+      dictionarySuspicionIssues: number;
+      llmIssues: number;
+      mergedIssues: number;
+      bySource: AnalysisTraceSummary["detectorBySource"];
+      needsReviewCount: number;
+      confirmedErrorCount: number;
+    };
+    postPipeline: {
+      beforeDedup: number;
+      afterDedup: number;
+      afterSelection: number;
+      duplicatesRemoved: number;
+      droppedByBudget: number;
+    };
+    rangeResolution: {
+      exact: number;
+      fuzzy: number;
+      ambiguous: number;
+      notFound: number;
+    };
+    annotation: {
+      commentCreated: number;
+      highlightApplied: number;
+      trackedChangeCreated: number;
+      annotatedInDocx: number;
+      skippedAnnotation: number;
+    };
+    responsePayload: {
+      returnedToUi: number;
+    };
+  };
+  issues: AnalysisTraceIssueRecord[];
+};
+
 export type CheckConfig = {
   checks: {
     spelling: {
@@ -308,8 +463,20 @@ export type DocumentSession = {
   updatedAt: string;
   originalFileName: string;
   originalPath: string;
+  fileHash?: string;
   reviewedPath?: string;
   finalPath?: string;
+  allIssuesPath?: string;
+  annotatedIssueIds?: string[];
+  traceEnabled?: boolean;
+  tracePath?: string;
+  analysisSummary?: AnalysisSummary;
+  traceSummary?: AnalysisTraceSummary;
+  cacheKey?: string;
+  cacheHit?: boolean;
+  cachedAt?: string;
+  analysisDurationMs?: number;
+  skippedAnalysisBecauseCacheHit?: boolean;
   issues: Issue[];
   comments: CommentRecord[];
   changes: ChangeRecord[];
@@ -330,4 +497,59 @@ export type AnalyzeConsistencyRequest = {
   useLLM: boolean;
   useRuleEngine: boolean;
   maxIssues: number;
+  maxAnnotatedIssues?: number;
+  maxReturnedIssues?: number;
+  debugTrace?: boolean;
+  useCache?: boolean;
+  forceReanalyze?: boolean;
+  annotateFromCache?: boolean;
+};
+
+export type AnalysisCacheMetadata = {
+  cacheKey: string;
+  fileHash: string;
+  originalFileName: string;
+  createdAt: string;
+  updatedAt: string;
+  totalIssues: number;
+  checks: AnalyzeConsistencyRequest["checks"];
+  mode: ReviewMode;
+  useLLM: boolean;
+  useRuleEngine: boolean;
+  checkConfigHash: string;
+  dictionaryVersion?: string;
+  dictionaryHash: string;
+  promptVersion?: string;
+  promptHash: string;
+  analysisEngineVersion: string;
+  sourceDocumentId: string;
+};
+
+export type TraceResponse = {
+  traceEnabled: boolean;
+  traceSummary?: AnalysisTraceSummary;
+  traceFileUrl?: string | null;
+  trace?: AnalysisTraceArtifact | null;
+};
+
+export type IssueListResponse = {
+  documentId: string;
+  issues: Issue[];
+  total: number;
+  page: number;
+  pageSize: number;
+  hasMore: boolean;
+  annotatedCount: number;
+  unannotatedCount: number;
+};
+
+export type AnalysisCacheInfo = {
+  cacheHit: boolean;
+  cacheKey?: string;
+  cachedAt?: string;
+  analysisDurationMs?: number;
+  skippedAnalysisBecauseCacheHit: boolean;
+  totalIssues: number;
+  annotatedIssues: number;
+  unannotatedIssues: number;
 };

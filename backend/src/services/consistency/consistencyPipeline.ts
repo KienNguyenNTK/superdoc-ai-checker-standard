@@ -1,10 +1,15 @@
 import type {
+  AnalysisSummary,
   AnalyzeConsistencyRequest,
   DocumentBlock,
   DocumentContextMemory,
   Issue,
 } from "../../domain/types.js";
-import { analyzeSpellingIssues } from "../llm/spellingAnalyzer.js";
+import {
+  analyzeSpellingIssuesDetailed,
+  buildBlockTemplateGroups,
+  chunkBlocks,
+} from "../llm/spellingAnalyzer.js";
 import { runRuleEngine } from "../rules/ruleEngine.js";
 import { mergeAndDeduplicateIssues } from "../rules/customRules.js";
 import { runEntityConsistencyChecker } from "./entityConsistencyChecker.js";
@@ -12,12 +17,20 @@ import { runFormatConsistencyChecker } from "./formatConsistencyChecker.js";
 import { runTerminologyConsistencyChecker } from "./terminologyConsistencyChecker.js";
 import { runToneConsistencyChecker } from "./toneConsistencyChecker.js";
 import { runTranslationConsistencyChecker } from "./translationConsistencyChecker.js";
+import type { AnalysisTraceCollector } from "../review/analysisTrace.js";
 
 type ConsistencyPipelineInput = {
   documentId: string;
   blocks: DocumentBlock[];
   contextMemory: DocumentContextMemory;
   request: AnalyzeConsistencyRequest;
+  traceCollector?: AnalysisTraceCollector;
+};
+
+export type ConsistencyPipelineResult = {
+  allIssues: Issue[];
+  selectedIssues: Issue[];
+  summary: AnalysisSummary;
 };
 
 export function selectIssuesForReview(issues: Issue[], maxIssues: number): Issue[] {
@@ -66,14 +79,55 @@ export async function runConsistencyPipeline({
   contextMemory,
   request,
 }: ConsistencyPipelineInput): Promise<Issue[]> {
+  const result = await runConsistencyPipelineDetailed({
+    documentId,
+    blocks,
+    contextMemory,
+    request,
+  });
+
+  return result.selectedIssues;
+}
+
+export async function runConsistencyPipelineDetailed({
+  documentId,
+  blocks,
+  contextMemory,
+  request,
+  traceCollector,
+}: ConsistencyPipelineInput): Promise<ConsistencyPipelineResult> {
   const issues: Issue[] = [];
+  const uniqueTemplates = buildBlockTemplateGroups(blocks).length;
+  const representativeChunks = chunkBlocks(
+    buildBlockTemplateGroups(blocks).map((group) => group.representative)
+  ).length;
+  traceCollector?.setInputBlocks(blocks, uniqueTemplates, representativeChunks);
+
+  let ruleEngineIssues: Issue[] = [];
+  let spellingIssues: Issue[] = [];
+  let spellingDiagnostics = {
+    heuristicIssueCount: 0,
+    dictionarySuspicionIssueCount: 0,
+    llmIssueCount: 0,
+    mergedIssueCount: 0,
+    needsReviewCount: 0,
+    bySource: {
+      rule_engine: 0,
+      llm: 0,
+      hybrid: 0,
+    },
+  };
 
   if (request.useRuleEngine) {
-    issues.push(...runRuleEngine(documentId, blocks, contextMemory));
+    ruleEngineIssues = runRuleEngine(documentId, blocks, contextMemory);
+    issues.push(...ruleEngineIssues);
   }
 
   if (request.checks.includes("spelling")) {
-    issues.push(...(await analyzeSpellingIssues(blocks, documentId)));
+    const spellingResult = await analyzeSpellingIssuesDetailed(blocks, documentId);
+    spellingIssues = spellingResult.issues;
+    spellingDiagnostics = spellingResult.diagnostics;
+    issues.push(...spellingIssues);
   }
 
   if (request.useLLM) {
@@ -94,8 +148,45 @@ export async function runConsistencyPipeline({
     }
   }
 
-  return selectIssuesForReview(
-    mergeAndDeduplicateIssues(issues),
-    request.maxIssues
-  );
+  traceCollector?.setDetectorMetrics({
+    ruleIssues: ruleEngineIssues.length + spellingDiagnostics.heuristicIssueCount,
+    dictionarySuspicionIssues: spellingDiagnostics.dictionarySuspicionIssueCount,
+    llmIssues: spellingDiagnostics.llmIssueCount,
+    mergedIssues: issues.length,
+    bySource: {
+      rule_engine: issues.filter((issue) => issue.source === "rule_engine").length,
+      llm: issues.filter((issue) => issue.source === "llm").length,
+      hybrid: issues.filter((issue) => issue.source === "hybrid").length,
+    },
+    needsReviewCount: issues.filter((issue) => issue.status === "needs_review").length,
+    confirmedErrorCount: issues.filter((issue) => issue.status !== "needs_review").length,
+  });
+  traceCollector?.registerDetectorIssues(ruleEngineIssues, "rule_engine_output");
+  traceCollector?.registerDetectorIssues(spellingIssues, "spelling_output");
+
+  const allIssues = mergeAndDeduplicateIssues(issues);
+  const selectedIssues = selectIssuesForReview(allIssues, request.maxIssues);
+  const blocksWithIssues = new Set(allIssues.map((issue) => issue.location.blockId)).size;
+  const needsReviewCount = allIssues.filter((issue) => issue.status === "needs_review").length;
+  const confirmedErrorCount = allIssues.length - needsReviewCount;
+  traceCollector?.recordPostPipeline(issues, allIssues, selectedIssues);
+
+  return {
+    allIssues,
+    selectedIssues,
+    summary: {
+      detectedIssues: allIssues.length,
+      selectedIssues: selectedIssues.length,
+      annotatedIssues: selectedIssues.length,
+      returnedIssues: allIssues.length,
+      maxIssues: request.maxIssues,
+      maxAnnotatedIssues: request.maxAnnotatedIssues ?? request.maxIssues,
+      maxReturnedIssues: request.maxReturnedIssues ?? Number.MAX_SAFE_INTEGER,
+      confirmedErrorCount,
+      needsReviewCount,
+      blocksAnalyzed: blocks.length,
+      blocksWithIssues,
+      uniqueBlockTemplates: uniqueTemplates,
+    },
+  };
 }

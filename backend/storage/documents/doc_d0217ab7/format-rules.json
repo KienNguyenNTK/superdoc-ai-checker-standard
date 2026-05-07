@@ -1,0 +1,50 @@
+[
+  {
+    "target": "heading_role:chapter_heading",
+    "ruleType": "heading_format",
+    "semanticRole": "chapter_heading",
+    "expectedFormat": {
+      "italic": false,
+      "underline": false
+    },
+    "examples": [
+      {
+        "blockId": "00000076",
+        "text": "Chương 8: Kiểm thử chính tả và ngữ cảnh"
+      },
+      {
+        "blockId": "00000085",
+        "text": "Chương 9: Kiểm thử chính tả và ngữ cảnh"
+      },
+      {
+        "blockId": "00000094",
+        "text": "Chương 10: Kiểm thử chính tả và ngữ cảnh"
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "target": "heading_role:normal_heading",
+    "ruleType": "heading_format",
+    "semanticRole": "normal_heading",
+    "expectedFormat": {
+      "italic": false,
+      "underline": false
+    },
+    "examples": [
+      {
+        "blockId": "00000070",
+        "text": "Ghi chú lỗi cố ý"
+      },
+      {
+        "blockId": "0000007F",
+        "text": "Ghi chú lỗi cố ý"
+      },
+      {
+        "blockId": "0000008E",
+        "text": "Ghi chú lỗi cố ý"
+      }
+    ],
+    "confidence": "high"
+  }
+]

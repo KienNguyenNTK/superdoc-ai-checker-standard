@@ -1,12 +1,15 @@
 import type {
   ApiHealth,
+  AnalysisTraceArtifact,
   DocumentContextMemory,
   FocusIssueResponse,
   GlossaryEntry,
+  IssueListResponse,
   PromptTemplate,
   PromptTestResult,
   ReviewMode,
   ReviewResponse,
+  TraceResponse,
   UploadedDocument,
 } from "../types";
 
@@ -62,9 +65,15 @@ export async function analyzeDocument(
     >;
     highlightColor?: string;
     maxIssues?: number;
+    maxAnnotatedIssues?: number;
+    maxReturnedIssues?: number;
     applyHighConfidence?: boolean;
     useLLM?: boolean;
     useRuleEngine?: boolean;
+    debugTrace?: boolean;
+    useCache?: boolean;
+    forceReanalyze?: boolean;
+    annotateFromCache?: boolean;
   }
 ): Promise<ReviewResponse> {
   const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/analyze-consistency`, {
@@ -95,6 +104,38 @@ export async function buildContext(documentId: string) {
 export async function getContext(documentId: string) {
   const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/context`);
   return readJson<{ context: DocumentContextMemory | null }>(response);
+}
+
+export async function getAnalysisTrace(documentId: string): Promise<TraceResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/trace`);
+  const data = await readJson<TraceResponse>(response);
+  return {
+    ...data,
+    traceFileUrl: absolutize(data.traceFileUrl),
+    trace: (data.trace ?? null) as AnalysisTraceArtifact | null,
+  };
+}
+
+export async function listIssues(
+  documentId: string,
+  query: {
+    page?: number;
+    pageSize?: number;
+    annotated?: "true" | "false";
+    status?: string;
+    source?: string;
+    type?: string;
+  } = {}
+) {
+  const params = new URLSearchParams();
+  if (query.page) params.set("page", String(query.page));
+  if (query.pageSize) params.set("pageSize", String(query.pageSize));
+  if (query.annotated) params.set("annotated", query.annotated);
+  if (query.status) params.set("status", query.status);
+  if (query.source) params.set("source", query.source);
+  if (query.type) params.set("type", query.type);
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/issues?${params.toString()}`);
+  return readJson<IssueListResponse>(response);
 }
 
 export async function updateGlossary(documentId: string, glossary: GlossaryEntry[]) {
@@ -142,6 +183,23 @@ export async function ignoreIssue(documentId: string, issueId: string) {
   };
 }
 
+export async function annotateIssues(
+  documentId: string,
+  body: { mode: ReviewMode; count?: number; all?: boolean; issueIds?: string[] }
+) {
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/issues/annotate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  const data = await readJson<ReviewResponse>(response);
+  return {
+    ...data,
+    reviewedFileUrl: absolutize(data.reviewedFileUrl),
+  };
+}
+
 export async function applyHighConfidence(documentId: string) {
   const response = await fetch(
     `${API_BASE_URL}/api/documents/${documentId}/issues/apply-high-confidence`,
@@ -158,12 +216,13 @@ export async function applyHighConfidence(documentId: string) {
 export async function runAiCommand(
   documentId: string,
   command: string,
-  mode: ReviewMode
+  mode: ReviewMode,
+  debugTrace?: boolean
 ) {
   const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/ai-command`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ command, mode }),
+    body: JSON.stringify({ command, mode, debugTrace }),
   });
 
   const data = await readJson<ReviewResponse>(response);
@@ -173,10 +232,14 @@ export async function runAiCommand(
   };
 }
 
-export async function runAgent(documentId: string, agentId: string) {
+export async function runAgent(documentId: string, agentId: string, debugTrace?: boolean) {
   const response = await fetch(
     `${API_BASE_URL}/api/documents/${documentId}/agents/${agentId}/run`,
-    { method: "POST" }
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ debugTrace }),
+    }
   );
 
   const data = await readJson<ReviewResponse>(response);

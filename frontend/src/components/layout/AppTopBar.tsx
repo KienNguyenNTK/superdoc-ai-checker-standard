@@ -10,7 +10,7 @@ import {
   Sun,
 } from "lucide-react";
 import { vi } from "../../i18n";
-import type { AgentOption, DocumentMode, UploadedDocument } from "../../types";
+import type { AgentOption, AnalysisCacheInfo, AnalysisTraceSummary, DocumentMode, UploadedDocument } from "../../types";
 import { AgentsDropdown } from "../agents/AgentsDropdown";
 
 type Props = {
@@ -25,14 +25,23 @@ type Props = {
   issueCount: number;
   reviewPanelOpen: boolean;
   analysisDurationLabel?: string | null;
+  traceSummary?: AnalysisTraceSummary | null;
+  traceInsightLabel?: string | null;
+  cacheInfo?: AnalysisCacheInfo | null;
   agentOptions: AgentOption[];
   currentAgentId: string;
+  debugTraceEnabled: boolean;
+  traceAvailable: boolean;
   onBuildContext: () => void;
+  onOpenTracePanel: () => void;
+  onToggleDebugTrace: () => void;
   onOpenContextPanel: () => void;
   onOpenPromptPanel: () => void;
   onModeChange: (mode: DocumentMode) => void;
   onUpload: (file: File) => void;
   onAnalyze: () => void;
+  onAnalyzeWithCache: () => void;
+  onForceReanalyze: () => void;
   onApplyHighConfidence: () => void;
   onCopyShareLink: () => void;
   onToggleTheme: () => void;
@@ -56,14 +65,23 @@ export function AppTopBar({
   issueCount,
   reviewPanelOpen,
   analysisDurationLabel,
+  traceSummary,
+  traceInsightLabel,
+  cacheInfo,
   agentOptions,
   currentAgentId,
+  debugTraceEnabled,
+  traceAvailable,
   onBuildContext,
+  onOpenTracePanel,
+  onToggleDebugTrace,
   onOpenContextPanel,
   onOpenPromptPanel,
   onModeChange,
   onUpload,
   onAnalyze,
+  onAnalyzeWithCache,
+  onForceReanalyze,
   onApplyHighConfidence,
   onCopyShareLink,
   onToggleTheme,
@@ -122,6 +140,21 @@ export function AppTopBar({
               aria-live="polite"
             >
               {isAnalyzing ? vi.common.analysisRunningTime(analysisDurationLabel) : vi.common.analysisLastTime(analysisDurationLabel)}
+            </span>
+          ) : null}
+          {!isAnalyzing && traceSummary ? (
+            <button
+              type="button"
+              className={`analysisTracePill ${traceInsightLabel?.includes("chưa annotate") || traceInsightLabel?.includes("không") ? "warning" : ""}`}
+              onClick={onOpenTracePanel}
+              disabled={!traceAvailable}
+            >
+              {traceInsightLabel ?? `Trace: detector ${traceSummary.detectedByDetector}, UI ${traceSummary.returnedToUi}`}
+            </button>
+          ) : null}
+          {!isAnalyzing && cacheInfo?.cacheHit ? (
+            <span className="analysisCachePill" title={cacheInfo.cacheKey}>
+              Cache HIT
             </span>
           ) : null}
         </div>
@@ -207,6 +240,24 @@ export function AppTopBar({
               type="button"
               className="ghostBtn moreMenuFullWidth"
               disabled={!currentDocument || loading}
+              onClick={onAnalyzeWithCache}
+            >
+              Dùng cache
+            </button>
+
+            <button
+              type="button"
+              className="ghostBtn moreMenuFullWidth"
+              disabled={!currentDocument || loading}
+              onClick={onForceReanalyze}
+            >
+              Phân tích lại từ đầu
+            </button>
+
+            <button
+              type="button"
+              className="ghostBtn moreMenuFullWidth"
+              disabled={!currentDocument || loading}
               onClick={onApplyHighConfidence}
             >
               {vi.common.applyHighConfidence}
@@ -219,6 +270,19 @@ export function AppTopBar({
               onClick={onBuildContext}
             >
               {vi.common.buildContext}
+            </button>
+
+            <button type="button" className="ghostBtn moreMenuFullWidth" onClick={onToggleDebugTrace}>
+              {debugTraceEnabled ? vi.common.debugTraceOn : vi.common.debugTraceOff}
+            </button>
+
+            <button
+              type="button"
+              className="ghostBtn moreMenuFullWidth"
+              disabled={!traceAvailable}
+              onClick={onOpenTracePanel}
+            >
+              {vi.common.openDebugTrace}
             </button>
 
             <div className="moreMenuSection">

@@ -25,9 +25,11 @@ type Props = {
   documentVersion: number;
   applyingIssueId?: string | null;
   issues?: Issue[];
+  totalIssueCount?: number;
   onFocusIssue?: (issue: Issue) => void | Promise<void>;
   onApplyIssue?: (issue: Issue) => void | Promise<void>;
   onIgnoreIssue?: (issue: Issue) => void | Promise<void>;
+  onOpenAllIssues?: () => void;
 };
 
 function resolveRole(mode: DocumentMode) {
@@ -46,9 +48,11 @@ export const SuperDocWorkspace = forwardRef<SuperDocWorkspaceHandle, Props>(
       documentVersion,
       applyingIssueId,
       issues = [],
+      totalIssueCount,
       onFocusIssue,
       onApplyIssue,
       onIgnoreIssue,
+      onOpenAllIssues,
     },
     ref
   ) {
@@ -63,9 +67,11 @@ export const SuperDocWorkspace = forwardRef<SuperDocWorkspaceHandle, Props>(
           documentVersion={documentVersion}
           applyingIssueId={applyingIssueId}
           issues={issues}
+          totalIssueCount={totalIssueCount}
           onFocusIssue={onFocusIssue}
           onApplyIssue={onApplyIssue}
           onIgnoreIssue={onIgnoreIssue}
+          onOpenAllIssues={onOpenAllIssues}
         />
       </SuperDocUIProvider>
     );
@@ -81,9 +87,11 @@ const WorkspaceInner = forwardRef<SuperDocWorkspaceHandle, Props>(function Works
     documentVersion,
     applyingIssueId,
     issues = [],
+    totalIssueCount,
     onFocusIssue,
     onApplyIssue,
     onIgnoreIssue,
+    onOpenAllIssues,
   },
   ref
 ) {
@@ -373,7 +381,19 @@ const WorkspaceInner = forwardRef<SuperDocWorkspaceHandle, Props>(function Works
               className="issueCommentsFallback"
               aria-label={vi.review.aiIssuesRailTitle}
             >
-              <div className="issueCommentsFallbackHeader">{vi.review.aiIssuesRailTitle}</div>
+              <div className="issueCommentsFallbackHeader">
+                <div>
+                  {vi.review.aiIssuesRailTitle}
+                  {typeof totalIssueCount === "number" ? (
+                    <span>{issues.length.toLocaleString("vi-VN")} / {totalIssueCount.toLocaleString("vi-VN")}</span>
+                  ) : null}
+                </div>
+                {onOpenAllIssues && typeof totalIssueCount === "number" && totalIssueCount > issues.length ? (
+                  <button type="button" className="miniBtn" onClick={onOpenAllIssues}>
+                    Xem tất cả
+                  </button>
+                ) : null}
+              </div>
               {issues.map((issue) => (
                 <article
                   className={`reviewCard issue-${issue.status} issueCommentsFallbackCard`}

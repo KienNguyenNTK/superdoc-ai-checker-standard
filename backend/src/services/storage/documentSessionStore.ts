@@ -6,6 +6,7 @@ type CreateDocumentSessionInput = {
   documentId: string;
   originalFileName: string;
   originalPath: string;
+  fileHash?: string;
 };
 
 function nowIso() {
@@ -33,7 +34,9 @@ export class FileDocumentSessionStore {
       updatedAt: nowIso(),
       originalFileName: input.originalFileName,
       originalPath: input.originalPath,
+      fileHash: input.fileHash,
       issues: [],
+      annotatedIssueIds: [],
       comments: [],
       changes: [],
       history: [createHistoryRecord(`Imported DOCX ${input.originalFileName}`)],

@@ -1,0 +1,22 @@
+[
+  {
+    "term": "người dùng",
+    "alternatives": [],
+    "firstSeenBlockId": "00000004",
+    "occurrences": [
+      {
+        "blockId": "00000004",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000005",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000028",
+        "text": "người dùng"
+      }
+    ],
+    "confidence": "medium"
+  }
+]

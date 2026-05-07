@@ -25,6 +25,7 @@ export const LlmIssueSchema = z.object({
   confidence: z.enum(["high", "medium", "low"]),
   severity: z.enum(["info", "warning", "error"]).default("warning"),
   source: z.enum(["rule_engine", "llm", "hybrid"]).default("llm"),
+  status: z.enum(["pending", "needs_review"]).optional(),
   startOffset: z.number().int().nonnegative().optional(),
   endOffset: z.number().int().nonnegative().optional(),
   beforeContext: z.string().optional(),

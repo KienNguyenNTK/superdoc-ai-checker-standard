@@ -49,6 +49,9 @@ export const vi = {
     contextBuilt: "Đã xây dựng bộ nhớ ngữ cảnh",
     promptSettings: "Thiết lập prompt AI",
     contextMemory: "Bộ nhớ tài liệu",
+    debugTraceOn: "Trace debug: Luôn bật",
+    debugTraceOff: "Trace debug: Luôn bật",
+    openDebugTrace: "Mở debug trace",
   },
   export: {
     original: "Tải tệp gốc original.docx",
@@ -67,7 +70,7 @@ export const vi = {
   },
   review: {
     eyebrow: "RÀ SOÁT",
-    aiIssuesRailTitle: "Lỗi do AI phát hiện",
+    aiIssuesRailTitle: "Lỗi đã annotate trong DOCX",
     tabs: {
       issues: "Vấn đề",
       comments: "Bình luận",
@@ -76,6 +79,9 @@ export const vi = {
     },
     filters: {
       all: "Tất cả",
+      annotated: "Đã annotate",
+      unannotated: "Chưa annotate",
+      needs_review: "Cần rà soát",
       spelling: "Chính tả",
       format: "Định dạng",
       terminology: "Thuật ngữ",

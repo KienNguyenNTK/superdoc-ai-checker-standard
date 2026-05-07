@@ -170,6 +170,38 @@ a {
   color: var(--accent-strong);
 }
 
+.analysisTracePill {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+  background: color-mix(in srgb, var(--accent-soft) 40%, var(--panel) 60%);
+  color: var(--accent-strong);
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.analysisCachePill {
+  border: 1px solid color-mix(in srgb, var(--success) 35%, var(--line));
+  background: color-mix(in srgb, var(--success) 12%, var(--panel));
+  color: var(--success);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.analysisTracePill.warning {
+  border-color: color-mix(in srgb, var(--danger) 28%, var(--line));
+  background: color-mix(in srgb, var(--danger) 10%, var(--panel) 90%);
+  color: var(--danger);
+}
+
 .workspaceCard h1 {
   margin: 0;
   font-family: var(--font-sans);
@@ -847,6 +879,18 @@ a {
   background: var(--panel-soft);
 }
 
+.cardStatus-annotated {
+  color: var(--success);
+  border-color: color-mix(in srgb, var(--success) 32%, var(--line));
+  background: color-mix(in srgb, var(--success) 12%, var(--panel) 88%);
+}
+
+.cardStatus-unannotated {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 28%, var(--line));
+  background: color-mix(in srgb, var(--danger) 8%, var(--panel) 92%);
+}
+
 .cardActions {
   margin-top: 12px;
 }
@@ -926,6 +970,278 @@ a {
   word-break: break-word;
 }
 
+.reviewSummaryNotice {
+  display: grid;
+  gap: 6px;
+  padding: 14px 15px;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+  background: color-mix(in srgb, var(--accent-soft) 50%, var(--panel) 50%);
+  color: var(--ink);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+}
+
+.reviewSummaryNotice strong {
+  font-size: 14px;
+}
+
+.reviewSummaryNotice span {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.reviewSummaryNotice-compact {
+  border-style: solid;
+}
+
+.reviewSummaryStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.reviewSummaryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.reviewPager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+}
+
+.reviewSummaryStats span {
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--line) 82%, white 18%);
+  background: color-mix(in srgb, var(--panel) 75%, white 25%);
+  color: var(--ink);
+}
+
+.tracePanel {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 0;
+}
+
+.tracePanelHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 18px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tracePanelTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tracePanelTitleRow h2 {
+  margin: 6px 0 0;
+}
+
+.traceBadge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--success) 14%, var(--panel) 86%);
+  color: var(--success);
+}
+
+.traceBadge.muted {
+  background: color-mix(in srgb, var(--line) 70%, var(--panel) 30%);
+  color: var(--muted);
+}
+
+.tracePanelHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tracePanelBody {
+  overflow: auto;
+  padding: 14px 18px 22px;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.traceDiagnosis {
+  display: grid;
+  gap: 10px;
+  padding: 14px 15px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 86%, white 14%) 0%, var(--panel-soft) 100%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.traceDiagnosis--warning {
+  border-color: color-mix(in srgb, var(--danger) 28%, var(--line));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--danger) 8%, var(--panel) 92%) 0%, var(--panel-soft) 100%);
+}
+
+.traceDiagnosis--info {
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--line));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 45%, var(--panel) 55%) 0%, var(--panel-soft) 100%);
+}
+
+.traceDiagnosisHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.traceDiagnosisHeader strong {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.traceDiagnosis p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.traceFlow {
+  display: grid;
+  gap: 10px;
+}
+
+.traceStageCard,
+.traceMetric,
+.traceClientEvent {
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 88%, white 12%) 0%, var(--panel-soft) 100%);
+}
+
+.traceStageCard {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.traceStageCard strong,
+.traceMetric strong,
+.traceClientEvent strong {
+  color: var(--ink);
+}
+
+.traceStageCard span {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.traceStageCard small,
+.traceMetric span,
+.traceClientEvent span {
+  color: var(--muted);
+}
+
+.traceSummaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.traceSectionCard {
+  display: grid;
+  gap: 12px;
+  padding: 14px 15px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 88%, white 12%) 0%, var(--panel-soft) 100%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.traceSectionTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.traceMetric {
+  display: grid;
+  gap: 6px;
+}
+
+.traceMetric strong {
+  font-size: 18px;
+}
+
+.traceActionsRow,
+.traceFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.traceTagGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.traceTagGroup {
+  display: grid;
+  gap: 8px;
+}
+
+.traceTagGroup strong {
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.traceTagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.traceTag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 80%, white 20%);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.traceIssueList,
+.traceClientEvents {
+  display: grid;
+  gap: 10px;
+}
+
+.traceClientEvents h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
 .builtinCommentsHost {
   min-height: 0;
   border-left: 1px solid var(--line);
@@ -970,6 +1286,16 @@ a {
   color: var(--muted);
   font-weight: 600;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.issueCommentsFallbackHeader span {
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
 }
 
 .issueCommentsFallbackCard h3 {
@@ -1045,10 +1371,18 @@ a {
   align-items: stretch;
 }
 
+.reviewSelectRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0 18px 14px;
+}
+
 .filterChip {
   width: 100%;
   min-height: 58px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--line);
@@ -1068,6 +1402,11 @@ a {
     border-color 0.16s ease,
     color 0.16s ease,
     box-shadow 0.16s ease;
+}
+
+.filterChip strong {
+  font-size: 14px;
+  line-height: 1.2;
 }
 
 .filterChip:hover {
@@ -1202,6 +1541,14 @@ a {
 
   .filterStrip {
     grid-template-columns: 1fr;
+  }
+
+  .reviewSelectRow {
+    grid-template-columns: 1fr;
+    margin-left: 14px;
+    margin-right: 14px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .tabButton,

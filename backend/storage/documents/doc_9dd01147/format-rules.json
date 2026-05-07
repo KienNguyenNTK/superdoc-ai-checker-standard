@@ -1,0 +1,43 @@
+[
+  {
+    "target": "heading_role:section_heading_level_1",
+    "ruleType": "heading_format",
+    "semanticRole": "section_heading_level_1",
+    "expectedFormat": {
+      "italic": false,
+      "underline": false,
+      "fontFamily": "calibri"
+    },
+    "examples": [
+      {
+        "blockId": "00000003",
+        "text": "1. Giới thiệu"
+      },
+      {
+        "blockId": "00000007",
+        "text": "2. Danh sách yêu cầu kiểm thử"
+      },
+      {
+        "blockId": "0000000D",
+        "text": "3. Bảng dữ liệu mẫu"
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "target": "STT",
+    "ruleType": "term_format",
+    "expectedFormat": {
+      "bold": true,
+      "italic": false,
+      "underline": false
+    },
+    "examples": [
+      {
+        "blockId": "0000000F",
+        "text": "STT"
+      }
+    ],
+    "confidence": "high"
+  }
+]

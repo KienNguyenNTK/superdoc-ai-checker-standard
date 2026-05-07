@@ -1,0 +1,693 @@
+{
+  "documentId": "doc_7d1659c9",
+  "glossary": [
+    {
+      "term": "người dùng",
+      "alternatives": [],
+      "firstSeenBlockId": "00000004",
+      "occurrences": [
+        {
+          "blockId": "00000004",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000012",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000060",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000006E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000007C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000008A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000098",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000000B2",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000000C0",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000010E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000011C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000012A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000138",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000146",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000160",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000016E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000001BC",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000001CA",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000001D8",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000001E6",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000001F4",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000020E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000021C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000026A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000278",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000286",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000294",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000002A2",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000002BC",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000002CA",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000318",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000326",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000334",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000342",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000350",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000036A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000378",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000003C6",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000003D4",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000003E2",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000003F0",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000003FE",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000418",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000426",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000474",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000482",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000490",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000049E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000004AC",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000004C6",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000004D4",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000522",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000530",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000053E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000054C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000055A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000574",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000582",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000005D0",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000005DE",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000005EC",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000005FA",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000608",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000622",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000630",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000067E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000068C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000069A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000006A8",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000006B6",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000006D0",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000006DE",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000072C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000073A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000748",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000756",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000764",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000077E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000078C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000007DA",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000007E8",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000007F6",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000804",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000812",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000082C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000083A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000888",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000896",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000008A4",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000008B2",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000008C0",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000008DA",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000008E8",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000936",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000944",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000952",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000960",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000096E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000988",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000996",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000009E4",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "000009F2",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000A00",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000A0E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000A1C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000A36",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000A44",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000A92",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000AA0",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000AAE",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000ABC",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000ACA",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000AE4",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000AF2",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000B40",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000B4E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000B5C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000B6A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000B78",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000B92",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000BA0",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000BEE",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000BFC",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000C0A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000C18",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000C26",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000C40",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000C4E",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000C9C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000CAA",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000CB8",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000CC6",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000CD4",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000CEE",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000CFC",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000D4A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000D58",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000D66",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000D74",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000D82",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000D9C",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000DAA",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000DF8",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000E06",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000E14",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000E22",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000E30",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000E4A",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000E58",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000EA6",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000EB4",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000EC2",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000ED0",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000EDE",
+          "text": "Người dùng"
+        }
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "formatRules": [
+    {
+      "target": "heading_role:chapter_heading",
+      "ruleType": "heading_format",
+      "semanticRole": "chapter_heading",
+      "expectedFormat": {
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "00000076",
+          "text": "Chương 8: Kiểm thử chính tả và ngữ cảnh"
+        },
+        {
+          "blockId": "00000085",
+          "text": "Chương 9: Kiểm thử chính tả và ngữ cảnh"
+        },
+        {
+          "blockId": "00000094",
+          "text": "Chương 10: Kiểm thử chính tả và ngữ cảnh"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "target": "heading_role:normal_heading",
+      "ruleType": "heading_format",
+      "semanticRole": "normal_heading",
+      "expectedFormat": {
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "00000070",
+          "text": "Ghi chú lỗi cố ý"
+        },
+        {
+          "blockId": "0000007F",
+          "text": "Ghi chú lỗi cố ý"
+        },
+        {
+          "blockId": "0000008E",
+          "text": "Ghi chú lỗi cố ý"
+        }
+      ],
+      "confidence": "high"
+    }
+  ],
+  "toneRules": [
+    {
+      "rule": "Ưu tiên văn phong trang trọng và xưng hô nhất quán theo tài liệu.",
+      "examples": [
+        "1.2. Người dùng có thể tải file docx lên, sau đó chương trinh phân tich và đưa ra gợi í sửa.",
+        "2.1. Người dùng có thể tải file docx lên, sau đó chương trinh phân tich và đưa ra gợi í sửa.",
+        "4.7. Chúng tôi luôn hổ trợ khách hàng trong quá trình xữ lý dử liệu và kiễm tra tài liêu.",
+        "5.6. Chúng tôi luôn hổ trợ khách hàng trong quá trình xữ lý dử liệu và kiễm tra tài liêu.",
+        "6.5. Chúng tôi luôn hổ trợ khách hàng trong quá trình xữ lý dử liệu và kiễm tra tài liêu."
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "entityRules": []
+}

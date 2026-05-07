@@ -1,4 +1,4 @@
-import { useDeferredValue } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { ClipboardList, X } from "lucide-react";
 import {
   labelChangeStatus,
@@ -11,6 +11,8 @@ import {
   vi,
 } from "../../i18n";
 import type {
+  AnalysisSummary,
+  AnalysisCacheInfo,
   ChangeRecord,
   CommentRecord,
   HistoryRecord,
@@ -24,7 +26,10 @@ type Props = {
   activeFilter: IssueFilter;
   hasReviewResult: boolean;
   applyingIssueId?: string | null;
+  analysisSummary?: AnalysisSummary | null;
+  cacheInfo?: AnalysisCacheInfo | null;
   issues: Issue[];
+  annotatedIssues?: Issue[];
   comments: CommentRecord[];
   changes: ChangeRecord[];
   history: HistoryRecord[];
@@ -33,6 +38,10 @@ type Props = {
   onFocusIssue: (issue: Issue) => void;
   onApplyIssue: (issue: Issue) => void;
   onIgnoreIssue: (issue: Issue) => void;
+  onAnnotateIssue?: (issue: Issue) => void;
+  onAnnotateMore?: () => void;
+  onAnnotateAll?: () => void;
+  onExportAllIssues?: () => void;
   onClose?: () => void;
 };
 
@@ -51,6 +60,9 @@ function formatTime(value: string) {
 
 function matchesFilter(issue: Issue, filter: IssueFilter) {
   if (filter === "all") return true;
+  if (filter === "annotated") return isAnnotatedIssue(issue);
+  if (filter === "unannotated") return !isAnnotatedIssue(issue);
+  if (filter === "needs_review") return issue.status === "needs_review";
   if (filter === "spelling") {
     return ["spelling", "accent", "typo", "grammar", "style"].includes(issue.type);
   }
@@ -65,12 +77,44 @@ function matchesFilter(issue: Issue, filter: IssueFilter) {
   return true;
 }
 
+function isAnnotatedIssue(issue: Issue) {
+  return Boolean(
+    issue.location.commentId ||
+      issue.location.changeId ||
+      ["commented", "highlighted", "tracked"].includes(issue.status)
+  );
+}
+
+function getAnnotationLabel(issue: Issue) {
+  if (issue.location.changeId || issue.status === "tracked") return "Đã tạo tracked change";
+  if (issue.location.commentId || issue.status === "commented") return "Đã bình luận";
+  if (issue.status === "highlighted") return "Đã highlight";
+  if (issue.status === "applied") return "Đã áp dụng";
+  if (issue.status === "ignored") return "Đã bỏ qua";
+  return "Chưa annotate";
+}
+
+function countFilterIssues(issues: Issue[], filter: IssueFilter) {
+  return issues.filter((issue) => matchesFilter(issue, filter)).length;
+}
+
+function countBy<T extends string>(issues: Issue[], selector: (issue: Issue) => T) {
+  return issues.reduce<Record<string, number>>((acc, issue) => {
+    const key = selector(issue);
+    acc[key] = (acc[key] ?? 0) + 1;
+    return acc;
+  }, {});
+}
+
 export function ReviewSidebar({
   activeTab,
   activeFilter,
   hasReviewResult,
   applyingIssueId,
+  analysisSummary,
+  cacheInfo,
   issues,
+  annotatedIssues = [],
   comments,
   changes,
   history,
@@ -79,13 +123,58 @@ export function ReviewSidebar({
   onFocusIssue,
   onApplyIssue,
   onIgnoreIssue,
+  onAnnotateIssue,
+  onAnnotateMore,
+  onAnnotateAll,
+  onExportAllIssues,
   onClose,
 }: Props) {
   const deferredIssues = useDeferredValue(issues);
-  const filteredIssues = deferredIssues.filter((issue) => matchesFilter(issue, activeFilter));
+  const [sourceFilter, setSourceFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [page, setPage] = useState(1);
+  const pageSize = 200;
+  const filteredIssues = useMemo(
+    () =>
+      deferredIssues.filter((issue) => {
+        if (!matchesFilter(issue, activeFilter)) return false;
+        if (sourceFilter !== "all" && issue.source !== sourceFilter) return false;
+        if (statusFilter !== "all" && issue.status !== statusFilter) return false;
+        if (typeFilter !== "all" && issue.type !== typeFilter) return false;
+        return true;
+      }),
+    [activeFilter, deferredIssues, sourceFilter, statusFilter, typeFilter]
+  );
+  const pagedIssues = useMemo(
+    () => filteredIssues.slice((page - 1) * pageSize, page * pageSize),
+    [filteredIssues, page]
+  );
+  const maxPage = Math.max(1, Math.ceil(filteredIssues.length / pageSize));
+  const uniqueSources = [...new Set(issues.map((issue) => issue.source))];
+  const uniqueStatuses = [...new Set(issues.map((issue) => issue.status))];
+  const uniqueTypes = [...new Set(issues.map((issue) => issue.type))];
+  const sourceCounts = useMemo(() => countBy(issues, (issue) => issue.source), [issues]);
+  const statusCounts = useMemo(() => countBy(issues, (issue) => issue.status), [issues]);
+  const typeCounts = useMemo(() => countBy(issues, (issue) => issue.type), [issues]);
+  const filterCounts = useMemo(
+    () =>
+      Object.fromEntries(
+        (["all", "annotated", "unannotated", "needs_review", "spelling", "format", "terminology", "translation", "tone", "entity", "date_number"] as IssueFilter[])
+          .map((filter) => [filter, countFilterIssues(issues, filter)])
+      ) as Record<IssueFilter, number>,
+    [issues]
+  );
   const tabTitles = vi.review.tabs;
   const showNoIssuesOverall = issues.length === 0 && hasReviewResult;
   const showNoIssuesForFilter = issues.length > 0 && filteredIssues.length === 0;
+  const totalIssueCount = analysisSummary?.detectedIssues ?? issues.length;
+  const annotatedCount = analysisSummary?.annotatedIssues ?? annotatedIssues.length;
+  const unannotatedCount = Math.max(totalIssueCount - annotatedCount, 0);
+
+  useEffect(() => {
+    setPage(1);
+  }, [activeFilter, sourceFilter, statusFilter, typeFilter, issues.length]);
 
   return (
     <aside className="reviewSidebar">
@@ -94,8 +183,8 @@ export function ReviewSidebar({
           <div className="eyebrow">{vi.review.eyebrow}</div>
           <div className="reviewSidebarTitleRow">
             <h2>{tabTitles[activeTab]}</h2>
-            <span className="issueCountBadge" aria-label={vi.review.issueCountAria(issues.length)}>
-              {issues.length}
+            <span className="issueCountBadge" aria-label={vi.review.issueCountAria(totalIssueCount)}>
+              {totalIssueCount}
             </span>
           </div>
         </div>
@@ -131,24 +220,85 @@ export function ReviewSidebar({
       </div>
 
       {activeTab === "issues" ? (
+        <>
         <div className="filterStrip">
           {(
-            ["all", "spelling", "format", "terminology", "translation", "tone", "entity", "date_number"] as IssueFilter[]
+            ["all", "annotated", "unannotated", "needs_review", "spelling", "format", "terminology", "translation", "tone", "entity", "date_number"] as IssueFilter[]
           ).map((filter) => (
             <button
               key={filter}
               className={`filterChip ${activeFilter === filter ? "active" : ""}`}
               onClick={() => onFilterChange(filter)}
             >
-              {vi.review.filters[filter]}
+              <span>{vi.review.filters[filter]}</span>
+              <strong>{filterCounts[filter].toLocaleString("vi-VN")}</strong>
             </button>
           ))}
         </div>
+        <div className="reviewSelectRow">
+          <select className="topSelect" value={sourceFilter} onChange={(event) => setSourceFilter(event.target.value)}>
+            <option value="all">Mọi nguồn</option>
+            {uniqueSources.map((source) => (
+              <option key={source} value={source}>{source} ({(sourceCounts[source] ?? 0).toLocaleString("vi-VN")})</option>
+            ))}
+          </select>
+          <select className="topSelect" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
+            <option value="all">Mọi trạng thái</option>
+            {uniqueStatuses.map((status) => (
+              <option key={status} value={status}>{status} ({(statusCounts[status] ?? 0).toLocaleString("vi-VN")})</option>
+            ))}
+          </select>
+          <select className="topSelect" value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)}>
+            <option value="all">Mọi loại lỗi</option>
+            {uniqueTypes.map((type) => (
+              <option key={type} value={type}>{type} ({(typeCounts[type] ?? 0).toLocaleString("vi-VN")})</option>
+            ))}
+          </select>
+        </div>
+        </>
       ) : null}
 
       <div className="reviewPane">
         {activeTab === "issues" && (
           <div className="reviewList">
+            {analysisSummary && unannotatedCount > 0 ? (
+              <div className="reviewSummaryNotice">
+                <strong>
+                  Phát hiện {analysisSummary.detectedIssues.toLocaleString("vi-VN")} lỗi
+                </strong>
+                <div className="reviewSummaryStats">
+                  <span>Chắc chắn: {analysisSummary.confirmedErrorCount.toLocaleString("vi-VN")}</span>
+                  <span>Cần rà soát: {analysisSummary.needsReviewCount.toLocaleString("vi-VN")}</span>
+                  <span>Đã annotate: {annotatedCount.toLocaleString("vi-VN")}</span>
+                  <span>Chưa annotate: {unannotatedCount.toLocaleString("vi-VN")}</span>
+                  <span>Đang xem: {filteredIssues.length.toLocaleString("vi-VN")}</span>
+                </div>
+                <span>
+                  Toàn bộ lỗi đã được giữ trong danh sách. Một phần chưa hiển thị comment/highlight trong DOCX vì đang giới hạn annotate.
+                </span>
+                {cacheInfo?.cacheHit ? (
+                  <span>
+                    Đã dùng kết quả phân tích đã lưu cho file này. Cache key: {cacheInfo.cacheKey?.slice(0, 12)}...
+                  </span>
+                ) : null}
+                <div className="reviewSummaryActions">
+                  {onAnnotateMore ? <button type="button" className="miniBtn accent" onClick={onAnnotateMore}>Annotate thêm 500 lỗi</button> : null}
+                  {onAnnotateAll ? <button type="button" className="miniBtn" onClick={onAnnotateAll}>Annotate tất cả lỗi</button> : null}
+                  {onExportAllIssues ? <button type="button" className="miniBtn ghost" onClick={onExportAllIssues}>Export all issues JSON</button> : null}
+                </div>
+              </div>
+            ) : null}
+            {analysisSummary && unannotatedCount === 0 ? (
+              <div className="reviewSummaryNotice reviewSummaryNotice-compact">
+                <strong>Tổng kết rà soát</strong>
+                <div className="reviewSummaryStats">
+                  <span>Chắc chắn: {analysisSummary.confirmedErrorCount.toLocaleString("vi-VN")}</span>
+                  <span>Cần rà soát: {analysisSummary.needsReviewCount.toLocaleString("vi-VN")}</span>
+                  <span>Đã annotate: {annotatedCount.toLocaleString("vi-VN")}</span>
+                  <span>Đang xem: {filteredIssues.length.toLocaleString("vi-VN")}</span>
+                </div>
+              </div>
+            ) : null}
             {filteredIssues.length === 0 ? (
               <div className="reviewEmpty">
                 <div className="reviewEmptyIcon">
@@ -179,12 +329,15 @@ export function ReviewSidebar({
                 )}
               </div>
             ) : (
-              filteredIssues.map((issue) => (
+              pagedIssues.map((issue) => (
                 <article className={`reviewCard issue-${issue.status}`} key={issue.id}>
                   <div className="cardMeta">
                     <span>{labelIssueType(issue.type)}</span>
                     <span>{labelIssueConfidence(issue.confidence)}</span>
                     <span>{labelIssueSeverity(issue.severity)}</span>
+                    <span className={`cardStatus ${isAnnotatedIssue(issue) ? "cardStatus-annotated" : "cardStatus-unannotated"}`}>
+                      {getAnnotationLabel(issue)}
+                    </span>
                     <span className={`cardStatus cardStatus-${issue.status}`}>
                       {labelIssueStatus(issue.status)}
                     </span>
@@ -201,17 +354,27 @@ export function ReviewSidebar({
                     <button className="miniBtn" onClick={() => onFocusIssue(issue)}>
                       {vi.review.goToIssue}
                     </button>
-                    <button
-                      className="miniBtn accent"
-                      onClick={() => onApplyIssue(issue)}
-                      disabled={applyingIssueId === issue.id || issue.status === "applied"}
-                    >
-                      {applyingIssueId === issue.id
-                        ? vi.review.applying
-                        : issue.status === "applied"
-                          ? vi.review.applied
-                          : vi.review.apply}
-                    </button>
+                    {isAnnotatedIssue(issue) ? (
+                      <button
+                        className="miniBtn accent"
+                        onClick={() => onApplyIssue(issue)}
+                        disabled={applyingIssueId === issue.id || issue.status === "applied"}
+                      >
+                        {applyingIssueId === issue.id
+                          ? vi.review.applying
+                          : issue.status === "applied"
+                            ? vi.review.applied
+                            : vi.review.apply}
+                      </button>
+                    ) : onAnnotateIssue && !["applied", "ignored"].includes(issue.status) ? (
+                      <button
+                        className="miniBtn accent"
+                        onClick={() => onAnnotateIssue(issue)}
+                        disabled={applyingIssueId === issue.id}
+                      >
+                        {applyingIssueId === issue.id ? "Đang annotate..." : "Annotate lỗi này"}
+                      </button>
+                    ) : null}
                     <button
                       className="miniBtn ghost"
                       onClick={() => onIgnoreIssue(issue)}
@@ -223,6 +386,17 @@ export function ReviewSidebar({
                 </article>
               ))
             )}
+            {filteredIssues.length > pageSize ? (
+              <div className="reviewPager">
+                <button type="button" className="miniBtn" disabled={page <= 1} onClick={() => setPage((current) => Math.max(1, current - 1))}>
+                  Trang trước
+                </button>
+                <span className="mutedText">Trang {page} / {maxPage} • {filteredIssues.length.toLocaleString("vi-VN")} lỗi</span>
+                <button type="button" className="miniBtn" disabled={page >= maxPage} onClick={() => setPage((current) => Math.min(maxPage, current + 1))}>
+                  Trang sau
+                </button>
+              </div>
+            ) : null}
           </div>
         )}
 

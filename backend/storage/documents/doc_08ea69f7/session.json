@@ -1,0 +1,26 @@
+{
+  "documentId": "doc_08ea69f7",
+  "createdAt": "2026-05-07T09:13:43.924Z",
+  "updatedAt": "2026-05-07T09:14:29.861Z",
+  "originalFileName": "file-test-sai-chinh-ta-220-trang.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_08ea69f7\\original.docx",
+  "fileHash": "1adbbca034e5bfff12709f40d815f79cecc4c2ae77c423f2545f8b966955b270",
+  "issues": [],
+  "annotatedIssueIds": [],
+  "comments": [],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1778145223924",
+      "type": "imported",
+      "message": "Imported DOCX file-test-sai-chinh-ta-220-trang.docx",
+      "createdAt": "2026-05-07T09:13:43.924Z"
+    },
+    {
+      "id": "hist_1778145269861_8jg5r",
+      "type": "context_built",
+      "message": "Built context memory with 1 glossary terms.",
+      "createdAt": "2026-05-07T09:14:29.861Z"
+    }
+  ]
+}

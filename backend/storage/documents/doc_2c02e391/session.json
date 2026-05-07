@@ -1,0 +1,19 @@
+{
+  "documentId": "doc_2c02e391",
+  "createdAt": "2026-05-07T08:18:05.541Z",
+  "updatedAt": "2026-05-07T08:18:05.542Z",
+  "originalFileName": "file-test-sai-chinh-ta-220-trang.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_2c02e391\\original.docx",
+  "issues": [],
+  "annotatedIssueIds": [],
+  "comments": [],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1778141885541",
+      "type": "imported",
+      "message": "Imported DOCX file-test-sai-chinh-ta-220-trang.docx",
+      "createdAt": "2026-05-07T08:18:05.541Z"
+    }
+  ]
+}
