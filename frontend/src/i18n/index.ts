@@ -4,6 +4,9 @@ export {
   labelCommentStatus,
   labelHistoryType,
   labelIssueConfidence,
+  labelIssueSeverity,
+  labelIssueSource,
   labelIssueStatus,
   labelIssueType,
+  labelPromptName,
 } from "./vi";

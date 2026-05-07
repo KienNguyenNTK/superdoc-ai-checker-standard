@@ -1,0 +1,18 @@
+{
+  "documentId": "doc_44248054",
+  "createdAt": "2026-05-05T09:34:56.884Z",
+  "updatedAt": "2026-05-05T09:34:56.885Z",
+  "originalFileName": "file-test-sai-chinh-ta-ngu-phap-van-phong.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_44248054\\original.docx",
+  "issues": [],
+  "comments": [],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1777973696884",
+      "type": "imported",
+      "message": "Imported DOCX file-test-sai-chinh-ta-ngu-phap-van-phong.docx",
+      "createdAt": "2026-05-05T09:34:56.884Z"
+    }
+  ]
+}

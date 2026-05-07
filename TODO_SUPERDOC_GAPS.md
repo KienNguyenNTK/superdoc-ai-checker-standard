@@ -1,11 +1,13 @@
 # TODO SuperDoc Gaps
 
-Các mục dưới đây đã được ghi rõ fallback trong source, không bịa thêm API ngoài bản SDK hiện dùng:
+Các mục dưới đây phản ánh đúng phạm vi SDK SuperDoc đã được xác minh trong repo này. Chỗ nào chưa có hỗ trợ ổn định đều đã fallback hoặc chỉ comment/TODO, không bịa API.
 
-1. `Ignore issue` hiện resolve comment và reject tracked change, nhưng chưa remove permanent highlight khỏi `reviewed.docx`.
-2. Focus issue ở frontend đang fallback qua `search/goToSearchResult`; chưa có temporary highlight UI 2-3 giây độc lập với search highlight.
-3. Sidebar `Comments` dùng kết hợp card custom và built-in comments surface; chưa đồng bộ state accept/reject sâu hơn với custom filter.
-4. `applyIssue` khi issue chưa có tracked change sẽ replace trực tiếp để chốt kết quả; nếu muốn luôn tạo tracked change rồi accept sau cần tách riêng UX `Suggest` và `Apply`.
-5. Backend đang ưu tiên `doc.extract()` cho body/table cell; chưa thêm reader riêng cho header/footer/list block path chi tiết.
-6. Chưa có endpoint riêng để accept/reject trực tiếp theo `changeId`; hiện flow đi qua `issueId`.
-7. Chưa thêm persistence DB; session hiện lưu file + JSON dưới `storage/documents/`.
+1. `doc.extract()` hiện chỉ cho block-level structure/text ổn định; run formatting phải hydrate thêm qua `doc.getNodeById()`.
+2. Reader hiện support tốt nhất cho `body` và `tableCell`; `header/footer/list/footnote` chưa có mapping path/run ổn định từ SDK nên mới fallback/TODO.
+3. `Ignore issue` hiện resolve comment và reject tracked change, nhưng chưa remove permanent highlight khỏi `reviewed-consistency.docx`.
+4. Focus issue ở frontend vẫn có fallback `search/goToSearchResult`; chưa có temporary highlight UI 2-3 giây độc lập với search highlight.
+5. Format issue cố gắng dùng `doc.format.*` với `changeMode: "tracked"`, nhưng một số mutation format không luôn trả tracked change receipt ổn định; khi đó flow fallback sang comment/direct apply và ghi TODO.
+6. `heading_consistency` đang ưu tiên direct formatting hoặc paragraph style khi có `styleName`; chưa có full style-clone engine cho mọi property paragraph/table style.
+7. `tone_consistency` hiện mặc định comment-only / needs-review; chưa auto-apply vì đây là semantic rewrite cần người duyệt.
+8. Prompt Settings hiện là in-app dev/admin panel, chưa có auth/role system thực thụ.
+9. Persistence vẫn là file + JSON dưới `storage/documents/` và `storage/config/`; chưa có DB multi-user.

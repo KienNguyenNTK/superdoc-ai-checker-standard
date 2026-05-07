@@ -22,7 +22,28 @@ export type BlockType =
   | "tableCell"
   | "header"
   | "footer"
-  | "listItem";
+  | "listItem"
+  | "caption"
+  | "footnote";
+
+export type IssueType =
+  | "spelling"
+  | "accent"
+  | "typo"
+  | "grammar"
+  | "style"
+  | "terminology_consistency"
+  | "translation_consistency"
+  | "format_consistency"
+  | "capitalization_consistency"
+  | "tone_consistency"
+  | "name_consistency"
+  | "date_number_consistency"
+  | "heading_consistency"
+  | "table_format_consistency";
+
+export type IssueSeverity = "info" | "warning" | "error";
+export type IssueSource = "rule_engine" | "llm" | "hybrid";
 
 export type IssueLocation = {
   blockId: string;
@@ -30,6 +51,7 @@ export type IssueLocation = {
   path: string;
   startOffset?: number;
   endOffset?: number;
+  runIds?: string[];
   searchText: string;
   beforeContext?: string;
   afterContext?: string;
@@ -43,16 +65,19 @@ export type IssueLocation = {
   };
 };
 
-export type SpellingIssue = {
+export type Issue = {
   id: string;
   documentId: string;
   wrong: string;
   suggestion: string;
   reason: string;
-  type: "spelling" | "accent" | "typo" | "grammar" | "style";
+  type: IssueType;
   confidence: "high" | "medium" | "low";
+  severity: IssueSeverity;
+  source: IssueSource;
   status: IssueStatus;
   location: IssueLocation;
+  evidence?: Array<{ blockId: string; text: string; note: string }>;
 };
 
 export type CommentRecord = {
@@ -68,7 +93,7 @@ export type CommentRecord = {
 export type ChangeRecord = {
   id: string;
   issueId?: string;
-  type: "replace" | "insert" | "delete";
+  type: "replace" | "insert" | "delete" | "format";
   oldText?: string;
   newText?: string;
   author: string;
@@ -86,7 +111,8 @@ export type HistoryRecord = {
     | "tracked"
     | "applied"
     | "ignored"
-    | "exported";
+    | "exported"
+    | "context_built";
   message: string;
   createdAt: string;
 };
@@ -107,16 +133,77 @@ export type UploadedDocument = {
   status: "uploaded";
 };
 
+export type GlossaryEntry = {
+  term: string;
+  preferredTranslation?: string;
+  alternatives: string[];
+  firstSeenBlockId: string;
+  confidence: "high" | "medium" | "low";
+};
+
+export type FormatRule = {
+  target: string;
+  ruleType: string;
+  expectedFormat: Record<string, unknown>;
+  confidence: "high" | "medium" | "low";
+};
+
+export type ToneRule = {
+  rule: string;
+  examples: string[];
+  confidence: "high" | "medium" | "low";
+};
+
+export type EntityRule = {
+  canonicalName: string;
+  variants: string[];
+  firstSeenBlockId: string;
+};
+
+export type DocumentContextMemory = {
+  documentId: string;
+  glossary: GlossaryEntry[];
+  formatRules: FormatRule[];
+  toneRules: ToneRule[];
+  entityRules: EntityRule[];
+};
+
+export type PromptTemplate = {
+  id: string;
+  name: string;
+  description: string;
+  system: string;
+  userTemplate: string;
+  outputSchema: object;
+  defaultModelOptions?: {
+    temperature?: number;
+    maxTokens?: number;
+  };
+};
+
+export type PromptTestResult = {
+  ok: boolean;
+  promptId: string;
+  renderedSystem: string;
+  renderedUser: string;
+  parsed?: unknown;
+  rawOutput?: string;
+  error?: string;
+};
+
 export type ReviewResponse = {
   documentId: string;
   status?: string;
-  issues: SpellingIssue[];
+  issues: Issue[];
   comments: CommentRecord[];
   changes: ChangeRecord[];
   history?: HistoryRecord[];
   reviewedFileUrl?: string | null;
   message?: string;
   todos?: string[];
+  context?: DocumentContextMemory;
+  appliedIssueId?: string;
+  appliedIssueLocation?: IssueLocation;
 };
 
 export type FocusIssueResponse = {
@@ -131,4 +218,17 @@ export type AgentOption = {
   name: string;
   description: string;
   defaultMode: ReviewMode;
+  checks: Array<
+    "spelling" | "format" | "terminology" | "translation" | "tone" | "entity" | "date_number"
+  >;
 };
+
+export type IssueFilter =
+  | "all"
+  | "spelling"
+  | "format"
+  | "terminology"
+  | "translation"
+  | "tone"
+  | "entity"
+  | "date_number";

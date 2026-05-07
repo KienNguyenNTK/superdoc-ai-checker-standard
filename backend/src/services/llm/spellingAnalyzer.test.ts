@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import type { DocumentBlock } from "../../domain/types.js";
 import {
+  applySuggestionCasing,
   analyzeWithHeuristics,
   chunkBlocks,
   mergeIssues,
@@ -14,6 +15,16 @@ function createBlock(text: string, blockId = "block-1"): DocumentBlock {
     type: "paragraph",
     path: `body.paragraph[${blockId}]`,
     text,
+    runs: [
+      {
+        runId: "run_000",
+        text,
+        startOffset: 0,
+        endOffset: text.length,
+        italic: false,
+        underline: false,
+      },
+    ],
   };
 }
 
@@ -51,7 +62,7 @@ test("analyzeWithHeuristics detects additional issues from the long sample doc",
   assert.ok(pairs.includes("hệ thông->hệ thống"));
   assert.ok(pairs.includes("trãi nghiệm->trải nghiệm"));
   assert.ok(pairs.includes("hoạt đông->hoạt động"));
-  assert.ok(pairs.includes("Kiễm tra->kiểm tra"));
+  assert.ok(pairs.includes("Kiễm tra->Kiểm tra"));
 });
 
 test("analyzeWithHeuristics preserves custom dictionary terms", () => {
@@ -62,6 +73,23 @@ test("analyzeWithHeuristics preserves custom dictionary terms", () => {
   assert.equal(issues.length, 0);
 });
 
+test("applySuggestionCasing preserves uppercase pattern from the original text", () => {
+  assert.equal(applySuggestionCasing("khách hang", "khách hàng"), "khách hàng");
+  assert.equal(applySuggestionCasing("Khách hang", "khách hàng"), "Khách hàng");
+  assert.equal(applySuggestionCasing("Nhân viêng", "nhân viên"), "Nhân viên");
+  assert.equal(applySuggestionCasing("KIỄM TRA", "kiểm tra"), "KIỂM TRA");
+});
+
+test("analyzeWithHeuristics keeps the original capitalization in suggestions", () => {
+  const blocks = [createBlock("Khách hang và Nhân viêng cần được sửa ngay.")];
+
+  const issues = analyzeWithHeuristics(blocks);
+  const pairs = issues.map((issue) => `${issue.wrong}->${issue.suggestion}`);
+
+  assert.ok(pairs.includes("Khách hang->Khách hàng"));
+  assert.ok(pairs.includes("Nhân viêng->Nhân viên"));
+});
+
 test("mergeIssues keeps LLM issues first and only adds missing heuristic issues", () => {
   const llmIssue: LlmIssue = {
     blockId: "block-1",
@@ -70,6 +98,8 @@ test("mergeIssues keeps LLM issues first and only adds missing heuristic issues"
     reason: "Thiếu dấu",
     type: "accent",
     confidence: "high",
+    severity: "error",
+    source: "llm",
     shouldAutoApply: true,
   };
 
@@ -81,6 +111,8 @@ test("mergeIssues keeps LLM issues first and only adds missing heuristic issues"
       reason: "Heuristic",
       type: "accent",
       confidence: "high",
+      severity: "error",
+      source: "rule_engine",
       shouldAutoApply: true,
     },
     {
@@ -90,6 +122,8 @@ test("mergeIssues keeps LLM issues first and only adds missing heuristic issues"
       reason: "Heuristic",
       type: "accent",
       confidence: "high",
+      severity: "error",
+      source: "rule_engine",
       shouldAutoApply: true,
     },
   ];

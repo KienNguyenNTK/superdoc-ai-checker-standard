@@ -1,6 +1,10 @@
 import type {
   ApiHealth,
+  DocumentContextMemory,
   FocusIssueResponse,
+  GlossaryEntry,
+  PromptTemplate,
+  PromptTestResult,
   ReviewMode,
   ReviewResponse,
   UploadedDocument,
@@ -53,12 +57,17 @@ export async function analyzeDocument(
   documentId: string,
   body: {
     mode: ReviewMode;
+    checks?: Array<
+      "spelling" | "format" | "terminology" | "translation" | "tone" | "entity" | "date_number"
+    >;
     highlightColor?: string;
     maxIssues?: number;
     applyHighConfidence?: boolean;
+    useLLM?: boolean;
+    useRuleEngine?: boolean;
   }
 ): Promise<ReviewResponse> {
-  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/analyze-spelling`, {
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/analyze-consistency`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -69,6 +78,32 @@ export async function analyzeDocument(
     ...data,
     reviewedFileUrl: absolutize(data.reviewedFileUrl),
   };
+}
+
+export async function buildContext(documentId: string) {
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/build-context`, {
+    method: "POST",
+  });
+  return readJson<{
+    documentId: string;
+    status: string;
+    summary: Record<string, number>;
+    contextMemoryUrl: string;
+  }>(response);
+}
+
+export async function getContext(documentId: string) {
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/context`);
+  return readJson<{ context: DocumentContextMemory | null }>(response);
+}
+
+export async function updateGlossary(documentId: string, glossary: GlossaryEntry[]) {
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/glossary`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ glossary }),
+  });
+  return readJson<{ glossary: GlossaryEntry[] }>(response);
 }
 
 export async function focusIssue(
@@ -149,4 +184,43 @@ export async function runAgent(documentId: string, agentId: string) {
     ...data,
     reviewedFileUrl: absolutize(data.reviewedFileUrl),
   };
+}
+
+export async function listPrompts() {
+  const response = await fetch(`${API_BASE_URL}/api/prompts`);
+  return readJson<{ prompts: PromptTemplate[] }>(response);
+}
+
+export async function getPrompt(promptId: string) {
+  const response = await fetch(`${API_BASE_URL}/api/prompts/${promptId}`);
+  return readJson<{ prompt: PromptTemplate }>(response);
+}
+
+export async function savePrompt(promptId: string, prompt: Partial<PromptTemplate>) {
+  const response = await fetch(`${API_BASE_URL}/api/prompts/${promptId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(prompt),
+  });
+  return readJson<{ prompt: PromptTemplate }>(response);
+}
+
+export async function resetPrompt(promptId: string) {
+  const response = await fetch(`${API_BASE_URL}/api/prompts/${promptId}/reset`, {
+    method: "POST",
+  });
+  return readJson<{ prompt: PromptTemplate }>(response);
+}
+
+export async function testPrompt(
+  promptId: string,
+  variables: Record<string, string>,
+  sampleOutput: string
+) {
+  const response = await fetch(`${API_BASE_URL}/api/prompts/${promptId}/test`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ variables, sampleOutput }),
+  });
+  return readJson<{ result: PromptTestResult }>(response);
 }

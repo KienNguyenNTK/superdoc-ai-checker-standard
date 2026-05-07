@@ -1,0 +1,26 @@
+[
+  {
+    "target": "heading_role:chapter_heading",
+    "ruleType": "heading_format",
+    "semanticRole": "chapter_heading",
+    "expectedFormat": {
+      "italic": false,
+      "underline": false
+    },
+    "examples": [
+      {
+        "blockId": "00000001",
+        "text": "Chương 1: Báo cáo hệ thông và dử liệu"
+      },
+      {
+        "blockId": "0000001B",
+        "text": "Chương 2: Báo cáo hệ thông và dử liệu"
+      },
+      {
+        "blockId": "00000035",
+        "text": "Chương 3: Báo cáo hệ thông và dử liệu"
+      }
+    ],
+    "confidence": "high"
+  }
+]

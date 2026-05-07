@@ -1,0 +1,18 @@
+[
+  {
+    "target": "SuperDoc",
+    "ruleType": "term_format",
+    "expectedFormat": {
+      "bold": true,
+      "italic": false,
+      "underline": false
+    },
+    "examples": [
+      {
+        "blockId": "00000047",
+        "text": "SuperDoc được in đậm khi xuất hiện lần đầu như một thuật ngữ chính trong phần này."
+      }
+    ],
+    "confidence": "high"
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "documentId": "doc_d6cc004a",
+  "createdAt": "2026-05-05T09:31:08.174Z",
+  "updatedAt": "2026-05-05T09:31:21.945Z",
+  "originalFileName": "test.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_d6cc004a\\original.docx",
+  "issues": [],
+  "comments": [],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1777973468174",
+      "type": "imported",
+      "message": "Imported DOCX test.docx",
+      "createdAt": "2026-05-05T09:31:08.174Z"
+    },
+    {
+      "id": "hist_1777973481944_nlzff",
+      "type": "analyzed",
+      "message": "Ran consistency analysis and found 0 issues.",
+      "createdAt": "2026-05-05T09:31:21.944Z"
+    },
+    {
+      "id": "hist_1777973481944_2a0wi",
+      "type": "highlighted",
+      "message": "Highlighted consistency issues in reviewed-consistency.docx.",
+      "createdAt": "2026-05-05T09:31:21.944Z"
+    }
+  ],
+  "reviewedPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_d6cc004a\\reviewed-consistency.docx"
+}

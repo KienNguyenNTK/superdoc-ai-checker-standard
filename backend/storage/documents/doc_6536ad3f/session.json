@@ -1,0 +1,757 @@
+{
+  "documentId": "doc_6536ad3f",
+  "createdAt": "2026-05-05T09:24:19.440Z",
+  "updatedAt": "2026-05-05T09:24:35.291Z",
+  "originalFileName": "file-test-sai-ngu-canh-format-consistency.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_6536ad3f\\original.docx",
+  "issues": [
+    {
+      "id": "format_SuperDoc_0000002A_12",
+      "documentId": "doc_6536ad3f",
+      "type": "format_consistency",
+      "wrong": "SuperDoc",
+      "suggestion": "Chuẩn hóa format cho SuperDoc",
+      "reason": "Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "0000002A",
+        "blockType": "paragraph",
+        "path": "body.paragraph[37]",
+        "startOffset": 12,
+        "endOffset": 20,
+        "runIds": [
+          "run_001"
+        ],
+        "searchText": "SuperDoc",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000002A",
+            "offset": 12
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000002A",
+            "offset": 20
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_1",
+        "commentId": "c48fad27-d16f-48fa-a756-3e9b425e6b52"
+      },
+      "evidence": [
+        {
+          "blockId": "00000007",
+          "text": "SuperDoc là bộ máy tài liệu hỗ trợ chỉnh sửa DOCX và track changes.",
+          "note": "Ví dụ định dạng chuẩn trong tài liệu."
+        }
+      ],
+      "suggestedFormat": {
+        "bold": true,
+        "italic": false,
+        "underline": false
+      }
+    },
+    {
+      "id": "format_SuperDoc_0000003F_12",
+      "documentId": "doc_6536ad3f",
+      "type": "format_consistency",
+      "wrong": "SuperDoc",
+      "suggestion": "Chuẩn hóa format cho SuperDoc",
+      "reason": "Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "0000003F",
+        "blockType": "paragraph",
+        "path": "body.paragraph[56]",
+        "startOffset": 12,
+        "endOffset": 20,
+        "runIds": [
+          "run_001"
+        ],
+        "searchText": "SuperDoc",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000003F",
+            "offset": 12
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000003F",
+            "offset": 20
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_2",
+        "commentId": "69bc6bd4-7b55-450e-b058-185c8f6da544"
+      },
+      "evidence": [
+        {
+          "blockId": "00000007",
+          "text": "SuperDoc là bộ máy tài liệu hỗ trợ chỉnh sửa DOCX và track changes.",
+          "note": "Ví dụ định dạng chuẩn trong tài liệu."
+        }
+      ],
+      "suggestedFormat": {
+        "bold": true,
+        "italic": false,
+        "underline": false
+      }
+    },
+    {
+      "id": "format_SuperDoc_00000048_12",
+      "documentId": "doc_6536ad3f",
+      "type": "format_consistency",
+      "wrong": "SuperDoc",
+      "suggestion": "Chuẩn hóa format cho SuperDoc",
+      "reason": "Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000048",
+        "blockType": "paragraph",
+        "path": "body.paragraph[65]",
+        "startOffset": 12,
+        "endOffset": 20,
+        "runIds": [
+          "run_001"
+        ],
+        "searchText": "SuperDoc",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000048",
+            "offset": 12
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000048",
+            "offset": 20
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_3",
+        "commentId": "5db5de86-cd3a-4851-a716-173731e67e89"
+      },
+      "evidence": [
+        {
+          "blockId": "00000007",
+          "text": "SuperDoc là bộ máy tài liệu hỗ trợ chỉnh sửa DOCX và track changes.",
+          "note": "Ví dụ định dạng chuẩn trong tài liệu."
+        }
+      ],
+      "suggestedFormat": {
+        "bold": true,
+        "italic": false,
+        "underline": false
+      }
+    },
+    {
+      "id": "format_SuperDoc_00000051_12",
+      "documentId": "doc_6536ad3f",
+      "type": "format_consistency",
+      "wrong": "SuperDoc",
+      "suggestion": "Chuẩn hóa format cho SuperDoc",
+      "reason": "Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000051",
+        "blockType": "paragraph",
+        "path": "body.paragraph[74]",
+        "startOffset": 12,
+        "endOffset": 20,
+        "runIds": [
+          "run_001"
+        ],
+        "searchText": "SuperDoc",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000051",
+            "offset": 12
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000051",
+            "offset": 20
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_4",
+        "commentId": "be8d7454-63a1-4e39-85df-dafa9f503380"
+      },
+      "evidence": [
+        {
+          "blockId": "00000007",
+          "text": "SuperDoc là bộ máy tài liệu hỗ trợ chỉnh sửa DOCX và track changes.",
+          "note": "Ví dụ định dạng chuẩn trong tài liệu."
+        }
+      ],
+      "suggestedFormat": {
+        "bold": true,
+        "italic": false,
+        "underline": false
+      }
+    },
+    {
+      "id": "format_SuperDoc_00000059_12",
+      "documentId": "doc_6536ad3f",
+      "type": "format_consistency",
+      "wrong": "SuperDoc",
+      "suggestion": "Chuẩn hóa format cho SuperDoc",
+      "reason": "Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000059",
+        "blockType": "paragraph",
+        "path": "body.paragraph[82]",
+        "startOffset": 12,
+        "endOffset": 20,
+        "runIds": [
+          "run_001"
+        ],
+        "searchText": "SuperDoc",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000059",
+            "offset": 12
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000059",
+            "offset": 20
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_5",
+        "commentId": "85128160-5929-4291-88b1-bea063bc7f43"
+      },
+      "evidence": [
+        {
+          "blockId": "00000007",
+          "text": "SuperDoc là bộ máy tài liệu hỗ trợ chỉnh sửa DOCX và track changes.",
+          "note": "Ví dụ định dạng chuẩn trong tài liệu."
+        }
+      ],
+      "suggestedFormat": {
+        "bold": true,
+        "italic": false,
+        "underline": false
+      }
+    },
+    {
+      "id": "format_SuperDoc_00000062_12",
+      "documentId": "doc_6536ad3f",
+      "type": "format_consistency",
+      "wrong": "SuperDoc",
+      "suggestion": "Chuẩn hóa format cho SuperDoc",
+      "reason": "Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000062",
+        "blockType": "paragraph",
+        "path": "body.paragraph[91]",
+        "startOffset": 12,
+        "endOffset": 20,
+        "runIds": [
+          "run_001"
+        ],
+        "searchText": "SuperDoc",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000062",
+            "offset": 12
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000062",
+            "offset": 20
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_6",
+        "commentId": "98dce376-0cc3-450d-997b-be647c7fc81d"
+      },
+      "evidence": [
+        {
+          "blockId": "00000007",
+          "text": "SuperDoc là bộ máy tài liệu hỗ trợ chỉnh sửa DOCX và track changes.",
+          "note": "Ví dụ định dạng chuẩn trong tài liệu."
+        }
+      ],
+      "suggestedFormat": {
+        "bold": true,
+        "italic": false,
+        "underline": false
+      }
+    },
+    {
+      "id": "entity_0000002D_000",
+      "documentId": "doc_6536ad3f",
+      "type": "name_consistency",
+      "wrong": "Open Ai",
+      "suggestion": "OpenAI",
+      "reason": "Tên riêng đang khác với dạng canonical trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "0000002D",
+        "blockType": "paragraph",
+        "path": "body.paragraph[40]",
+        "startOffset": 31,
+        "endOffset": 38,
+        "searchText": "Open Ai",
+        "beforeContext": "cố ý viết sai thành ",
+        "afterContext": " và 8AM coffee để te",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000002D",
+            "offset": 31
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000002D",
+            "offset": 38
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_7",
+        "commentId": "f9f5fe56-35ff-4c25-aeba-f5b71ae4cd5f"
+      }
+    },
+    {
+      "id": "entity_0000002D_001",
+      "documentId": "doc_6536ad3f",
+      "type": "name_consistency",
+      "wrong": "8AM coffee",
+      "suggestion": "8AM Coffee",
+      "reason": "Tên riêng đang khác với dạng canonical trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "0000002D",
+        "blockType": "paragraph",
+        "path": "body.paragraph[40]",
+        "startOffset": 42,
+        "endOffset": 52,
+        "searchText": "8AM coffee",
+        "beforeContext": "ai thành Open Ai và ",
+        "afterContext": " để test name/entity",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000002D",
+            "offset": 42
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000002D",
+            "offset": 52
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_8",
+        "commentId": "0c0f448c-8555-4045-8ca7-c670223a1a9f"
+      }
+    },
+    {
+      "id": "entity_00000049_000",
+      "documentId": "doc_6536ad3f",
+      "type": "name_consistency",
+      "wrong": "Open Ai",
+      "suggestion": "OpenAI",
+      "reason": "Tên riêng đang khác với dạng canonical trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000049",
+        "blockType": "paragraph",
+        "path": "body.paragraph[66]",
+        "startOffset": 23,
+        "endOffset": 30,
+        "searchText": "Open Ai",
+        "beforeContext": " riêng bị viết sai: ",
+        "afterContext": " và Super Doc.",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000049",
+            "offset": 23
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000049",
+            "offset": 30
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_9",
+        "commentId": "be281783-ddce-4e89-977e-368689899797"
+      }
+    },
+    {
+      "id": "entity_00000049_001",
+      "documentId": "doc_6536ad3f",
+      "type": "name_consistency",
+      "wrong": "Super Doc",
+      "suggestion": "SuperDoc",
+      "reason": "Tên riêng đang khác với dạng canonical trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000049",
+        "blockType": "paragraph",
+        "path": "body.paragraph[66]",
+        "startOffset": 34,
+        "endOffset": 43,
+        "searchText": "Super Doc",
+        "beforeContext": "iết sai: Open Ai và ",
+        "afterContext": ".",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000049",
+            "offset": 34
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000049",
+            "offset": 43
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_10",
+        "commentId": "10999e0b-e971-4daa-9c81-7f8907ee575e"
+      }
+    },
+    {
+      "id": "entity_00000063_000",
+      "documentId": "doc_6536ad3f",
+      "type": "name_consistency",
+      "wrong": "Open Ai",
+      "suggestion": "OpenAI",
+      "reason": "Tên riêng đang khác với dạng canonical trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000063",
+        "blockType": "paragraph",
+        "path": "body.paragraph[92]",
+        "startOffset": 23,
+        "endOffset": 30,
+        "searchText": "Open Ai",
+        "beforeContext": " riêng bị viết sai: ",
+        "afterContext": " và Super Doc.",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000063",
+            "offset": 23
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000063",
+            "offset": 30
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_11",
+        "commentId": "31c8c6f7-c763-4735-81be-71533fad76c9"
+      }
+    },
+    {
+      "id": "entity_00000063_001",
+      "documentId": "doc_6536ad3f",
+      "type": "name_consistency",
+      "wrong": "Super Doc",
+      "suggestion": "SuperDoc",
+      "reason": "Tên riêng đang khác với dạng canonical trong tài liệu.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000063",
+        "blockType": "paragraph",
+        "path": "body.paragraph[92]",
+        "startOffset": 34,
+        "endOffset": 43,
+        "searchText": "Super Doc",
+        "beforeContext": "iết sai: Open Ai và ",
+        "afterContext": ".",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000063",
+            "offset": 34
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000063",
+            "offset": 43
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_12",
+        "commentId": "3ec9e6ea-d3ca-4f67-9772-0c73c12d28b1"
+      }
+    },
+    {
+      "id": "tone_00000030_bọn mình_25",
+      "documentId": "doc_6536ad3f",
+      "type": "tone_consistency",
+      "wrong": "bọn mình",
+      "suggestion": "chúng tôi",
+      "reason": "Xưng hô/văn phong lệch khỏi tone rule của tài liệu.",
+      "confidence": "medium",
+      "severity": "info",
+      "source": "llm",
+      "status": "commented",
+      "location": {
+        "blockId": "00000030",
+        "blockType": "paragraph",
+        "path": "body.paragraph[43]",
+        "startOffset": 25,
+        "endOffset": 33,
+        "searchText": "bọn mình",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000030",
+            "offset": 25
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000030",
+            "offset": 33
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_13",
+        "commentId": "8fd7f662-30bf-486a-b635-e6c33b2b322e"
+      }
+    },
+    {
+      "id": "tone_00000030_bạn_39",
+      "documentId": "doc_6536ad3f",
+      "type": "tone_consistency",
+      "wrong": "bạn",
+      "suggestion": "người dùng",
+      "reason": "Xưng hô/văn phong lệch khỏi tone rule của tài liệu.",
+      "confidence": "medium",
+      "severity": "info",
+      "source": "llm",
+      "status": "commented",
+      "location": {
+        "blockId": "00000030",
+        "blockType": "paragraph",
+        "path": "body.paragraph[43]",
+        "startOffset": 39,
+        "endOffset": 42,
+        "searchText": "bạn",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000030",
+            "offset": 39
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000030",
+            "offset": 42
+          }
+        },
+        "anchorId": "anchor_doc_6536ad3f_14",
+        "commentId": "0cf49a56-1be9-405b-855e-5d98ab448a9a"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": "c48fad27-d16f-48fa-a756-3e9b425e6b52",
+      "issueId": "format_SuperDoc_0000002A_12",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: format_consistency\nNội dung: \"SuperDoc\"\nGợi ý: \"Chuẩn hóa format cho SuperDoc\"\nLý do: Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:34.901Z",
+      "targetText": "SuperDoc",
+      "status": "open"
+    },
+    {
+      "id": "69bc6bd4-7b55-450e-b058-185c8f6da544",
+      "issueId": "format_SuperDoc_0000003F_12",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: format_consistency\nNội dung: \"SuperDoc\"\nGợi ý: \"Chuẩn hóa format cho SuperDoc\"\nLý do: Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:34.924Z",
+      "targetText": "SuperDoc",
+      "status": "open"
+    },
+    {
+      "id": "5db5de86-cd3a-4851-a716-173731e67e89",
+      "issueId": "format_SuperDoc_00000048_12",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: format_consistency\nNội dung: \"SuperDoc\"\nGợi ý: \"Chuẩn hóa format cho SuperDoc\"\nLý do: Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:34.943Z",
+      "targetText": "SuperDoc",
+      "status": "open"
+    },
+    {
+      "id": "be8d7454-63a1-4e39-85df-dafa9f503380",
+      "issueId": "format_SuperDoc_00000051_12",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: format_consistency\nNội dung: \"SuperDoc\"\nGợi ý: \"Chuẩn hóa format cho SuperDoc\"\nLý do: Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:34.962Z",
+      "targetText": "SuperDoc",
+      "status": "open"
+    },
+    {
+      "id": "85128160-5929-4291-88b1-bea063bc7f43",
+      "issueId": "format_SuperDoc_00000059_12",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: format_consistency\nNội dung: \"SuperDoc\"\nGợi ý: \"Chuẩn hóa format cho SuperDoc\"\nLý do: Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:34.981Z",
+      "targetText": "SuperDoc",
+      "status": "open"
+    },
+    {
+      "id": "98dce376-0cc3-450d-997b-be647c7fc81d",
+      "issueId": "format_SuperDoc_00000062_12",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: format_consistency\nNội dung: \"SuperDoc\"\nGợi ý: \"Chuẩn hóa format cho SuperDoc\"\nLý do: Thuật ngữ/nhãn đang khác định dạng đã dùng trước đó trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:35.001Z",
+      "targetText": "SuperDoc",
+      "status": "open"
+    },
+    {
+      "id": "f9f5fe56-35ff-4c25-aeba-f5b71ae4cd5f",
+      "issueId": "entity_0000002D_000",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: name_consistency\nNội dung: \"Open Ai\"\nGợi ý: \"OpenAI\"\nLý do: Tên riêng đang khác với dạng canonical trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:35.020Z",
+      "targetText": "Open Ai",
+      "status": "open"
+    },
+    {
+      "id": "0c0f448c-8555-4045-8ca7-c670223a1a9f",
+      "issueId": "entity_0000002D_001",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: name_consistency\nNội dung: \"8AM coffee\"\nGợi ý: \"8AM Coffee\"\nLý do: Tên riêng đang khác với dạng canonical trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:35.039Z",
+      "targetText": "8AM coffee",
+      "status": "open"
+    },
+    {
+      "id": "be281783-ddce-4e89-977e-368689899797",
+      "issueId": "entity_00000049_000",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: name_consistency\nNội dung: \"Open Ai\"\nGợi ý: \"OpenAI\"\nLý do: Tên riêng đang khác với dạng canonical trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:35.058Z",
+      "targetText": "Open Ai",
+      "status": "open"
+    },
+    {
+      "id": "10999e0b-e971-4daa-9c81-7f8907ee575e",
+      "issueId": "entity_00000049_001",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: name_consistency\nNội dung: \"Super Doc\"\nGợi ý: \"SuperDoc\"\nLý do: Tên riêng đang khác với dạng canonical trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:35.078Z",
+      "targetText": "Super Doc",
+      "status": "open"
+    },
+    {
+      "id": "31c8c6f7-c763-4735-81be-71533fad76c9",
+      "issueId": "entity_00000063_000",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: name_consistency\nNội dung: \"Open Ai\"\nGợi ý: \"OpenAI\"\nLý do: Tên riêng đang khác với dạng canonical trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:35.095Z",
+      "targetText": "Open Ai",
+      "status": "open"
+    },
+    {
+      "id": "3ec9e6ea-d3ca-4f67-9772-0c73c12d28b1",
+      "issueId": "entity_00000063_001",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: name_consistency\nNội dung: \"Super Doc\"\nGợi ý: \"SuperDoc\"\nLý do: Tên riêng đang khác với dạng canonical trong tài liệu.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:24:35.113Z",
+      "targetText": "Super Doc",
+      "status": "open"
+    },
+    {
+      "id": "8fd7f662-30bf-486a-b635-e6c33b2b322e",
+      "issueId": "tone_00000030_bọn mình_25",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: tone_consistency\nNội dung: \"bọn mình\"\nGợi ý: \"chúng tôi\"\nLý do: Xưng hô/văn phong lệch khỏi tone rule của tài liệu.\nĐộ chắc chắn: medium\nNguồn: llm",
+      "createdAt": "2026-05-05T09:24:35.130Z",
+      "targetText": "bọn mình",
+      "status": "open"
+    },
+    {
+      "id": "0cf49a56-1be9-405b-855e-5d98ab448a9a",
+      "issueId": "tone_00000030_bạn_39",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: tone_consistency\nNội dung: \"bạn\"\nGợi ý: \"người dùng\"\nLý do: Xưng hô/văn phong lệch khỏi tone rule của tài liệu.\nĐộ chắc chắn: medium\nNguồn: llm",
+      "createdAt": "2026-05-05T09:24:35.149Z",
+      "targetText": "bạn",
+      "status": "open"
+    }
+  ],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1777973059440",
+      "type": "imported",
+      "message": "Imported DOCX file-test-sai-ngu-canh-format-consistency.docx",
+      "createdAt": "2026-05-05T09:24:19.440Z"
+    },
+    {
+      "id": "hist_1777973075290_fdcj1",
+      "type": "analyzed",
+      "message": "Ran consistency analysis and found 14 issues.",
+      "createdAt": "2026-05-05T09:24:35.290Z"
+    },
+    {
+      "id": "hist_1777973075290_om6zb",
+      "type": "commented",
+      "message": "Added 14 AI comments.",
+      "createdAt": "2026-05-05T09:24:35.290Z"
+    },
+    {
+      "id": "hist_1777973075290_c8l8q",
+      "type": "highlighted",
+      "message": "Highlighted consistency issues in reviewed-consistency.docx.",
+      "createdAt": "2026-05-05T09:24:35.290Z"
+    }
+  ],
+  "reviewedPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_6536ad3f\\reviewed-consistency.docx"
+}

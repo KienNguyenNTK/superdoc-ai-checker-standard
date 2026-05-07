@@ -1,0 +1,1536 @@
+{
+  "documentId": "doc_6042258e",
+  "createdAt": "2026-05-05T09:14:58.531Z",
+  "updatedAt": "2026-05-05T09:15:33.841Z",
+  "originalFileName": "file-test-sai-chinh-ta.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_6042258e\\original.docx",
+  "issues": [
+    {
+      "id": "heading_format_00000003",
+      "documentId": "doc_6042258e",
+      "type": "heading_consistency",
+      "wrong": "1. Giới thiệu",
+      "suggestion": "Chuẩn hóa style heading level 1",
+      "reason": "Heading cùng cấp đang lệch định dạng so với pattern trước đó.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000003",
+        "blockType": "heading",
+        "path": "body.heading[2]",
+        "startOffset": 0,
+        "endOffset": 13,
+        "runIds": [
+          "run_000"
+        ],
+        "searchText": "1. Giới thiệu",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000003",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000003",
+            "offset": 13
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_1",
+        "commentId": "f69e8200-5d04-441f-819b-b81860cd9734"
+      },
+      "suggestedFormat": {
+        "italic": false,
+        "underline": false,
+        "color": {
+          "val": "365F91"
+        },
+        "fontFamily": "Calibri"
+      }
+    },
+    {
+      "id": "heading_format_00000007",
+      "documentId": "doc_6042258e",
+      "type": "heading_consistency",
+      "wrong": "2. Danh sách yêu cầu kiểm thử",
+      "suggestion": "Chuẩn hóa style heading level 1",
+      "reason": "Heading cùng cấp đang lệch định dạng so với pattern trước đó.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000007",
+        "blockType": "heading",
+        "path": "body.heading[6]",
+        "startOffset": 0,
+        "endOffset": 29,
+        "runIds": [
+          "run_000"
+        ],
+        "searchText": "2. Danh sách yêu cầu kiểm thử",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000007",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000007",
+            "offset": 29
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_2",
+        "commentId": "15a1adaf-75c5-4c94-907e-32e6c61d43bc"
+      },
+      "suggestedFormat": {
+        "italic": false,
+        "underline": false,
+        "color": {
+          "val": "365F91"
+        },
+        "fontFamily": "Calibri"
+      }
+    },
+    {
+      "id": "heading_format_0000000D",
+      "documentId": "doc_6042258e",
+      "type": "heading_consistency",
+      "wrong": "3. Bảng dữ liệu mẫu",
+      "suggestion": "Chuẩn hóa style heading level 1",
+      "reason": "Heading cùng cấp đang lệch định dạng so với pattern trước đó.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "0000000D",
+        "blockType": "heading",
+        "path": "body.heading[12]",
+        "startOffset": 0,
+        "endOffset": 19,
+        "runIds": [
+          "run_000"
+        ],
+        "searchText": "3. Bảng dữ liệu mẫu",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000000D",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000000D",
+            "offset": 19
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_3",
+        "commentId": "1bc75a34-3df7-4822-aeeb-a7c14c72e392"
+      },
+      "suggestedFormat": {
+        "italic": false,
+        "underline": false,
+        "color": {
+          "val": "365F91"
+        },
+        "fontFamily": "Calibri"
+      }
+    },
+    {
+      "id": "heading_format_00000027",
+      "documentId": "doc_6042258e",
+      "type": "heading_consistency",
+      "wrong": "4. Đoạn văn dài để test ngữ cảnh",
+      "suggestion": "Chuẩn hóa style heading level 1",
+      "reason": "Heading cùng cấp đang lệch định dạng so với pattern trước đó.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000027",
+        "blockType": "heading",
+        "path": "body.heading[33]",
+        "startOffset": 0,
+        "endOffset": 32,
+        "runIds": [
+          "run_000"
+        ],
+        "searchText": "4. Đoạn văn dài để test ngữ cảnh",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000027",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000027",
+            "offset": 32
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_4",
+        "commentId": "7ff1bb65-8456-4fbc-a127-7b7c62ea9112"
+      },
+      "suggestedFormat": {
+        "italic": false,
+        "underline": false,
+        "color": {
+          "val": "365F91"
+        },
+        "fontFamily": "Calibri"
+      }
+    },
+    {
+      "id": "heading_format_00000029",
+      "documentId": "doc_6042258e",
+      "type": "heading_consistency",
+      "wrong": "5. Kỳ vọng kết quả",
+      "suggestion": "Chuẩn hóa style heading level 1",
+      "reason": "Heading cùng cấp đang lệch định dạng so với pattern trước đó.",
+      "confidence": "high",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "location": {
+        "blockId": "00000029",
+        "blockType": "heading",
+        "path": "body.heading[35]",
+        "startOffset": 0,
+        "endOffset": 18,
+        "runIds": [
+          "run_000"
+        ],
+        "searchText": "5. Kỳ vọng kết quả",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000029",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000029",
+            "offset": 18
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_5",
+        "commentId": "c55642a1-8449-4f98-bed0-5f8c19bfef6f"
+      },
+      "suggestedFormat": {
+        "italic": false,
+        "underline": false,
+        "color": {
+          "val": "365F91"
+        },
+        "fontFamily": "Calibri"
+      }
+    },
+    {
+      "id": "spell_00000004_000",
+      "documentId": "doc_6042258e",
+      "wrong": "hổ trợ",
+      "suggestion": "hỗ trợ",
+      "reason": "Sai dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000004",
+        "blockType": "paragraph",
+        "path": "body.paragraph[3]",
+        "startOffset": 102,
+        "endOffset": 108,
+        "searchText": "hổ trợ",
+        "beforeContext": "u DOCX. Hệ thống này sẽ ",
+        "afterContext": " người dùng upload file,",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000004",
+            "offset": 102
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000004",
+            "offset": 108
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_6",
+        "commentId": "35888eb4-daca-49c1-bcd3-7d2d7ea93297"
+      }
+    },
+    {
+      "id": "spell_00000004_001",
+      "documentId": "doc_6042258e",
+      "wrong": "chính tã",
+      "suggestion": "chính tả",
+      "reason": "Sai dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000004",
+        "blockType": "paragraph",
+        "path": "body.paragraph[3]",
+        "startOffset": 54,
+        "endOffset": 62,
+        "searchText": "chính tã",
+        "beforeContext": "g một hệ thống kiểm tra ",
+        "afterContext": " cho các tài liệu DOCX. ",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000004",
+            "offset": 54
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000004",
+            "offset": 62
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_7",
+        "commentId": "4623c53c-20a3-491a-a7fd-0cc01aef882b"
+      }
+    },
+    {
+      "id": "spell_00000005_002",
+      "documentId": "doc_6042258e",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000005",
+        "blockType": "paragraph",
+        "path": "body.paragraph[4]",
+        "startOffset": 90,
+        "endOffset": 100,
+        "searchText": "khách hang",
+        "beforeContext": "nên có thể viết sai như ",
+        "afterContext": ", sản phẫm hoặc dử liệu.",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000005",
+            "offset": 90
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000005",
+            "offset": 100
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_8",
+        "commentId": "fc4cdfb5-2e3e-4a73-90ad-032494be415d"
+      }
+    },
+    {
+      "id": "spell_00000005_003",
+      "documentId": "doc_6042258e",
+      "wrong": "dử liệu",
+      "suggestion": "dữ liệu",
+      "reason": "Sai dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000005",
+        "blockType": "paragraph",
+        "path": "body.paragraph[4]",
+        "startOffset": 116,
+        "endOffset": 123,
+        "searchText": "dử liệu",
+        "beforeContext": "ách hang, sản phẫm hoặc ",
+        "afterContext": ". Những lỗi này cần được",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000005",
+            "offset": 116
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000005",
+            "offset": 123
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_9",
+        "commentId": "5efbb7fa-a6ea-445b-834d-5217cd770a66"
+      }
+    },
+    {
+      "id": "spell_00000005_004",
+      "documentId": "doc_6042258e",
+      "wrong": "nhân viêng",
+      "suggestion": "nhân viên",
+      "reason": "Sai phụ âm cuối trong từ phổ biến.",
+      "type": "typo",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000005",
+        "blockType": "paragraph",
+        "path": "body.paragraph[4]",
+        "startOffset": 32,
+        "endOffset": 42,
+        "searchText": "nhân viêng",
+        "beforeContext": "á trình vận hành, nhiều ",
+        "afterContext": " thường nhập liệu nhanh ",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000005",
+            "offset": 32
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000005",
+            "offset": 42
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_10",
+        "commentId": "aa866ff4-1da2-42bf-8872-110e027670b3"
+      }
+    },
+    {
+      "id": "spell_00000005_005",
+      "documentId": "doc_6042258e",
+      "wrong": "sản phẫm",
+      "suggestion": "sản phẩm",
+      "reason": "Sai dấu trong từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000005",
+        "blockType": "paragraph",
+        "path": "body.paragraph[4]",
+        "startOffset": 102,
+        "endOffset": 110,
+        "searchText": "sản phẫm",
+        "beforeContext": "iết sai như khách hang, ",
+        "afterContext": " hoặc dử liệu. Những lỗi",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000005",
+            "offset": 102
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000005",
+            "offset": 110
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_11",
+        "commentId": "5b6f47e6-b554-4378-a17f-680a63f896ca"
+      }
+    },
+    {
+      "id": "spell_00000008_006",
+      "documentId": "doc_6042258e",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000008",
+        "blockType": "listItem",
+        "path": "body.listItem[7]",
+        "startOffset": 28,
+        "endOffset": 38,
+        "searchText": "khách hang",
+        "beforeContext": " tra lỗi thiếu dấu như: ",
+        "afterContext": ", thong tin, du lieu.",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000008",
+            "offset": 28
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000008",
+            "offset": 38
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_12",
+        "commentId": "d5edb00c-571d-4ad2-91be-ec8c96ec11e2"
+      }
+    },
+    {
+      "id": "spell_00000008_007",
+      "documentId": "doc_6042258e",
+      "wrong": "thong tin",
+      "suggestion": "thông tin",
+      "reason": "Thiếu dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000008",
+        "blockType": "listItem",
+        "path": "body.listItem[7]",
+        "startOffset": 40,
+        "endOffset": 49,
+        "searchText": "thong tin",
+        "beforeContext": "ếu dấu như: khách hang, ",
+        "afterContext": ", du lieu.",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000008",
+            "offset": 40
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000008",
+            "offset": 49
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_13",
+        "commentId": "644ffe8c-97d4-4dd5-9a18-a9bd7a102897"
+      }
+    },
+    {
+      "id": "spell_00000008_008",
+      "documentId": "doc_6042258e",
+      "wrong": "du lieu",
+      "suggestion": "dữ liệu",
+      "reason": "Thiếu dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000008",
+        "blockType": "listItem",
+        "path": "body.listItem[7]",
+        "startOffset": 51,
+        "endOffset": 58,
+        "searchText": "du lieu",
+        "beforeContext": " khách hang, thong tin, ",
+        "afterContext": ".",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000008",
+            "offset": 51
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000008",
+            "offset": 58
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_14",
+        "commentId": "71053a96-8711-4769-a828-f048cd2748d4"
+      }
+    },
+    {
+      "id": "spell_00000009_009",
+      "documentId": "doc_6042258e",
+      "wrong": "nhân viêng",
+      "suggestion": "nhân viên",
+      "reason": "Sai phụ âm cuối trong từ phổ biến.",
+      "type": "typo",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000009",
+        "blockType": "listItem",
+        "path": "body.listItem[8]",
+        "startOffset": 42,
+        "endOffset": 52,
+        "searchText": "nhân viêng",
+        "beforeContext": "hụ âm hoặc sai vần như: ",
+        "afterContext": ", sản phẫm, chinh tả.",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000009",
+            "offset": 42
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000009",
+            "offset": 52
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_15",
+        "commentId": "cbbb6444-2018-486d-a152-ba9e5921b9bd"
+      }
+    },
+    {
+      "id": "spell_00000009_010",
+      "documentId": "doc_6042258e",
+      "wrong": "sản phẫm",
+      "suggestion": "sản phẩm",
+      "reason": "Sai dấu trong từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000009",
+        "blockType": "listItem",
+        "path": "body.listItem[8]",
+        "startOffset": 54,
+        "endOffset": 62,
+        "searchText": "sản phẫm",
+        "beforeContext": "ai vần như: nhân viêng, ",
+        "afterContext": ", chinh tả.",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000009",
+            "offset": 54
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000009",
+            "offset": 62
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_16",
+        "commentId": "ce8ba9cf-c379-4af0-b69e-b5b9c187b42c"
+      }
+    },
+    {
+      "id": "spell_00000009_011",
+      "documentId": "doc_6042258e",
+      "wrong": "chinh tả",
+      "suggestion": "chính tả",
+      "reason": "Thiếu dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000009",
+        "blockType": "listItem",
+        "path": "body.listItem[8]",
+        "startOffset": 64,
+        "endOffset": 72,
+        "searchText": "chinh tả",
+        "beforeContext": ": nhân viêng, sản phẫm, ",
+        "afterContext": ".",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000009",
+            "offset": 64
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000009",
+            "offset": 72
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_17",
+        "commentId": "9f641326-3e9c-4efb-b149-9f6d522d985e"
+      }
+    },
+    {
+      "id": "spell_0000000C_012",
+      "documentId": "doc_6042258e",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Chuẩn hóa chính tả tiếng Việt.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000000C",
+        "blockType": "listItem",
+        "path": "body.listItem[11]",
+        "startOffset": 22,
+        "endOffset": 27,
+        "searchText": "xử lí",
+        "beforeContext": "Nếu gặp từ quản lí và ",
+        "afterContext": " thì có thể gợi ý chuẩn ",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000000C",
+            "offset": 22
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000000C",
+            "offset": 27
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_18",
+        "commentId": "0a9f7695-f803-4f4d-92d4-583716b8c8e5"
+      }
+    },
+    {
+      "id": "spell_0000000C_013",
+      "documentId": "doc_6042258e",
+      "wrong": "quản lí",
+      "suggestion": "quản lý",
+      "reason": "Chuẩn hóa chính tả tiếng Việt.",
+      "type": "accent",
+      "confidence": "medium",
+      "severity": "warning",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": false,
+      "location": {
+        "blockId": "0000000C",
+        "blockType": "listItem",
+        "path": "body.listItem[11]",
+        "startOffset": 11,
+        "endOffset": 18,
+        "searchText": "quản lí",
+        "beforeContext": "Nếu gặp từ ",
+        "afterContext": " và xử lí thì có thể gợi",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000000C",
+            "offset": 11
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000000C",
+            "offset": 18
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_19",
+        "commentId": "98311dad-d4d9-4572-a514-4770ca058dc9"
+      }
+    },
+    {
+      "id": "spell_00000015_014",
+      "documentId": "doc_6042258e",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000015",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[1].cell[1]",
+        "startOffset": 0,
+        "endOffset": 10,
+        "searchText": "khách hang",
+        "beforeContext": "",
+        "afterContext": " cần được hổ trợ nhanh",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000015",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000015",
+            "offset": 10
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_20",
+        "commentId": "67414db2-7f9e-443e-90d6-b621c480ef7c"
+      }
+    },
+    {
+      "id": "spell_00000015_015",
+      "documentId": "doc_6042258e",
+      "wrong": "hổ trợ",
+      "suggestion": "hỗ trợ",
+      "reason": "Sai dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000015",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[1].cell[1]",
+        "startOffset": 20,
+        "endOffset": 26,
+        "searchText": "hổ trợ",
+        "beforeContext": "khách hang cần được ",
+        "afterContext": " nhanh",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000015",
+            "offset": 20
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000015",
+            "offset": 26
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_21",
+        "commentId": "245911c2-8575-41c7-8a7e-e31d92ef7405"
+      }
+    },
+    {
+      "id": "spell_0000001A_016",
+      "documentId": "doc_6042258e",
+      "wrong": "dử liệu",
+      "suggestion": "dữ liệu",
+      "reason": "Sai dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001A",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[2].cell[1]",
+        "startOffset": 16,
+        "endOffset": 23,
+        "searchText": "dử liệu",
+        "beforeContext": "nhân viêng nhập ",
+        "afterContext": " đơn hàng",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000001A",
+            "offset": 16
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000001A",
+            "offset": 23
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_22",
+        "commentId": "1afa6112-2c4a-41c6-b407-ec2562f14bd6"
+      }
+    },
+    {
+      "id": "spell_0000001A_017",
+      "documentId": "doc_6042258e",
+      "wrong": "nhân viêng",
+      "suggestion": "nhân viên",
+      "reason": "Sai phụ âm cuối trong từ phổ biến.",
+      "type": "typo",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001A",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[2].cell[1]",
+        "startOffset": 0,
+        "endOffset": 10,
+        "searchText": "nhân viêng",
+        "beforeContext": "",
+        "afterContext": " nhập dử liệu đơn hàng",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000001A",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000001A",
+            "offset": 10
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_23",
+        "commentId": "cd75f8a5-7289-4852-bbd7-ba737f0c3f10"
+      }
+    },
+    {
+      "id": "spell_0000001F_018",
+      "documentId": "doc_6042258e",
+      "wrong": "sản phẫm",
+      "suggestion": "sản phẩm",
+      "reason": "Sai dấu trong từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001F",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[3].cell[1]",
+        "startOffset": 0,
+        "endOffset": 8,
+        "searchText": "sản phẫm",
+        "beforeContext": "",
+        "afterContext": " đã được cập nhập",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000001F",
+            "offset": 0
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000001F",
+            "offset": 8
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_24",
+        "commentId": "d3b81e58-33dc-42b9-8599-007dc031489e"
+      }
+    },
+    {
+      "id": "spell_0000001F_019",
+      "documentId": "doc_6042258e",
+      "wrong": "cập nhập",
+      "suggestion": "cập nhật",
+      "reason": "Dùng từ sai ở cụm từ phổ biến.",
+      "type": "spelling",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "0000001F",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[3].cell[1]",
+        "startOffset": 17,
+        "endOffset": 25,
+        "searchText": "cập nhập",
+        "beforeContext": "sản phẫm đã được ",
+        "afterContext": "",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "0000001F",
+            "offset": 17
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "0000001F",
+            "offset": 25
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_25",
+        "commentId": "91c16e7a-9660-4d17-85cb-22e9d7d6a976"
+      }
+    },
+    {
+      "id": "spell_00000024_020",
+      "documentId": "doc_6042258e",
+      "wrong": "xử lí",
+      "suggestion": "xử lý",
+      "reason": "Chuẩn hóa chính tả tiếng Việt.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000024",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[4].cell[1]",
+        "startOffset": 10,
+        "endOffset": 15,
+        "searchText": "xử lí",
+        "beforeContext": "quy trình ",
+        "afterContext": " phản hổi",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000024",
+            "offset": 10
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000024",
+            "offset": 15
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_26",
+        "commentId": "dc881e27-fbc9-4f26-bde9-0aad1502bb0e"
+      }
+    },
+    {
+      "id": "spell_00000024_021",
+      "documentId": "doc_6042258e",
+      "wrong": "phản hổi",
+      "suggestion": "phản hồi",
+      "reason": "Sai dấu trong từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000024",
+        "blockType": "tableCell",
+        "path": "body.table[0].row[4].cell[1]",
+        "startOffset": 16,
+        "endOffset": 24,
+        "searchText": "phản hổi",
+        "beforeContext": "quy trình xử lí ",
+        "afterContext": "",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000024",
+            "offset": 16
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000024",
+            "offset": 24
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_27",
+        "commentId": "3592fb57-e9bb-47ee-ac9c-1d93b6075b24"
+      }
+    },
+    {
+      "id": "spell_00000028_022",
+      "documentId": "doc_6042258e",
+      "wrong": "khách hang",
+      "suggestion": "khách hàng",
+      "reason": "Thiếu dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000028",
+        "blockType": "paragraph",
+        "path": "body.paragraph[34]",
+        "startOffset": 326,
+        "endOffset": 336,
+        "searchText": "khách hang",
+        "beforeContext": " một số từ như dử liệu, ",
+        "afterContext": ", nhân viêng và cập nhập",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000028",
+            "offset": 326
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000028",
+            "offset": 336
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_28",
+        "commentId": "ab522408-4981-4924-b3b6-2c05e0af9c85"
+      }
+    },
+    {
+      "id": "spell_00000028_023",
+      "documentId": "doc_6042258e",
+      "wrong": "dử liệu",
+      "suggestion": "dữ liệu",
+      "reason": "Sai dấu tiếng Việt ở cụm từ phổ biến.",
+      "type": "accent",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000028",
+        "blockType": "paragraph",
+        "path": "body.paragraph[34]",
+        "startOffset": 317,
+        "endOffset": 324,
+        "searchText": "dử liệu",
+        "beforeContext": " viết sai một số từ như ",
+        "afterContext": ", khách hang, nhân viêng",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000028",
+            "offset": 317
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000028",
+            "offset": 324
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_29",
+        "commentId": "1dffccc7-5e5d-4345-bf2e-3c9ad7e7d6bf"
+      }
+    },
+    {
+      "id": "spell_00000028_024",
+      "documentId": "doc_6042258e",
+      "wrong": "nhân viêng",
+      "suggestion": "nhân viên",
+      "reason": "Sai phụ âm cuối trong từ phổ biến.",
+      "type": "typo",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000028",
+        "blockType": "paragraph",
+        "path": "body.paragraph[34]",
+        "startOffset": 338,
+        "endOffset": 348,
+        "searchText": "nhân viêng",
+        "beforeContext": "hư dử liệu, khách hang, ",
+        "afterContext": " và cập nhập để kiểm tra",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000028",
+            "offset": 338
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000028",
+            "offset": 348
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_30",
+        "commentId": "ec3a51af-b850-4c55-b991-d04112fd573d"
+      }
+    },
+    {
+      "id": "spell_00000028_025",
+      "documentId": "doc_6042258e",
+      "wrong": "cập nhập",
+      "suggestion": "cập nhật",
+      "reason": "Dùng từ sai ở cụm từ phổ biến.",
+      "type": "spelling",
+      "confidence": "high",
+      "severity": "error",
+      "source": "rule_engine",
+      "status": "commented",
+      "shouldAutoApply": true,
+      "location": {
+        "blockId": "00000028",
+        "blockType": "paragraph",
+        "path": "body.paragraph[34]",
+        "startOffset": 352,
+        "endOffset": 360,
+        "searchText": "cập nhập",
+        "beforeContext": "ách hang, nhân viêng và ",
+        "afterContext": " để kiểm tra khả năng ph",
+        "target": {
+          "kind": "selection",
+          "start": {
+            "kind": "text",
+            "blockId": "00000028",
+            "offset": 352
+          },
+          "end": {
+            "kind": "text",
+            "blockId": "00000028",
+            "offset": 360
+          }
+        },
+        "anchorId": "anchor_doc_6042258e_31",
+        "commentId": "79e3f451-6762-418f-9e4e-c7b4a5c04f2e"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": "f69e8200-5d04-441f-819b-b81860cd9734",
+      "issueId": "heading_format_00000003",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: heading_consistency\nNội dung: \"1. Giới thiệu\"\nGợi ý: \"Chuẩn hóa style heading level 1\"\nLý do: Heading cùng cấp đang lệch định dạng so với pattern trước đó.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.025Z",
+      "targetText": "1. Giới thiệu",
+      "status": "open"
+    },
+    {
+      "id": "15a1adaf-75c5-4c94-907e-32e6c61d43bc",
+      "issueId": "heading_format_00000007",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: heading_consistency\nNội dung: \"2. Danh sách yêu cầu kiểm thử\"\nGợi ý: \"Chuẩn hóa style heading level 1\"\nLý do: Heading cùng cấp đang lệch định dạng so với pattern trước đó.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.051Z",
+      "targetText": "2. Danh sách yêu cầu kiểm thử",
+      "status": "open"
+    },
+    {
+      "id": "1bc75a34-3df7-4822-aeeb-a7c14c72e392",
+      "issueId": "heading_format_0000000D",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: heading_consistency\nNội dung: \"3. Bảng dữ liệu mẫu\"\nGợi ý: \"Chuẩn hóa style heading level 1\"\nLý do: Heading cùng cấp đang lệch định dạng so với pattern trước đó.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.072Z",
+      "targetText": "3. Bảng dữ liệu mẫu",
+      "status": "open"
+    },
+    {
+      "id": "7ff1bb65-8456-4fbc-a127-7b7c62ea9112",
+      "issueId": "heading_format_00000027",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: heading_consistency\nNội dung: \"4. Đoạn văn dài để test ngữ cảnh\"\nGợi ý: \"Chuẩn hóa style heading level 1\"\nLý do: Heading cùng cấp đang lệch định dạng so với pattern trước đó.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.093Z",
+      "targetText": "4. Đoạn văn dài để test ngữ cảnh",
+      "status": "open"
+    },
+    {
+      "id": "c55642a1-8449-4f98-bed0-5f8c19bfef6f",
+      "issueId": "heading_format_00000029",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: heading_consistency\nNội dung: \"5. Kỳ vọng kết quả\"\nGợi ý: \"Chuẩn hóa style heading level 1\"\nLý do: Heading cùng cấp đang lệch định dạng so với pattern trước đó.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.115Z",
+      "targetText": "5. Kỳ vọng kết quả",
+      "status": "open"
+    },
+    {
+      "id": "35888eb4-daca-49c1-bcd3-7d2d7ea93297",
+      "issueId": "spell_00000004_000",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"hổ trợ\"\nGợi ý: \"hỗ trợ\"\nLý do: Sai dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.137Z",
+      "targetText": "hổ trợ",
+      "status": "open"
+    },
+    {
+      "id": "4623c53c-20a3-491a-a7fd-0cc01aef882b",
+      "issueId": "spell_00000004_001",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"chính tã\"\nGợi ý: \"chính tả\"\nLý do: Sai dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.159Z",
+      "targetText": "chính tã",
+      "status": "open"
+    },
+    {
+      "id": "fc4cdfb5-2e3e-4a73-90ad-032494be415d",
+      "issueId": "spell_00000005_002",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.181Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "5efbb7fa-a6ea-445b-834d-5217cd770a66",
+      "issueId": "spell_00000005_003",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"dử liệu\"\nGợi ý: \"dữ liệu\"\nLý do: Sai dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.205Z",
+      "targetText": "dử liệu",
+      "status": "open"
+    },
+    {
+      "id": "aa866ff4-1da2-42bf-8872-110e027670b3",
+      "issueId": "spell_00000005_004",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: typo\nNội dung: \"nhân viêng\"\nGợi ý: \"nhân viên\"\nLý do: Sai phụ âm cuối trong từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.226Z",
+      "targetText": "nhân viêng",
+      "status": "open"
+    },
+    {
+      "id": "5b6f47e6-b554-4378-a17f-680a63f896ca",
+      "issueId": "spell_00000005_005",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"sản phẫm\"\nGợi ý: \"sản phẩm\"\nLý do: Sai dấu trong từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.247Z",
+      "targetText": "sản phẫm",
+      "status": "open"
+    },
+    {
+      "id": "d5edb00c-571d-4ad2-91be-ec8c96ec11e2",
+      "issueId": "spell_00000008_006",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.269Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "644ffe8c-97d4-4dd5-9a18-a9bd7a102897",
+      "issueId": "spell_00000008_007",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"thong tin\"\nGợi ý: \"thông tin\"\nLý do: Thiếu dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.291Z",
+      "targetText": "thong tin",
+      "status": "open"
+    },
+    {
+      "id": "71053a96-8711-4769-a828-f048cd2748d4",
+      "issueId": "spell_00000008_008",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"du lieu\"\nGợi ý: \"dữ liệu\"\nLý do: Thiếu dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.313Z",
+      "targetText": "du lieu",
+      "status": "open"
+    },
+    {
+      "id": "cbbb6444-2018-486d-a152-ba9e5921b9bd",
+      "issueId": "spell_00000009_009",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: typo\nNội dung: \"nhân viêng\"\nGợi ý: \"nhân viên\"\nLý do: Sai phụ âm cuối trong từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.337Z",
+      "targetText": "nhân viêng",
+      "status": "open"
+    },
+    {
+      "id": "ce8ba9cf-c379-4af0-b69e-b5b9c187b42c",
+      "issueId": "spell_00000009_010",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"sản phẫm\"\nGợi ý: \"sản phẩm\"\nLý do: Sai dấu trong từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.362Z",
+      "targetText": "sản phẫm",
+      "status": "open"
+    },
+    {
+      "id": "9f641326-3e9c-4efb-b149-9f6d522d985e",
+      "issueId": "spell_00000009_011",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"chinh tả\"\nGợi ý: \"chính tả\"\nLý do: Thiếu dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.387Z",
+      "targetText": "chinh tả",
+      "status": "open"
+    },
+    {
+      "id": "0a9f7695-f803-4f4d-92d4-583716b8c8e5",
+      "issueId": "spell_0000000C_012",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Chuẩn hóa chính tả tiếng Việt.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.412Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "98311dad-d4d9-4572-a514-4770ca058dc9",
+      "issueId": "spell_0000000C_013",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"quản lí\"\nGợi ý: \"quản lý\"\nLý do: Chuẩn hóa chính tả tiếng Việt.\nĐộ chắc chắn: medium\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.436Z",
+      "targetText": "quản lí",
+      "status": "open"
+    },
+    {
+      "id": "67414db2-7f9e-443e-90d6-b621c480ef7c",
+      "issueId": "spell_00000015_014",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.460Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "245911c2-8575-41c7-8a7e-e31d92ef7405",
+      "issueId": "spell_00000015_015",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"hổ trợ\"\nGợi ý: \"hỗ trợ\"\nLý do: Sai dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.482Z",
+      "targetText": "hổ trợ",
+      "status": "open"
+    },
+    {
+      "id": "1afa6112-2c4a-41c6-b407-ec2562f14bd6",
+      "issueId": "spell_0000001A_016",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"dử liệu\"\nGợi ý: \"dữ liệu\"\nLý do: Sai dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.502Z",
+      "targetText": "dử liệu",
+      "status": "open"
+    },
+    {
+      "id": "cd75f8a5-7289-4852-bbd7-ba737f0c3f10",
+      "issueId": "spell_0000001A_017",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: typo\nNội dung: \"nhân viêng\"\nGợi ý: \"nhân viên\"\nLý do: Sai phụ âm cuối trong từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.520Z",
+      "targetText": "nhân viêng",
+      "status": "open"
+    },
+    {
+      "id": "d3b81e58-33dc-42b9-8599-007dc031489e",
+      "issueId": "spell_0000001F_018",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"sản phẫm\"\nGợi ý: \"sản phẩm\"\nLý do: Sai dấu trong từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.544Z",
+      "targetText": "sản phẫm",
+      "status": "open"
+    },
+    {
+      "id": "91c16e7a-9660-4d17-85cb-22e9d7d6a976",
+      "issueId": "spell_0000001F_019",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: spelling\nNội dung: \"cập nhập\"\nGợi ý: \"cập nhật\"\nLý do: Dùng từ sai ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.566Z",
+      "targetText": "cập nhập",
+      "status": "open"
+    },
+    {
+      "id": "dc881e27-fbc9-4f26-bde9-0aad1502bb0e",
+      "issueId": "spell_00000024_020",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"xử lí\"\nGợi ý: \"xử lý\"\nLý do: Chuẩn hóa chính tả tiếng Việt.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.588Z",
+      "targetText": "xử lí",
+      "status": "open"
+    },
+    {
+      "id": "3592fb57-e9bb-47ee-ac9c-1d93b6075b24",
+      "issueId": "spell_00000024_021",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"phản hổi\"\nGợi ý: \"phản hồi\"\nLý do: Sai dấu trong từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.606Z",
+      "targetText": "phản hổi",
+      "status": "open"
+    },
+    {
+      "id": "ab522408-4981-4924-b3b6-2c05e0af9c85",
+      "issueId": "spell_00000028_022",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"khách hang\"\nGợi ý: \"khách hàng\"\nLý do: Thiếu dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.628Z",
+      "targetText": "khách hang",
+      "status": "open"
+    },
+    {
+      "id": "1dffccc7-5e5d-4345-bf2e-3c9ad7e7d6bf",
+      "issueId": "spell_00000028_023",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: accent\nNội dung: \"dử liệu\"\nGợi ý: \"dữ liệu\"\nLý do: Sai dấu tiếng Việt ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.650Z",
+      "targetText": "dử liệu",
+      "status": "open"
+    },
+    {
+      "id": "ec3a51af-b850-4c55-b991-d04112fd573d",
+      "issueId": "spell_00000028_024",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: typo\nNội dung: \"nhân viêng\"\nGợi ý: \"nhân viên\"\nLý do: Sai phụ âm cuối trong từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.671Z",
+      "targetText": "nhân viêng",
+      "status": "open"
+    },
+    {
+      "id": "79e3f451-6762-418f-9e4e-c7b4a5c04f2e",
+      "issueId": "spell_00000028_025",
+      "author": "AI Consistency Checker",
+      "text": "AI phát hiện lỗi: spelling\nNội dung: \"cập nhập\"\nGợi ý: \"cập nhật\"\nLý do: Dùng từ sai ở cụm từ phổ biến.\nĐộ chắc chắn: high\nNguồn: rule_engine",
+      "createdAt": "2026-05-05T09:15:33.693Z",
+      "targetText": "cập nhập",
+      "status": "open"
+    }
+  ],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1777972498531",
+      "type": "imported",
+      "message": "Imported DOCX file-test-sai-chinh-ta.docx",
+      "createdAt": "2026-05-05T09:14:58.531Z"
+    },
+    {
+      "id": "hist_1777972533840_7y9xb",
+      "type": "analyzed",
+      "message": "Ran consistency analysis and found 31 issues.",
+      "createdAt": "2026-05-05T09:15:33.840Z"
+    },
+    {
+      "id": "hist_1777972533840_w2e0n",
+      "type": "commented",
+      "message": "Added 31 AI comments.",
+      "createdAt": "2026-05-05T09:15:33.840Z"
+    },
+    {
+      "id": "hist_1777972533840_bm9sb",
+      "type": "highlighted",
+      "message": "Highlighted consistency issues in reviewed-consistency.docx.",
+      "createdAt": "2026-05-05T09:15:33.840Z"
+    }
+  ],
+  "reviewedPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_6042258e\\reviewed-consistency.docx"
+}

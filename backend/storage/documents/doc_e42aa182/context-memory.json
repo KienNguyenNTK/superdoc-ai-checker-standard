@@ -1,0 +1,342 @@
+{
+  "documentId": "doc_e42aa182",
+  "glossary": [
+    {
+      "term": "document engine",
+      "alternatives": [],
+      "firstSeenBlockId": "00000081",
+      "occurrences": [
+        {
+          "blockId": "00000081",
+          "text": "document engine"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "term": "người dùng",
+      "alternatives": [],
+      "firstSeenBlockId": "00000008",
+      "occurrences": [
+        {
+          "blockId": "00000008",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000000C",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000000D",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000000E",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000001D",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000001E",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000001F",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000048",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000049",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000004A",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000056",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000058",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000059",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000005A",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000084",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000085",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000086",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000095",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000097",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000099",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000C3",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000C4",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000C5",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000D0",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000D4",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000D5",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000D6",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000FC",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000FF",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000100",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000101",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000010F",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000110",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000111",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000013B",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000013C",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000013D",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000014C",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000014E",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000150",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001CA",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001CD",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001CE",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001CF",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001D0",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001D1",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001D2",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001D3",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001D4",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001D5",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000001D6",
+          "text": "người dùng"
+        }
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "formatRules": [
+    {
+      "target": "heading_role:section_heading_level_1",
+      "ruleType": "heading_format",
+      "semanticRole": "section_heading_level_1",
+      "expectedFormat": {
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "00000081",
+          "text": "5. Backend document engine"
+        },
+        {
+          "blockId": "00000092",
+          "text": "6. LLM spelling pipeline"
+        },
+        {
+          "blockId": "000000BE",
+          "text": "7. Custom dictionary"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "target": "heading_role:section_heading_level_2",
+      "ruleType": "heading_format",
+      "semanticRole": "section_heading_level_2",
+      "expectedFormat": {
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "0000007E",
+          "text": "4.4 Ghi chú kiểm thử"
+        },
+        {
+          "blockId": "00000083",
+          "text": "5.1 Nội dung kiểm thử"
+        },
+        {
+          "blockId": "00000089",
+          "text": "5.2 Checklist có lỗi cố ý"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "target": "heading_role:appendix_heading",
+      "ruleType": "heading_format",
+      "semanticRole": "appendix_heading",
+      "expectedFormat": {
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "00000175",
+          "text": "PHỤ LỤC A — Danh sách lỗi kỳ vọng"
+        },
+        {
+          "blockId": "000001CC",
+          "text": "PHỤ LỤC B — Đoạn văn dài có nhiều lỗi trộn lẫn"
+        }
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "toneRules": [
+    {
+      "rule": "Ưu tiên văn phong trang trọng và xưng hô nhất quán theo tài liệu.",
+      "examples": [
+        "Dự án SuperDoc AI DOCX Checker được xây dựng để hổ trợ kiểm tra chính tã trong tài liêu DOCX dài. Người dùng có thể import DOCX, xem nội dung bằng SuperDoc, sau đó gửi dử liệu sang LLM để phân tích.",
+        "Khi phát hiện lỗi như sản phẫm hoặc nhân viêng, hệ thống nên trả về suggestion rõ ràng, confidence và lý do ngắn. Frontend sau đó hiển thị trong right sidebar. Ngoài ra, cần cập nhập trạng thái xử lí để người dùng biết tiến trình đang hoạt đông.",
+        "Nếu người dùng bấm vào issue, editor cần scroll tới đúng đoạn và bôi đúng từ sai. Đây là yêu cầu quan trọng để trãi nghiệm giống demo SuperDoc.",
+        "Với lỗi có độ chắc chắn cao, backend có thể tạo track changes. Với lỗi chưa chắc chắn, backend chỉ nên thêm comment để người dùng tự quyết định.",
+        "Nếu người dùng bấm vào issue, editor cần scroll tới đúng đoạn và bôi đúng từ sai. Đây là yêu cầu quan trọng để trãi nghiệm giống demo SuperDoc. Ngoài ra, cần cập nhập trạng thái xử lí để người dùng biết tiến trình đang hoạt đông."
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "entityRules": [
+    {
+      "canonicalName": "Upload",
+      "variants": [
+        "Upload"
+      ],
+      "firstSeenBlockId": "0000002D"
+    },
+    {
+      "canonicalName": "Editor",
+      "variants": [
+        "Editor"
+      ],
+      "firstSeenBlockId": "00000032"
+    },
+    {
+      "canonicalName": "Backend",
+      "variants": [
+        "Backend"
+      ],
+      "firstSeenBlockId": "00000037"
+    },
+    {
+      "canonicalName": "Export",
+      "variants": [
+        "Export"
+      ],
+      "firstSeenBlockId": "0000003C"
+    }
+  ]
+}

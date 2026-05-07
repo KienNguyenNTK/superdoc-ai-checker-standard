@@ -1,0 +1,18 @@
+{
+  "documentId": "doc_c62c022c",
+  "createdAt": "2026-05-05T14:50:30.652Z",
+  "updatedAt": "2026-05-05T14:50:30.653Z",
+  "originalFileName": "file-test-sai-ngu-canh-format-consistency.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_c62c022c\\original.docx",
+  "issues": [],
+  "comments": [],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1777992630653",
+      "type": "imported",
+      "message": "Imported DOCX file-test-sai-ngu-canh-format-consistency.docx",
+      "createdAt": "2026-05-05T14:50:30.653Z"
+    }
+  ]
+}

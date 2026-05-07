@@ -4,11 +4,20 @@ import path from "node:path";
 import express from "express";
 import cors from "cors";
 import multer from "multer";
-import { BASE_URL, CUSTOM_DICTIONARY, FILES_ROOT, FRONTEND_ORIGIN, MODEL } from "./config.js";
-import type { ReviewMode } from "./domain/types.js";
+import {
+  BASE_URL,
+  CUSTOM_DICTIONARY,
+  DEFAULT_MAX_ISSUES,
+  FILES_ROOT,
+  FRONTEND_ORIGIN,
+  MODEL,
+  PROMPTS_DIR,
+} from "./config.js";
+import type { AnalyzeConsistencyRequest, ReviewMode } from "./domain/types.js";
 import { FileDocumentSessionStore } from "./services/storage/documentSessionStore.js";
 import { DocumentReviewService } from "./services/review/documentReviewService.js";
 import { exportIssuesCsv } from "./services/report/reportExporter.js";
+import { PromptTemplateService } from "./prompts/promptTemplateService.js";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -19,6 +28,7 @@ const upload = multer({
 
 const sessionStore = new FileDocumentSessionStore(FILES_ROOT);
 const reviewService = new DocumentReviewService(sessionStore);
+const promptService = new PromptTemplateService(PROMPTS_DIR);
 
 async function ensureDocFile(documentId: string, filename: string, buffer: Buffer) {
   const documentDir = sessionStore.getDocumentDir(documentId);
@@ -45,6 +55,18 @@ function jsonModeFromInput(value: unknown): ReviewMode {
   return allowed.has(raw as ReviewMode)
     ? (raw as ReviewMode)
     : "comment_and_highlight";
+}
+
+function normalizeAnalyzeRequest(body: any): AnalyzeConsistencyRequest {
+  return {
+    checks: Array.isArray(body?.checks) && body.checks.length > 0
+      ? body.checks
+      : ["spelling", "format", "terminology", "translation", "tone", "entity", "date_number"],
+    mode: jsonModeFromInput(body?.mode),
+    useLLM: body?.useLLM !== false,
+    useRuleEngine: body?.useRuleEngine !== false,
+    maxIssues: Number(body?.maxIssues || DEFAULT_MAX_ISSUES),
+  };
 }
 
 export function createApp() {
@@ -104,9 +126,55 @@ export function createApp() {
     }
   });
 
+  app.post("/api/documents/:documentId/build-context", async (req, res) => {
+    try {
+      const memory = await reviewService.buildContext(req.params.documentId);
+      return res.json({
+        documentId: req.params.documentId,
+        status: "context_built",
+        summary: {
+          terms: memory.glossary.length,
+          formatRules: memory.formatRules.length,
+          toneRules: memory.toneRules.length,
+          entities: memory.entityRules.length,
+        },
+        contextMemoryUrl: getFileUrl(req.params.documentId, "context-memory.json"),
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không build được context memory",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.get("/api/documents/:documentId/context", async (req, res) => {
+    try {
+      const context = await reviewService.getContext(req.params.documentId);
+      return res.json({ context });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không lấy được context memory",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.put("/api/documents/:documentId/glossary", async (req, res) => {
+    try {
+      const glossary = await reviewService.updateGlossary(req.params.documentId, req.body?.glossary || []);
+      return res.json({ glossary });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không cập nhật được glossary",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
   app.post("/api/documents/:documentId/analyze-spelling", async (req, res) => {
     try {
-      const session = await reviewService.runReview({
+      const result = await reviewService.runReview({
         documentId: req.params.documentId,
         mode: jsonModeFromInput(req.body?.mode),
         highlightColor:
@@ -116,19 +184,130 @@ export function createApp() {
       });
 
       return res.json({
-        documentId: session.documentId,
+        documentId: result.session.documentId,
         status: "reviewed",
-        issues: session.issues,
-        comments: session.comments,
-        changes: session.changes,
-        history: session.history,
-        reviewedFileUrl: session.reviewedPath
-          ? getFileUrl(session.documentId, path.basename(session.reviewedPath))
+        issues: result.session.issues,
+        comments: result.session.comments,
+        changes: result.session.changes,
+        history: result.session.history,
+        todos: result.todos,
+        reviewedFileUrl: result.session.reviewedPath
+          ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
           : null,
       });
     } catch (error: any) {
       return res.status(500).json({
         error: "Lỗi khi phân tích DOCX",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.post("/api/documents/:documentId/analyze-consistency", async (req, res) => {
+    try {
+      const result = await reviewService.runConsistencyAnalysis({
+        documentId: req.params.documentId,
+        request: normalizeAnalyzeRequest(req.body),
+      });
+
+      return res.json({
+        documentId: result.session.documentId,
+        status: "reviewed",
+        issues: result.session.issues,
+        comments: result.session.comments,
+        changes: result.session.changes,
+        history: result.session.history,
+        todos: result.todos,
+        context: result.contextMemory,
+        reviewedFileUrl: result.session.reviewedPath
+          ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
+          : null,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Lỗi khi kiểm tra consistency",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.post("/api/documents/:documentId/analyze-selection", async (req, res) => {
+    try {
+      const issues = await reviewService.analyzeSelection(
+        req.params.documentId,
+        req.body?.selection,
+        req.body?.checks || ["spelling", "format"]
+      );
+      return res.json({ issues });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không analyze được selection",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.get("/api/prompts", async (_req, res) => {
+    try {
+      res.json({ prompts: await promptService.listPrompts() });
+    } catch (error: any) {
+      res.status(500).json({
+        error: "Không lấy được danh sách prompts",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.get("/api/prompts/:promptId", async (req, res) => {
+    try {
+      res.json({ prompt: await promptService.getPrompt(req.params.promptId) });
+    } catch (error: any) {
+      res.status(404).json({
+        error: "Không tìm thấy prompt",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.put("/api/prompts/:promptId", async (req, res) => {
+    try {
+      res.json({
+        prompt: await promptService.saveOverride(req.params.promptId, {
+          system: req.body?.system,
+          userTemplate: req.body?.userTemplate,
+          defaultModelOptions: req.body?.defaultModelOptions,
+        }),
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        error: "Không lưu được prompt override",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.post("/api/prompts/:promptId/test", async (req, res) => {
+    try {
+      res.json({
+        result: await promptService.testPrompt(req.params.promptId, req.body?.variables || {}, {
+          sampleOutput: req.body?.sampleOutput,
+          runModel: Boolean(req.body?.runModel),
+        }),
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        error: "Không test được prompt",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.post("/api/prompts/:promptId/reset", async (req, res) => {
+    try {
+      res.json({ prompt: await promptService.resetOverride(req.params.promptId) });
+    } catch (error: any) {
+      res.status(500).json({
+        error: "Không reset được prompt",
         detail: error?.message || String(error),
       });
     }
@@ -150,13 +329,16 @@ export function createApp() {
 
   app.post("/api/documents/:documentId/issues/:issueId/apply", async (req, res) => {
     try {
-      const session = await reviewService.applyIssue(req.params.documentId, req.params.issueId);
+      const result = await reviewService.applyIssue(req.params.documentId, req.params.issueId);
       return res.json({
         ok: true,
-        issues: session.issues,
-        changes: session.changes,
-        reviewedFileUrl: session.reviewedPath
-          ? getFileUrl(session.documentId, path.basename(session.reviewedPath))
+        issues: result.session.issues,
+        changes: result.session.changes,
+        todos: result.todos,
+        appliedIssueId: req.params.issueId,
+        appliedIssueLocation: result.session.issues.find((candidate) => candidate.id === req.params.issueId)?.location,
+        reviewedFileUrl: result.session.reviewedPath
+          ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
           : null,
       });
     } catch (error: any) {
@@ -270,20 +452,22 @@ export function createApp() {
 
   app.post("/api/documents/:documentId/ai-command", async (req, res) => {
     try {
-      const session = await reviewService.runReview({
+      const result = await reviewService.runConsistencyAnalysis({
         documentId: req.params.documentId,
-        mode: jsonModeFromInput(req.body?.mode),
-        highlightColor:
-          typeof req.body?.highlightColor === "string" ? req.body.highlightColor : "yellow",
+        request: normalizeAnalyzeRequest({
+          ...req.body,
+          checks: ["spelling", "format", "terminology", "translation", "tone", "entity"],
+        }),
       });
 
       return res.json({
-        message: `Đã cập nhật ${session.issues.length} lỗi theo AI command.`,
-        issues: session.issues,
-        comments: session.comments,
-        changes: session.changes,
-        reviewedFileUrl: session.reviewedPath
-          ? getFileUrl(session.documentId, path.basename(session.reviewedPath))
+        message: `Đã cập nhật ${result.session.issues.length} lỗi theo AI command.`,
+        issues: result.session.issues,
+        comments: result.session.comments,
+        changes: result.session.changes,
+        todos: result.todos,
+        reviewedFileUrl: result.session.reviewedPath
+          ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
           : null,
       });
     } catch (error: any) {
@@ -295,31 +479,36 @@ export function createApp() {
   });
 
   app.post("/api/documents/:documentId/agents/:agentId/run", async (req, res) => {
-    const agentModeMap: Record<string, string> = {
-      "vietnamese-spelling-checker": "comment_and_highlight",
-      "grammar-reviewer": "comment_only",
-      "style-reviewer": "comment_only",
-      "legal-reviewer": "comment_only",
-      "contract-risk-reviewer": "comment_only",
-      "format-cleaner": "track_changes",
-      "table-formatter": "comment_only",
-      "summary-agent": "comment_only",
+    const agentChecksMap: Record<string, AnalyzeConsistencyRequest["checks"]> = {
+      "vietnamese-spelling-checker": ["spelling"],
+      "format-consistency-checker": ["format"],
+      "terminology-consistency-checker": ["terminology"],
+      "translation-consistency-checker": ["translation"],
+      "tone-consistency-checker": ["tone"],
+      "entity-name-consistency-checker": ["entity"],
+      "full-document-consistency-checker": ["spelling", "format", "terminology", "translation", "tone", "entity", "date_number"],
+      "grammar-reviewer": ["spelling"],
+      "style-reviewer": ["tone"],
+      "format-cleaner": ["format"],
     };
 
     try {
-      const session = await reviewService.runReview({
+      const result = await reviewService.runConsistencyAnalysis({
         documentId: req.params.documentId,
-        mode: jsonModeFromInput(agentModeMap[req.params.agentId]),
-        highlightColor: "yellow",
+        request: normalizeAnalyzeRequest({
+          mode: req.params.agentId === "format-cleaner" ? "track_changes" : "comment_and_highlight",
+          checks: agentChecksMap[req.params.agentId] || ["spelling"],
+        }),
       });
 
       return res.json({
         agentId: req.params.agentId,
-        issues: session.issues,
-        comments: session.comments,
-        changes: session.changes,
-        reviewedFileUrl: session.reviewedPath
-          ? getFileUrl(session.documentId, path.basename(session.reviewedPath))
+        issues: result.session.issues,
+        comments: result.session.comments,
+        changes: result.session.changes,
+        todos: result.todos,
+        reviewedFileUrl: result.session.reviewedPath
+          ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
           : null,
       });
     } catch (error: any) {

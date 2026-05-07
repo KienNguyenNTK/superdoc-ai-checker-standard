@@ -8,6 +8,16 @@ const block: DocumentBlock = {
   type: "paragraph",
   path: "body.paragraph[1]",
   text: "Chung toi luon ho tro khach hang trong qua trinh xu ly du lieu.",
+  runs: [
+    {
+      runId: "run_000",
+      text: "Chung toi luon ho tro khach hang trong qua trinh xu ly du lieu.",
+      startOffset: 0,
+      endOffset: 62,
+      italic: false,
+      underline: false,
+    },
+  ],
 };
 
 test("resolveIssueRange returns exact offsets for a single match", () => {
@@ -34,6 +44,16 @@ test("resolveIssueRange marks ambiguous when multiple matches have no useful con
     type: "paragraph",
     path: "body.paragraph[2]",
     text: "khach hang can gap khach hang ngay hom nay",
+    runs: [
+      {
+        runId: "run_000",
+        text: "khach hang can gap khach hang ngay hom nay",
+        startOffset: 0,
+        endOffset: 42,
+        italic: false,
+        underline: false,
+      },
+    ],
   };
 
   const result = resolveIssueRange({
@@ -52,6 +72,16 @@ test("resolveIssueRange uses surrounding context to disambiguate repeated matche
     type: "paragraph",
     path: "body.paragraph[3]",
     text: "khach hang can gap khach hang ngay hom nay",
+    runs: [
+      {
+        runId: "run_000",
+        text: "khach hang can gap khach hang ngay hom nay",
+        startOffset: 0,
+        endOffset: 42,
+        italic: false,
+        underline: false,
+      },
+    ],
   };
 
   const result = resolveIssueRange({

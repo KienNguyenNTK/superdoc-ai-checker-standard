@@ -1,0 +1,88 @@
+{
+  "documentId": "doc_6536ad3f",
+  "glossary": [
+    {
+      "term": "document engine",
+      "alternatives": [],
+      "firstSeenBlockId": "00000016",
+      "occurrences": [
+        {
+          "blockId": "00000016",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000025",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000026",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000044",
+          "text": "document engine"
+        },
+        {
+          "blockId": "0000005E",
+          "text": "document engine"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "term": "người dùng",
+      "alternatives": [],
+      "firstSeenBlockId": "0000002F",
+      "occurrences": [
+        {
+          "blockId": "0000002F",
+          "text": "người dùng"
+        }
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "formatRules": [
+    {
+      "target": "SuperDoc",
+      "ruleType": "term_format",
+      "expectedFormat": {
+        "bold": true,
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "00000007",
+          "text": "SuperDoc là bộ máy tài liệu hỗ trợ chỉnh sửa DOCX và track changes."
+        }
+      ],
+      "confidence": "high"
+    }
+  ],
+  "toneRules": [
+    {
+      "rule": "Ưu tiên văn phong trang trọng và xưng hô nhất quán theo tài liệu.",
+      "examples": [
+        "Văn phong chuẩn của tài liệu là trang trọng: chúng tôi khuyến nghị người dùng kiểm tra tài liệu trước khi xuất bản."
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "entityRules": [
+    {
+      "canonicalName": "SuperDoc",
+      "variants": [
+        "SuperDoc"
+      ],
+      "firstSeenBlockId": "00000007"
+    },
+    {
+      "canonicalName": "STT",
+      "variants": [
+        "STT"
+      ],
+      "firstSeenBlockId": "00000011"
+    }
+  ]
+}

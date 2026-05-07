@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "spelling": {
+      "enabled": true,
+      "mode": "comment_and_highlight",
+      "autoApplyHighConfidence": false
+    },
+    "formatConsistency": {
+      "enabled": true,
+      "checkBold": true,
+      "checkItalic": true,
+      "checkUnderline": true,
+      "checkHeadingStyles": true,
+      "checkFirstMentionInChapter": true
+    },
+    "translationConsistency": {
+      "enabled": true,
+      "useGlossary": true,
+      "inferGlossary": true,
+      "requireUserConfirmGlossary": false
+    },
+    "toneConsistency": {
+      "enabled": true,
+      "targetTone": "formal"
+    }
+  }
+}

@@ -8,8 +8,8 @@ import {
 } from "react";
 import { SuperDocEditor, type SuperDocRef } from "@superdoc-dev/react";
 import { SuperDocUIProvider, useSetSuperDoc, useSuperDocUI } from "superdoc/ui/react";
-import { labelIssueConfidence, labelIssueType, vi } from "../../i18n";
-import type { DocumentMode, IssueLocation, SpellingIssue } from "../../types";
+import { labelIssueConfidence, labelIssueStatus, labelIssueType, vi } from "../../i18n";
+import type { DocumentMode, Issue, IssueLocation } from "../../types";
 
 export type SuperDocWorkspaceHandle = {
   reloadDocument: () => void;
@@ -23,10 +23,11 @@ type Props = {
   toolbarId: string;
   commentsElementId: string;
   documentVersion: number;
-  issues?: SpellingIssue[];
-  onFocusIssue?: (issue: SpellingIssue) => void | Promise<void>;
-  onApplyIssue?: (issue: SpellingIssue) => void | Promise<void>;
-  onIgnoreIssue?: (issue: SpellingIssue) => void | Promise<void>;
+  applyingIssueId?: string | null;
+  issues?: Issue[];
+  onFocusIssue?: (issue: Issue) => void | Promise<void>;
+  onApplyIssue?: (issue: Issue) => void | Promise<void>;
+  onIgnoreIssue?: (issue: Issue) => void | Promise<void>;
 };
 
 function resolveRole(mode: DocumentMode) {
@@ -43,6 +44,7 @@ export const SuperDocWorkspace = forwardRef<SuperDocWorkspaceHandle, Props>(
       toolbarId,
       commentsElementId,
       documentVersion,
+      applyingIssueId,
       issues = [],
       onFocusIssue,
       onApplyIssue,
@@ -59,6 +61,7 @@ export const SuperDocWorkspace = forwardRef<SuperDocWorkspaceHandle, Props>(
           toolbarId={toolbarId}
           commentsElementId={commentsElementId}
           documentVersion={documentVersion}
+          applyingIssueId={applyingIssueId}
           issues={issues}
           onFocusIssue={onFocusIssue}
           onApplyIssue={onApplyIssue}
@@ -76,6 +79,7 @@ const WorkspaceInner = forwardRef<SuperDocWorkspaceHandle, Props>(function Works
     toolbarId,
     commentsElementId,
     documentVersion,
+    applyingIssueId,
     issues = [],
     onFocusIssue,
     onApplyIssue,
@@ -378,6 +382,9 @@ const WorkspaceInner = forwardRef<SuperDocWorkspaceHandle, Props>(function Works
                   <div className="cardMeta">
                     <span>{labelIssueType(issue.type)}</span>
                     <span>{labelIssueConfidence(issue.confidence)}</span>
+                    <span className={`cardStatus cardStatus-${issue.status}`}>
+                      {labelIssueStatus(issue.status)}
+                    </span>
                   </div>
                   <h3>
                     {issue.wrong} → {issue.suggestion}
@@ -398,8 +405,13 @@ const WorkspaceInner = forwardRef<SuperDocWorkspaceHandle, Props>(function Works
                         type="button"
                         className="miniBtn accent"
                         onClick={() => onApplyIssue(issue)}
+                        disabled={applyingIssueId === issue.id || issue.status === "applied" || issue.status === "ignored"}
                       >
-                        {vi.review.apply}
+                        {applyingIssueId === issue.id
+                          ? vi.review.applying
+                          : issue.status === "applied"
+                            ? vi.review.applied
+                            : vi.review.apply}
                       </button>
                     ) : null}
                     {onIgnoreIssue ? (
@@ -407,6 +419,7 @@ const WorkspaceInner = forwardRef<SuperDocWorkspaceHandle, Props>(function Works
                         type="button"
                         className="miniBtn ghost"
                         onClick={() => onIgnoreIssue(issue)}
+                        disabled={issue.status === "applied" || issue.status === "ignored"}
                       >
                         {vi.review.ignore}
                       </button>

@@ -1,0 +1,42 @@
+[
+  {
+    "term": "document engine",
+    "alternatives": [],
+    "firstSeenBlockId": "00000016",
+    "occurrences": [
+      {
+        "blockId": "00000016",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000025",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000026",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000044",
+        "text": "document engine"
+      },
+      {
+        "blockId": "0000005E",
+        "text": "document engine"
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "term": "người dùng",
+    "alternatives": [],
+    "firstSeenBlockId": "0000002F",
+    "occurrences": [
+      {
+        "blockId": "0000002F",
+        "text": "người dùng"
+      }
+    ],
+    "confidence": "medium"
+  }
+]

@@ -16,6 +16,7 @@ import { AgentsDropdown } from "../agents/AgentsDropdown";
 type Props = {
   currentDocument: UploadedDocument | null;
   loading: boolean;
+  isAnalyzing: boolean;
   mode: DocumentMode;
   apiStatus: "checking" | "online" | "offline";
   modelName: string;
@@ -23,8 +24,12 @@ type Props = {
   chatVisible: boolean;
   issueCount: number;
   reviewPanelOpen: boolean;
+  analysisDurationLabel?: string | null;
   agentOptions: AgentOption[];
   currentAgentId: string;
+  onBuildContext: () => void;
+  onOpenContextPanel: () => void;
+  onOpenPromptPanel: () => void;
   onModeChange: (mode: DocumentMode) => void;
   onUpload: (file: File) => void;
   onAnalyze: () => void;
@@ -42,6 +47,7 @@ type Props = {
 export function AppTopBar({
   currentDocument,
   loading,
+  isAnalyzing,
   mode,
   apiStatus,
   modelName,
@@ -49,8 +55,12 @@ export function AppTopBar({
   chatVisible,
   issueCount,
   reviewPanelOpen,
+  analysisDurationLabel,
   agentOptions,
   currentAgentId,
+  onBuildContext,
+  onOpenContextPanel,
+  onOpenPromptPanel,
   onModeChange,
   onUpload,
   onAnalyze,
@@ -96,15 +106,25 @@ export function AppTopBar({
       </div>
 
       <div className="topBarCenter">
-        <button
-          className="primaryBtn spellCheckBtn"
-          type="button"
-          disabled={!currentDocument || loading}
-          onClick={onAnalyze}
-        >
-          <Play size={16} aria-hidden />
-          {loading ? vi.common.checkingSpelling : vi.common.checkSpelling}
-        </button>
+        <div className="topBarAnalyzeGroup">
+          <button
+            className="primaryBtn spellCheckBtn"
+            type="button"
+            disabled={!currentDocument || loading}
+            onClick={onAnalyze}
+          >
+            <Play size={16} aria-hidden />
+            {isAnalyzing ? vi.common.analyzing : vi.common.analyzeConsistency}
+          </button>
+          {analysisDurationLabel ? (
+            <span
+              className={`analysisDurationPill ${isAnalyzing ? "running" : ""}`}
+              aria-live="polite"
+            >
+              {isAnalyzing ? vi.common.analysisRunningTime(analysisDurationLabel) : vi.common.analysisLastTime(analysisDurationLabel)}
+            </span>
+          ) : null}
+        </div>
       </div>
 
       <div className="topBarControls">
@@ -192,6 +212,15 @@ export function AppTopBar({
               {vi.common.applyHighConfidence}
             </button>
 
+            <button
+              type="button"
+              className="ghostBtn moreMenuFullWidth"
+              disabled={!currentDocument || loading}
+              onClick={onBuildContext}
+            >
+              {vi.common.buildContext}
+            </button>
+
             <div className="moreMenuSection">
               <span className="moreMenuLabel">{vi.common.agentsSection}</span>
               <AgentsDropdown
@@ -207,6 +236,14 @@ export function AppTopBar({
             <button type="button" className="ghostBtn moreMenuFullWidth" onClick={onToggleChat}>
               <MessageSquareText size={16} aria-hidden />
               {chatVisible ? vi.common.hideChatAi : vi.common.showChatAi}
+            </button>
+
+            <button type="button" className="ghostBtn moreMenuFullWidth" onClick={onOpenContextPanel}>
+              {vi.common.contextMemory}
+            </button>
+
+            <button type="button" className="ghostBtn moreMenuFullWidth" onClick={onOpenPromptPanel}>
+              {vi.common.promptSettings}
             </button>
 
             <div className="moreMenuSection moreMenuApiRow">

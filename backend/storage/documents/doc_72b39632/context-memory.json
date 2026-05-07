@@ -1,0 +1,323 @@
+{
+  "documentId": "doc_72b39632",
+  "glossary": [
+    {
+      "term": "document engine",
+      "alternatives": [],
+      "firstSeenBlockId": "00000010",
+      "occurrences": [
+        {
+          "blockId": "00000010",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000041",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000042",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000057",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000062",
+          "text": "document engine"
+        },
+        {
+          "blockId": "0000006D",
+          "text": "document engine"
+        },
+        {
+          "blockId": "0000007E",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000088",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000093",
+          "text": "document engine"
+        },
+        {
+          "blockId": "0000009E",
+          "text": "document engine"
+        },
+        {
+          "blockId": "000000AF",
+          "text": "document engine"
+        },
+        {
+          "blockId": "000000B9",
+          "text": "document engine"
+        },
+        {
+          "blockId": "000000C4",
+          "text": "document engine"
+        },
+        {
+          "blockId": "000000CF",
+          "text": "document engine"
+        },
+        {
+          "blockId": "000000E0",
+          "text": "document engine"
+        },
+        {
+          "blockId": "000000EA",
+          "text": "document engine"
+        },
+        {
+          "blockId": "000000F5",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000100",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000111",
+          "text": "document engine"
+        },
+        {
+          "blockId": "0000011B",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000126",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000131",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000142",
+          "text": "document engine"
+        },
+        {
+          "blockId": "0000014C",
+          "text": "document engine"
+        },
+        {
+          "blockId": "00000156",
+          "text": "document engine"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "term": "người dùng",
+      "alternatives": [],
+      "firstSeenBlockId": "0000000D",
+      "occurrences": [
+        {
+          "blockId": "0000000D",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "00000029",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000036",
+          "text": "Người dùng"
+        },
+        {
+          "blockId": "0000003A",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000003C",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000053",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000054",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000005E",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000005F",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000069",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000006A",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000084",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000085",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000008F",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000090",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000009A",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000009B",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000B5",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000B6",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000C0",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000C1",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000CB",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000CC",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000E6",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000E7",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000F1",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000F2",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000FC",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "000000FD",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000117",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000118",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000122",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000123",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000012D",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "0000012E",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000148",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000149",
+          "text": "người dùng"
+        }
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "formatRules": [
+    {
+      "target": "SuperDoc",
+      "ruleType": "term_format",
+      "expectedFormat": {
+        "bold": true,
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "00000047",
+          "text": "SuperDoc được in đậm khi xuất hiện lần đầu như một thuật ngữ chính trong phần này."
+        }
+      ],
+      "confidence": "high"
+    }
+  ],
+  "toneRules": [
+    {
+      "rule": "Ưu tiên văn phong trang trọng và xưng hô nhất quán theo tài liệu.",
+      "examples": [
+        "Không chỉ vậy, có những câu không sai từng từ nhưng sai về ngữ pháp hoặc câu văn nghe không tự nhiên. Ví dụ: Chúng tôi là đang muốn hệ thống này có thể kiểm tra được tất cả mọi vấn đề trong tài liệu.",
+        "Kiểm tra câu văn sai ngữ pháp: Người dùng khi mà mở file thì hệ thống là sẽ kiểm tra.",
+        "Kiểm tra văn phong không nhất quán: lúc dùng quý khách, lúc dùng bạn, lúc dùng tụi mình.",
+        "Sau khi người dùng bấm nút, hệ thống sẽ trả về kết quả.",
+        "Chúng tôi cam kết với bạn sẽ phục vụ quý khách tốt nhất nha."
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "entityRules": [
+    {
+      "canonicalName": "STT",
+      "variants": [
+        "STT"
+      ],
+      "firstSeenBlockId": "00000013"
+    },
+    {
+      "canonicalName": "SuperDoc",
+      "variants": [
+        "SuperDoc"
+      ],
+      "firstSeenBlockId": "00000047"
+    },
+    {
+      "canonicalName": "OpenAI",
+      "variants": [
+        "OpenAI"
+      ],
+      "firstSeenBlockId": "00000049"
+    }
+  ]
+}

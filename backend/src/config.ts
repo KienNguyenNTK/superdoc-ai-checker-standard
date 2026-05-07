@@ -18,6 +18,7 @@ export const MODEL = process.env.LOCAL_LLM_MODEL || "gpt-4o-mini";
 export const BASE_URL =
   process.env.LOCAL_LLM_BASE_URL || "https://api.openai.com/v1";
 export const API_KEY = process.env.LOCAL_LLM_API_KEY || "";
+export const DEFAULT_MAX_ISSUES = Number(process.env.DEFAULT_MAX_ISSUES || 1000);
 
 export const SUPERDOC_USER = {
   name: process.env.SUPERDOC_USER_NAME || "AI Spelling Checker",
@@ -50,3 +51,6 @@ export const CUSTOM_DICTIONARY = [
 ];
 
 export const FILES_ROOT = path.join(STORAGE_DIR, "documents");
+export const CONFIG_ROOT = path.join(STORAGE_DIR, "config");
+export const PROMPTS_DIR = path.join(CONFIG_ROOT, "prompts");
+export const GLOBAL_GLOSSARY_PATH = path.join(CONFIG_ROOT, "glossary", "global-glossary.json");

@@ -1,0 +1,92 @@
+{
+  "documentId": "doc_d6cc004a",
+  "glossary": [],
+  "formatRules": [
+    {
+      "target": "heading_role:normal_heading",
+      "ruleType": "heading_format",
+      "semanticRole": "normal_heading",
+      "expectedFormat": {
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "00000006",
+          "text": "HƯỚNG DẪN TRÌNH BÀY ĐỀ CƯƠNG LUẬN VĂN THẠC SĨ NGÀNH"
+        },
+        {
+          "blockId": "0000000B",
+          "text": "YÊU CẦU CHUNG"
+        },
+        {
+          "blockId": "0000000E",
+          "text": "BỐ CỤC CỦA LUẬN VĂN"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "target": "heading_role:chapter_heading",
+      "ruleType": "heading_format",
+      "semanticRole": "chapter_heading",
+      "expectedFormat": {
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "000000C7",
+          "text": "CHƯƠNG 1 TỔNG QUAN TÀI LIỆU"
+        },
+        {
+          "blockId": "000000D9",
+          "text": "CHƯƠNG 2"
+        },
+        {
+          "blockId": "000000F3",
+          "text": "CHƯƠNG 3"
+        }
+      ],
+      "confidence": "high"
+    }
+  ],
+  "toneRules": [],
+  "entityRules": [
+    {
+      "canonicalName": "SL",
+      "variants": [
+        "SL"
+      ],
+      "firstSeenBlockId": "000000FD"
+    },
+    {
+      "canonicalName": "Nam",
+      "variants": [
+        "Nam"
+      ],
+      "firstSeenBlockId": "00000104"
+    },
+    {
+      "canonicalName": "Chung",
+      "variants": [
+        "Chung"
+      ],
+      "firstSeenBlockId": "0000016E"
+    },
+    {
+      "canonicalName": "Mean",
+      "variants": [
+        "Mean"
+      ],
+      "firstSeenBlockId": "00000253"
+    },
+    {
+      "canonicalName": "SD",
+      "variants": [
+        "SD"
+      ],
+      "firstSeenBlockId": "00000254"
+    }
+  ]
+}

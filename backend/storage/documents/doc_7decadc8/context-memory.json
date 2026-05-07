@@ -1,0 +1,88 @@
+{
+  "documentId": "doc_7decadc8",
+  "glossary": [
+    {
+      "term": "người dùng",
+      "alternatives": [],
+      "firstSeenBlockId": "00000004",
+      "occurrences": [
+        {
+          "blockId": "00000004",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000005",
+          "text": "người dùng"
+        },
+        {
+          "blockId": "00000028",
+          "text": "người dùng"
+        }
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "formatRules": [
+    {
+      "target": "heading_role:section_heading_level_1",
+      "ruleType": "heading_format",
+      "semanticRole": "section_heading_level_1",
+      "expectedFormat": {
+        "italic": false,
+        "underline": false,
+        "fontFamily": "calibri"
+      },
+      "examples": [
+        {
+          "blockId": "00000003",
+          "text": "1. Giới thiệu"
+        },
+        {
+          "blockId": "00000007",
+          "text": "2. Danh sách yêu cầu kiểm thử"
+        },
+        {
+          "blockId": "0000000D",
+          "text": "3. Bảng dữ liệu mẫu"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "target": "STT",
+      "ruleType": "term_format",
+      "expectedFormat": {
+        "bold": true,
+        "italic": false,
+        "underline": false
+      },
+      "examples": [
+        {
+          "blockId": "0000000F",
+          "text": "STT"
+        }
+      ],
+      "confidence": "high"
+    }
+  ],
+  "toneRules": [
+    {
+      "rule": "Ưu tiên văn phong trang trọng và xưng hô nhất quán theo tài liệu.",
+      "examples": [
+        "Công ty chúng tôi đang xây dựng một hệ thống kiểm tra chính tã cho các tài liệu DOCX. Hệ thống này sẽ hổ trợ người dùng upload file, xem nội dung và phát hiện lỗi ngay trên giao diện.",
+        "Trong quá trình vận hành, nhiều nhân viêng thường nhập liệu nhanh nên có thể viết sai như khách hang, sản phẫm hoặc dử liệu. Những lỗi này cần được phát hiện rõ ràng để người dùng dễ sửa.",
+        "Khi người dùng gửi một tài liệu lớn, hệ thống cần phân tích từng phần nhỏ thay vì gửi toàn bộ nội dung một lần. Nếu tài liệu có nhiều bảng biểu, tiêu đề và ghi chú, backend phải giữ được thông tin vị trí tương đối để sau này có thể gắn comment vào đúng đoạn. Trong ví dụ này, chúng tôi cố tình viết sai một số từ như dử liệu, khách hang, nhân viêng và cập nhập để kiểm tra khả năng phát hiện lỗi. Tuy nhiên, hệ thống không nên báo sai các thuật ngữ như SuperDoc, DOCX, OpenAI, LM Studio hoặc Ollama vì đó là tên riêng hoặc thuật ngữ công nghệ."
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "entityRules": [
+    {
+      "canonicalName": "STT",
+      "variants": [
+        "STT"
+      ],
+      "firstSeenBlockId": "0000000F"
+    }
+  ]
+}

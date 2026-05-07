@@ -1,0 +1,18 @@
+{
+  "documentId": "doc_96134c2c",
+  "createdAt": "2026-05-06T10:12:29.017Z",
+  "updatedAt": "2026-05-06T10:12:29.018Z",
+  "originalFileName": "file-test-100-trang.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_96134c2c\\original.docx",
+  "issues": [],
+  "comments": [],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1778062349017",
+      "type": "imported",
+      "message": "Imported DOCX file-test-100-trang.docx",
+      "createdAt": "2026-05-06T10:12:29.017Z"
+    }
+  ]
+}

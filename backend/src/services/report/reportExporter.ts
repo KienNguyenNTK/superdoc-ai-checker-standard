@@ -1,4 +1,4 @@
-import type { SpellingIssue } from "../../domain/types.js";
+import type { Issue } from "../../domain/types.js";
 
 function escapeCsv(value: string | number | undefined) {
   const safe = String(value ?? "");
@@ -6,14 +6,17 @@ function escapeCsv(value: string | number | undefined) {
   return `"${safe.replace(/"/g, '""')}"`;
 }
 
-export function exportIssuesCsv(issues: SpellingIssue[]) {
+export function exportIssuesCsv(issues: Issue[]) {
   const header = [
     "issueId",
     "documentId",
+    "type",
     "wrong",
     "suggestion",
     "reason",
     "confidence",
+    "severity",
+    "source",
     "status",
     "blockId",
     "path",
@@ -25,10 +28,13 @@ export function exportIssuesCsv(issues: SpellingIssue[]) {
     [
       issue.id,
       issue.documentId,
+      issue.type,
       issue.wrong,
       issue.suggestion,
       issue.reason,
       issue.confidence,
+      issue.severity,
+      issue.source,
       issue.status,
       issue.location.blockId,
       issue.location.path,

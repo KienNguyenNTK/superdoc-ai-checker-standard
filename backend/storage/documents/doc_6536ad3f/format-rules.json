@@ -1,0 +1,18 @@
+[
+  {
+    "target": "SuperDoc",
+    "ruleType": "term_format",
+    "expectedFormat": {
+      "bold": true,
+      "italic": false,
+      "underline": false
+    },
+    "examples": [
+      {
+        "blockId": "00000007",
+        "text": "SuperDoc là bộ máy tài liệu hỗ trợ chỉnh sửa DOCX và track changes."
+      }
+    ],
+    "confidence": "high"
+  }
+]

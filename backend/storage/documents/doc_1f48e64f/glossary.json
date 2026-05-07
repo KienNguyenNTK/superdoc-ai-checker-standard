@@ -1,0 +1,266 @@
+[
+  {
+    "term": "document engine",
+    "alternatives": [],
+    "firstSeenBlockId": "00000010",
+    "occurrences": [
+      {
+        "blockId": "00000010",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000041",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000042",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000057",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000062",
+        "text": "document engine"
+      },
+      {
+        "blockId": "0000006D",
+        "text": "document engine"
+      },
+      {
+        "blockId": "0000007E",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000088",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000093",
+        "text": "document engine"
+      },
+      {
+        "blockId": "0000009E",
+        "text": "document engine"
+      },
+      {
+        "blockId": "000000AF",
+        "text": "document engine"
+      },
+      {
+        "blockId": "000000B9",
+        "text": "document engine"
+      },
+      {
+        "blockId": "000000C4",
+        "text": "document engine"
+      },
+      {
+        "blockId": "000000CF",
+        "text": "document engine"
+      },
+      {
+        "blockId": "000000E0",
+        "text": "document engine"
+      },
+      {
+        "blockId": "000000EA",
+        "text": "document engine"
+      },
+      {
+        "blockId": "000000F5",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000100",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000111",
+        "text": "document engine"
+      },
+      {
+        "blockId": "0000011B",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000126",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000131",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000142",
+        "text": "document engine"
+      },
+      {
+        "blockId": "0000014C",
+        "text": "document engine"
+      },
+      {
+        "blockId": "00000156",
+        "text": "document engine"
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "term": "người dùng",
+    "alternatives": [],
+    "firstSeenBlockId": "0000000D",
+    "occurrences": [
+      {
+        "blockId": "0000000D",
+        "text": "Người dùng"
+      },
+      {
+        "blockId": "00000029",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000036",
+        "text": "Người dùng"
+      },
+      {
+        "blockId": "0000003A",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "0000003C",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000053",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000054",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "0000005E",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "0000005F",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000069",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "0000006A",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000084",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000085",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "0000008F",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000090",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "0000009A",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "0000009B",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000B5",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000B6",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000C0",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000C1",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000CB",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000CC",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000E6",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000E7",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000F1",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000F2",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000FC",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "000000FD",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000117",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000118",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000122",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000123",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "0000012D",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "0000012E",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000148",
+        "text": "người dùng"
+      },
+      {
+        "blockId": "00000149",
+        "text": "người dùng"
+      }
+    ],
+    "confidence": "medium"
+  }
+]

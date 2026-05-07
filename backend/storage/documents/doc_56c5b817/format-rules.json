@@ -1,0 +1,50 @@
+[
+  {
+    "target": "heading_role:normal_heading",
+    "ruleType": "heading_format",
+    "semanticRole": "normal_heading",
+    "expectedFormat": {
+      "italic": false,
+      "underline": false
+    },
+    "examples": [
+      {
+        "blockId": "00000006",
+        "text": "HƯỚNG DẪN TRÌNH BÀY ĐỀ CƯƠNG LUẬN VĂN THẠC SĨ NGÀNH"
+      },
+      {
+        "blockId": "0000000B",
+        "text": "YÊU CẦU CHUNG"
+      },
+      {
+        "blockId": "0000000E",
+        "text": "BỐ CỤC CỦA LUẬN VĂN"
+      }
+    ],
+    "confidence": "high"
+  },
+  {
+    "target": "heading_role:chapter_heading",
+    "ruleType": "heading_format",
+    "semanticRole": "chapter_heading",
+    "expectedFormat": {
+      "italic": false,
+      "underline": false
+    },
+    "examples": [
+      {
+        "blockId": "000000C7",
+        "text": "CHƯƠNG 1 TỔNG QUAN TÀI LIỆU"
+      },
+      {
+        "blockId": "000000D9",
+        "text": "CHƯƠNG 2"
+      },
+      {
+        "blockId": "000000F3",
+        "text": "CHƯƠNG 3"
+      }
+    ],
+    "confidence": "high"
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "documentId": "doc_afa7ca23",
+  "createdAt": "2026-05-05T11:15:30.912Z",
+  "updatedAt": "2026-05-05T11:15:30.913Z",
+  "originalFileName": "file-test-sai-chinh-ta.docx",
+  "originalPath": "D:\\inres\\superdoc-ai-checker-standard\\backend\\storage\\documents\\doc_afa7ca23\\original.docx",
+  "issues": [],
+  "comments": [],
+  "changes": [],
+  "history": [
+    {
+      "id": "hist_1777979730912",
+      "type": "imported",
+      "message": "Imported DOCX file-test-sai-chinh-ta.docx",
+      "createdAt": "2026-05-05T11:15:30.912Z"
+    }
+  ]
+}
