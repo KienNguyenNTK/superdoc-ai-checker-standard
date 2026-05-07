@@ -117,6 +117,49 @@ test("runConsistencyAnalysis reuses cached issues for a matching file/config and
     assert.ok(cachedResult.session.issues.every((issue) => issue.documentId === documentId));
     assert.equal(cachedResult.trace?.cache?.cacheHit, true);
 
+    const cachedListOnlyResult = await service.runConsistencyAnalysis({
+      documentId,
+      request: {
+        ...request,
+        annotateFromCache: false,
+      },
+    });
+    assert.equal(cachedListOnlyResult.cacheInfo?.cacheHit, true);
+    assert.equal(cachedListOnlyResult.session.issues.length, 12);
+    assert.equal(cachedListOnlyResult.session.annotatedIssueIds?.length, 0);
+    assert.equal(cachedListOnlyResult.summary?.annotatedIssues, 0);
+    assert.equal(cachedListOnlyResult.trace?.request.annotateFromCache, false);
+    assert.equal(cachedListOnlyResult.trace?.issues[0]?.dropReason, "not_loaded_into_annotation_batch");
+
+    const fallbackDocumentId = "doc_cache_fallback";
+    const fallbackDocDir = path.join(root, "documents", fallbackDocumentId);
+    mkdirSync(fallbackDocDir, { recursive: true });
+    const fallbackOriginalPath = path.join(fallbackDocDir, "original.docx");
+    writeFileSync(fallbackOriginalPath, buffer);
+    await store.create({
+      documentId: fallbackDocumentId,
+      originalFileName: "cache.docx",
+      originalPath: fallbackOriginalPath,
+      fileHash: hashFileBuffer(buffer),
+    });
+    const fallbackCacheStore = new FileAnalysisCacheStore(path.join(root, "legacy-analysis-cache"));
+    await fallbackCacheStore.put({
+      metadata: {
+        ...metadata,
+        cacheKey: "legacy_cache_key_same_file",
+      },
+      issues: Array.from({ length: 12 }, (_, index) => createCachedIssue(index)),
+    });
+    const fallbackService = new DocumentReviewService(store, fallbackCacheStore);
+    const fallbackResult = await fallbackService.runConsistencyAnalysis({
+      documentId: fallbackDocumentId,
+      request,
+    });
+    assert.equal(fallbackResult.cacheInfo?.cacheHit, true);
+    assert.equal(fallbackResult.cacheInfo?.cacheKey, "legacy_cache_key_same_file");
+    assert.equal(fallbackResult.session.issues.length, 12);
+    assert.ok(fallbackResult.session.issues.every((issue) => issue.documentId === fallbackDocumentId));
+
     const forcedResult = await service.runConsistencyAnalysis({
       documentId,
       request: {

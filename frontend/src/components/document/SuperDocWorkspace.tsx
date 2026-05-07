@@ -9,7 +9,7 @@ import {
 import { SuperDocEditor, type SuperDocRef } from "@superdoc-dev/react";
 import { SuperDocUIProvider, useSetSuperDoc, useSuperDocUI } from "superdoc/ui/react";
 import { labelIssueConfidence, labelIssueStatus, labelIssueType, vi } from "../../i18n";
-import type { DocumentMode, Issue, IssueLocation } from "../../types";
+import type { DocumentMode, Issue, IssueAnnotationWindow, IssueLocation } from "../../types";
 
 export type SuperDocWorkspaceHandle = {
   reloadDocument: () => void;
@@ -26,10 +26,17 @@ type Props = {
   applyingIssueId?: string | null;
   issues?: Issue[];
   totalIssueCount?: number;
+  chunkMode?: boolean;
+  issueRailStartIndex?: number;
+  issueRailBatchSize?: number;
+  activeIssueWindow?: IssueAnnotationWindow | null;
+  issueBatchLoading?: boolean;
   onFocusIssue?: (issue: Issue) => void | Promise<void>;
   onApplyIssue?: (issue: Issue) => void | Promise<void>;
   onIgnoreIssue?: (issue: Issue) => void | Promise<void>;
   onOpenAllIssues?: () => void;
+  onOpenIssueBatch?: (startIndex: number, count?: number) => void | Promise<void>;
+  onRailWindowChange?: (startIndex: number) => void;
 };
 
 function resolveRole(mode: DocumentMode) {
@@ -49,10 +56,17 @@ export const SuperDocWorkspace = forwardRef<SuperDocWorkspaceHandle, Props>(
       applyingIssueId,
       issues = [],
       totalIssueCount,
+      issueRailStartIndex,
+      issueRailBatchSize,
+      chunkMode,
+      activeIssueWindow,
+      issueBatchLoading,
       onFocusIssue,
       onApplyIssue,
       onIgnoreIssue,
       onOpenAllIssues,
+      onOpenIssueBatch,
+      onRailWindowChange,
     },
     ref
   ) {
@@ -68,10 +82,17 @@ export const SuperDocWorkspace = forwardRef<SuperDocWorkspaceHandle, Props>(
           applyingIssueId={applyingIssueId}
           issues={issues}
           totalIssueCount={totalIssueCount}
+          issueRailStartIndex={issueRailStartIndex}
+          issueRailBatchSize={issueRailBatchSize}
+          chunkMode={chunkMode}
+          activeIssueWindow={activeIssueWindow}
+          issueBatchLoading={issueBatchLoading}
           onFocusIssue={onFocusIssue}
           onApplyIssue={onApplyIssue}
           onIgnoreIssue={onIgnoreIssue}
           onOpenAllIssues={onOpenAllIssues}
+          onOpenIssueBatch={onOpenIssueBatch}
+          onRailWindowChange={onRailWindowChange}
         />
       </SuperDocUIProvider>
     );
@@ -88,15 +109,28 @@ const WorkspaceInner = forwardRef<SuperDocWorkspaceHandle, Props>(function Works
     applyingIssueId,
     issues = [],
     totalIssueCount,
+    issueRailStartIndex = 0,
+    issueRailBatchSize = 500,
+    chunkMode = false,
+    activeIssueWindow,
+    issueBatchLoading = false,
     onFocusIssue,
     onApplyIssue,
     onIgnoreIssue,
     onOpenAllIssues,
+    onOpenIssueBatch,
+    onRailWindowChange,
   },
   ref
 ) {
     const editorRef = useRef<SuperDocRef>(null);
-    const useAppIssuesRail = issues.length > 0;
+    const useAppIssuesRail = issues.length > 0 || (totalIssueCount ?? 0) > 0;
+    const railStart = activeIssueWindow?.startIndex ?? issueRailStartIndex;
+    const railEnd = activeIssueWindow?.endIndex ??
+      Math.min(railStart + (issues.length > 0 ? issues.length : issueRailBatchSize), totalIssueCount ?? issues.length);
+    const canGoPreviousRail = railStart > 0;
+    const canGoNextRail = typeof totalIssueCount === "number" && railEnd < totalIssueCount;
+    const railIsAnnotatedBatch = Boolean(activeIssueWindow);
     const setSuperDoc = useSetSuperDoc();
     const ui = useSuperDocUI();
     const uiRef = useRef<typeof ui>(null);
@@ -376,24 +410,92 @@ const WorkspaceInner = forwardRef<SuperDocWorkspaceHandle, Props>(function Works
           className={`builtinCommentsHost${useAppIssuesRail ? " builtinCommentsHost--appIssues" : ""}`}
         >
           <div id={commentsElementId} className="superdocCommentsMount" />
-          {issues.length > 0 ? (
+              {useAppIssuesRail ? (
             <div
               className="issueCommentsFallback"
               aria-label={vi.review.aiIssuesRailTitle}
             >
               <div className="issueCommentsFallbackHeader">
                 <div>
-                  {vi.review.aiIssuesRailTitle}
+                  {activeIssueWindow ? "Lỗi đã nạp vào DOCX" : "Lỗi sẵn sàng"}
                   {typeof totalIssueCount === "number" ? (
-                    <span>{issues.length.toLocaleString("vi-VN")} / {totalIssueCount.toLocaleString("vi-VN")}</span>
+                    <span>
+                      {chunkMode
+                        ? `Chunk đang xem`
+                        : activeIssueWindow
+                        ? `Batch ${(activeIssueWindow.startIndex + 1).toLocaleString("vi-VN")}-${activeIssueWindow.endIndex.toLocaleString("vi-VN")}`
+                        : issueBatchLoading
+                          ? `Đang nạp batch ${(railStart + 1).toLocaleString("vi-VN")}-${Math.min(railStart + issueRailBatchSize, totalIssueCount).toLocaleString("vi-VN")}`
+                          : `Chưa nạp batch DOCX`} / {totalIssueCount.toLocaleString("vi-VN")}
+                    </span>
                   ) : null}
                 </div>
-                {onOpenAllIssues && typeof totalIssueCount === "number" && totalIssueCount > issues.length ? (
+                {!chunkMode && onOpenAllIssues && typeof totalIssueCount === "number" && totalIssueCount > issues.length ? (
                   <button type="button" className="miniBtn" onClick={onOpenAllIssues}>
                     Xem tất cả
                   </button>
                 ) : null}
               </div>
+              {!chunkMode ? <div className="issueRailBatchBar">
+                <button
+                  type="button"
+                  className="miniBtn"
+                  disabled={!canGoPreviousRail || issueBatchLoading}
+                  onClick={() => {
+                    const previousStart = Math.max(0, railStart - issueRailBatchSize);
+                    if (onOpenIssueBatch) {
+                      void onOpenIssueBatch(previousStart, issueRailBatchSize);
+                    } else {
+                      onRailWindowChange?.(previousStart);
+                    }
+                  }}
+                >
+                  Batch trước
+                </button>
+                {onOpenIssueBatch ? (
+                  <button
+                    type="button"
+                    className="miniBtn accent"
+                    disabled={issueBatchLoading}
+                    onClick={() => void onOpenIssueBatch(railStart, issueRailBatchSize)}
+                  >
+                    {issueBatchLoading
+                      ? "Đang nạp batch..."
+                      : railIsAnnotatedBatch
+                        ? "Nạp lại batch này"
+                        : "Nạp batch này vào DOCX"}
+                  </button>
+                ) : null}
+                <button
+                  type="button"
+                  className="miniBtn"
+                  disabled={!canGoNextRail || issueBatchLoading}
+                  onClick={() => {
+                    const nextStart = railEnd;
+                    if (onOpenIssueBatch) {
+                      void onOpenIssueBatch(nextStart, issueRailBatchSize);
+                    } else {
+                      onRailWindowChange?.(nextStart);
+                    }
+                  }}
+                >
+                  Batch sau
+                </button>
+              </div> : null}
+              {!railIsAnnotatedBatch ? (
+                <div className="issueRailNotice">
+                  {issueBatchLoading
+                    ? chunkMode
+                      ? "Đang tạo comment/highlight cho chunk hiện tại trong DOCX..."
+                      : `Đang tạo comment/highlight cho batch ${(railStart + 1).toLocaleString("vi-VN")}-${Math.min(railStart + issueRailBatchSize, totalIssueCount ?? railStart + issueRailBatchSize).toLocaleString("vi-VN")} trong DOCX...`
+                    : chunkMode
+                      ? "DOCX chỉ đang nạp comment/highlight cho chunk hiện tại."
+                      : `Danh sách lỗi đã có trong cache/session. DOCX chưa có comment/highlight; bấm "Nạp batch này vào DOCX" để bôi vàng/bình luận batch hiện tại.`}
+                </div>
+              ) : null}
+              {issues.length === 0 && issueBatchLoading ? (
+                <div className="issueRailNotice">Đang mở DOCX đã annotate trong SuperDoc...</div>
+              ) : null}
               {issues.map((issue) => (
                 <article
                   className={`reviewCard issue-${issue.status} issueCommentsFallbackCard`}
@@ -447,6 +549,43 @@ const WorkspaceInner = forwardRef<SuperDocWorkspaceHandle, Props>(function Works
                   </div>
                 </article>
               ))}
+              {!chunkMode ? <div className="issueRailBatchFooter">
+                <button
+                  type="button"
+                  className="miniBtn"
+                  disabled={!canGoPreviousRail || issueBatchLoading}
+                  onClick={() => {
+                    const previousStart = Math.max(0, railStart - issueRailBatchSize);
+                    if (onOpenIssueBatch) {
+                      void onOpenIssueBatch(previousStart, issueRailBatchSize);
+                    } else {
+                      onRailWindowChange?.(previousStart);
+                    }
+                  }}
+                >
+                  Batch trước
+                </button>
+                <span className="mutedText">
+                  {typeof totalIssueCount === "number"
+                    ? `${(railStart + 1).toLocaleString("vi-VN")}-${railEnd.toLocaleString("vi-VN")} / ${totalIssueCount.toLocaleString("vi-VN")}`
+                    : ""}
+                </span>
+                <button
+                  type="button"
+                  className="miniBtn accent"
+                  disabled={!canGoNextRail || issueBatchLoading}
+                  onClick={() => {
+                    const nextStart = railEnd;
+                    if (onOpenIssueBatch) {
+                      void onOpenIssueBatch(nextStart, issueRailBatchSize);
+                    } else {
+                      onRailWindowChange?.(nextStart);
+                    }
+                  }}
+                >
+                  Batch sau
+                </button>
+              </div> : null}
             </div>
           ) : null}
         </div>

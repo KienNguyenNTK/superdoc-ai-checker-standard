@@ -147,6 +147,8 @@ export type IssueEvidence = {
 export type Issue = {
   id: string;
   documentId: string;
+  chunkIndex?: number;
+  pageNumber?: number;
   type: IssueType;
   wrong: string;
   suggestion: string;
@@ -269,6 +271,78 @@ export type AnalysisSummary = {
   cachedAt?: string;
   analysisDurationMs?: number;
   skippedAnalysisBecauseCacheHit?: boolean;
+};
+
+export type PageChunkStatus =
+  | "pending"
+  | "analyzing"
+  | "completed"
+  | "failed";
+
+export type PageChunk = {
+  chunkIndex: number;
+  startPage: number;
+  endPage: number;
+  status: PageChunkStatus;
+  issueCount?: number;
+  errorMessage?: string;
+};
+
+export type AnalysisStatus =
+  | "idle"
+  | "analyzing"
+  | "partial"
+  | "completed"
+  | "failed"
+  | "paused";
+
+export type AnalysisProgress = {
+  documentId: string;
+  fileHash: string;
+  totalPages: number;
+  pageSize: number;
+  totalChunks: number;
+  completedChunks: number;
+  currentChunkIndex: number | null;
+  status: AnalysisStatus;
+  totalIssues: number;
+  updatedAt: string;
+};
+
+export type AnnotationApplyResult = {
+  issueId: string;
+  status: "applied" | "range_not_found" | "skipped" | "failed";
+  reason?: string;
+};
+
+export type CachedChunkAnalysis = {
+  documentId: string;
+  fileHash: string;
+  fileName: string;
+  chunkIndex: number;
+  startPage: number;
+  endPage: number;
+  analyzedAt: string;
+  status: "completed" | "failed";
+  issues: Issue[];
+  errorMessage?: string;
+  annotationResults?: AnnotationApplyResult[];
+};
+
+export type CachedDocumentAnalysisMetadata = {
+  documentId: string;
+  fileHash: string;
+  fileName: string;
+  totalPages: number;
+  pageSize: number;
+  totalChunks: number;
+  completedChunks: number;
+  status: "partial" | "completed" | "failed";
+  totalIssues: number;
+  createdAt: string;
+  updatedAt: string;
+  cacheKey?: string;
+  chunks?: PageChunk[];
 };
 
 export type AnalysisTraceStage =
@@ -468,6 +542,7 @@ export type DocumentSession = {
   finalPath?: string;
   allIssuesPath?: string;
   annotatedIssueIds?: string[];
+  activeIssueWindow?: IssueAnnotationWindow | null;
   traceEnabled?: boolean;
   tracePath?: string;
   analysisSummary?: AnalysisSummary;
@@ -481,6 +556,16 @@ export type DocumentSession = {
   comments: CommentRecord[];
   changes: ChangeRecord[];
   history: HistoryRecord[];
+};
+
+export type IssueAnnotationWindow = {
+  startIndex: number;
+  count: number;
+  endIndex: number;
+  totalIssues: number;
+  issueIds: string[];
+  reviewedFileName?: string;
+  createdAt: string;
 };
 
 export type AnalyzeConsistencyRequest = {
@@ -541,6 +626,7 @@ export type IssueListResponse = {
   hasMore: boolean;
   annotatedCount: number;
   unannotatedCount: number;
+  activeIssueWindow?: IssueAnnotationWindow | null;
 };
 
 export type AnalysisCacheInfo = {

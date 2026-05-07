@@ -38,7 +38,9 @@ type TraceDiagnosis = {
 
 function matchesTraceFilter(issue: AnalysisTraceIssueRecord, filter: TraceFilter) {
   if (filter === "all") return true;
-  if (filter === "budget") return issue.dropReason === "trimmed_by_max_issues";
+  if (filter === "budget") {
+    return issue.dropReason === "trimmed_by_max_issues" || issue.dropReason === "not_loaded_into_annotation_batch";
+  }
   if (filter === "range") {
     return issue.events.some((event) => event.decision === "range_not_found");
   }
@@ -95,13 +97,28 @@ function buildTraceDiagnosis(
       issue.events.some((event) => event.stage === "range_resolution" && event.decision === "range_not_found")
   ).length;
 
+  const isListFirstBatchMode =
+    Boolean(trace?.request.annotateFromCache === false) &&
+    summary.returnedToUi > 0 &&
+    summary.annotatedInDocx === 0;
+
+  if (isListFirstBatchMode) {
+    return {
+      tone: "info",
+      title: "Đã tải đủ danh sách lỗi, chưa mở batch DOCX",
+      message: `${summary.returnedToUi.toLocaleString("vi-VN")} issue đã có trong UI/session từ cache. Đây là trạng thái đúng để test chuyển batch: DOCX chưa có comment/highlight vì bạn chưa mở batch 500 lỗi nào.`,
+      recommendedFilter: "response",
+      recommendedLabel: "Có trong UI",
+    };
+  }
+
   if (largestLoss?.key === "budget" && largestLoss.value > 0) {
     return {
-      tone: "warning",
-      title: "Nhiều lỗi chưa annotate do giới hạn lượt đầu",
-      message: `${summary.droppedByBudget.toLocaleString("vi-VN")} issue hiện chưa được annotate trong DOCX ở lượt đầu. Detector vẫn phát hiện ra đầy đủ, và UI có thể tiếp tục hiển thị/phân trang toàn bộ danh sách.`,
+      tone: "info",
+      title: "Một phần issue chưa nạp vào batch DOCX",
+      message: `${summary.droppedByBudget.toLocaleString("vi-VN")} issue chưa có comment/highlight trong DOCX active. Đây không phải mất lỗi; hãy mở batch chứa issue cần xem để SuperDoc nạp đúng vùng đó.`,
       recommendedFilter: "budget",
-      recommendedLabel: "Chưa annotate do giới hạn",
+      recommendedLabel: "Chưa nạp batch",
     };
   }
 
@@ -205,7 +222,11 @@ export function TraceDebugPanel({
   const filterCounts = useMemo(
     () => ({
       all: traceIssues.length,
-      budget: traceIssues.filter((issue) => issue.dropReason === "trimmed_by_max_issues").length,
+      budget: traceIssues.filter(
+        (issue) =>
+          issue.dropReason === "trimmed_by_max_issues" ||
+          issue.dropReason === "not_loaded_into_annotation_batch"
+      ).length,
       range: traceIssues.filter((issue) =>
         issue.events.some((event) => event.decision === "range_not_found")
       ).length,
@@ -295,7 +316,7 @@ export function TraceDebugPanel({
                 <small>{stageDelta(summary.afterDedup, summary.detectedByDetector)}</small>
               </div>
               <div className="traceStageCard">
-                <strong>Sau giới hạn annotate</strong>
+                <strong>Đã nạp vào batch DOCX</strong>
                 <span>{summary.afterSelection.toLocaleString("vi-VN")}</span>
                 <small>{stageDelta(summary.afterSelection, summary.afterDedup)}</small>
               </div>
@@ -312,7 +333,7 @@ export function TraceDebugPanel({
             </section>
 
             <section className="traceSummaryGrid">
-              <div className="traceMetric"><span>Chưa annotate do giới hạn</span><strong>{summary.droppedByBudget.toLocaleString("vi-VN")}</strong></div>
+              <div className="traceMetric"><span>Chưa nạp vào batch DOCX</span><strong>{summary.droppedByBudget.toLocaleString("vi-VN")}</strong></div>
               <div className="traceMetric"><span>Duplicate bị bỏ</span><strong>{summary.duplicatesRemoved.toLocaleString("vi-VN")}</strong></div>
               <div className="traceMetric"><span>Range not found</span><strong>{summary.rangeNotFound.toLocaleString("vi-VN")}</strong></div>
               <div className="traceMetric"><span>Annotation skipped</span><strong>{summary.skippedAnnotation.toLocaleString("vi-VN")}</strong></div>
@@ -331,7 +352,7 @@ export function TraceDebugPanel({
                     <div className="traceMetric"><span>Mode</span><strong>{trace.request.mode}</strong></div>
                     <div className="traceMetric"><span>useLLM</span><strong>{String(trace.request.useLLM)}</strong></div>
                     <div className="traceMetric"><span>useRuleEngine</span><strong>{String(trace.request.useRuleEngine)}</strong></div>
-                    <div className="traceMetric"><span>Giới hạn annotate lượt đầu</span><strong>{formatTraceNumber(trace.request.maxAnnotatedIssues)}</strong></div>
+                    <div className="traceMetric"><span>Kích thước batch annotate</span><strong>{formatTraceNumber(trace.request.maxAnnotatedIssues)}</strong></div>
                     <div className="traceMetric"><span>Trace</span><strong>{trace.request.debugTrace ? "always_on" : "off"}</strong></div>
                     <div className="traceMetric"><span>Cache hit</span><strong>{trace.cache?.cacheHit ? "true" : "false"}</strong></div>
                     <div className="traceMetric"><span>Force reanalyze</span><strong>{String(trace.cache?.forceReanalyze ?? trace.request.forceReanalyze ?? false)}</strong></div>
@@ -434,7 +455,7 @@ export function TraceDebugPanel({
             <section className="traceFilters">
               {([
                 ["all", "Tất cả"],
-                ["budget", "Chưa annotate do giới hạn"],
+                ["budget", "Chưa nạp batch DOCX"],
                 ["range", "Range not found"],
                 ["annotation", "Không annotate"],
                 ["response", "Có trong UI"],

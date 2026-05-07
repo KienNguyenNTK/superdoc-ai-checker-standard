@@ -49,6 +49,15 @@ test("session store keeps full issue list and listIssues paginates without trunc
     session.annotatedIssueIds = session.issues
       .filter((issue) => issue.location.commentId)
       .map((issue) => issue.id);
+    session.activeIssueWindow = {
+      startIndex: 500,
+      count: 500,
+      endIndex: 1000,
+      totalIssues: 3520,
+      issueIds: session.issues.slice(500, 1000).map((issue) => issue.id),
+      reviewedFileName: "reviewed-consistency.docx",
+      createdAt: new Date().toISOString(),
+    };
     await store.save(session);
 
     const reloaded = await store.get(documentId);
@@ -65,6 +74,8 @@ test("session store keeps full issue list and listIssues paginates without trunc
     assert.equal(pageTwo.total, 3520);
     assert.equal(pageTwo.issues.length, 500);
     assert.equal(pageTwo.issues[0]?.id, "issue_501");
+    assert.equal(pageTwo.activeIssueWindow?.startIndex, 500);
+    assert.equal(pageTwo.activeIssueWindow?.endIndex, 1000);
     assert.equal(pageTwo.hasMore, true);
     assert.ok(annotatedOnly.total > 0);
     assert.ok(annotatedOnly.issues.every((issue) => Boolean(issue.location.commentId)));

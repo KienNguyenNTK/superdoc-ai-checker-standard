@@ -6,6 +6,9 @@ import type {
   AnalysisSummary,
   AnalysisTraceArtifact,
   AnalyzeConsistencyRequest,
+  AnnotationApplyResult,
+  CachedChunkAnalysis,
+  CachedDocumentAnalysisMetadata,
   ChangeRecord,
   CheckConfig,
   CommentRecord,
@@ -14,6 +17,8 @@ import type {
   HistoryRecord,
   IssueListResponse,
   Issue,
+  IssueAnnotationWindow,
+  PageChunk,
   ReviewMode,
   RunFormatSnapshot,
 } from "../../domain/types.js";
@@ -23,6 +28,7 @@ import { resolveIssueRange } from "./rangeResolver.js";
 import type { FileDocumentSessionStore } from "../storage/documentSessionStore.js";
 import { withSuperDocDocument } from "../superdoc/superdocClient.js";
 import { readDocumentBlocks } from "../superdoc/documentReader.js";
+import { applyPageMapToBlocks, buildDocxPageMap } from "../superdoc/docxPageMap.js";
 import { buildContextMemory } from "../consistency/contextMemoryBuilder.js";
 import { runConsistencyPipeline, runConsistencyPipelineDetailed } from "../consistency/consistencyPipeline.js";
 import { summarizeContextMemory } from "../consistency/consistencyReporter.js";
@@ -33,6 +39,7 @@ import type { FileAnalysisCacheStore } from "../storage/analysisCacheStore.js";
 import { hashFile } from "../hash/fileHash.js";
 import { hashStableJson, sha256Hex } from "../hash/configHash.js";
 import { DICTIONARY_JSON_PATH } from "../llm/vietnameseDictionary.js";
+import { createPageChunks } from "./pageChunker.js";
 
 type RunReviewInput = {
   documentId: string;
@@ -49,6 +56,18 @@ type RunReviewInput = {
 type AnalyzeConsistencyInput = {
   documentId: string;
   request: AnalyzeConsistencyRequest;
+};
+
+type ChunkAnalysisSession = {
+  documentId: string;
+  fileHash: string;
+  fileName: string;
+  totalPages: number;
+  pageSize: number;
+  totalChunks: number;
+  status: "created" | "partial" | "completed" | "failed";
+  chunks: PageChunk[];
+  metadata: CachedDocumentAnalysisMetadata;
 };
 
 const DEFAULT_ANALYZE_REQUEST: AnalyzeConsistencyRequest = {
@@ -97,6 +116,7 @@ const HIGHLIGHT_COLORS: Record<string, string> = {
 const ANALYSIS_ENGINE_VERSION = "v1";
 const PROMPT_VERSION = "prompt-v1";
 const DICTIONARY_VERSION = "dictionary-v1";
+const DEFAULT_ANNOTATION_BATCH_SIZE = 500;
 
 function nowIso() {
   return new Date().toISOString();
@@ -301,6 +321,18 @@ function getAnnotatedIssues(issues: Issue[]) {
 
 function getAnnotatedIssueIds(issues: Issue[]) {
   return getAnnotatedIssues(issues).map((issue) => issue.id);
+}
+
+function clearTransientAnnotation(issue: Issue) {
+  issue.location = {
+    ...issue.location,
+    commentId: undefined,
+    changeId: undefined,
+    anchorId: undefined,
+  };
+  if (issue.status === "commented" || issue.status === "highlighted" || issue.status === "tracked") {
+    issue.status = "pending";
+  }
 }
 
 function isEmptyTextNodesError(error: unknown) {
@@ -749,6 +781,477 @@ export class DocumentReviewService {
     };
   }
 
+  private async buildChunkCacheDescriptor(
+    session: DocumentSession,
+    request: AnalyzeConsistencyRequest
+  ) {
+    return this.buildCacheDescriptor(session, {
+      ...request,
+      annotateFromCache: false,
+    });
+  }
+
+  private async readPagedBlocks(session: DocumentSession) {
+    return withSuperDocDocument(session.originalPath, async (doc) => {
+      const blocks = await readDocumentBlocks(doc);
+      const pageMap = await buildDocxPageMap(session.originalPath, blocks);
+      return {
+        blocks: applyPageMapToBlocks(blocks, pageMap),
+        totalPages: pageMap.totalPages,
+      };
+    });
+  }
+
+  private buildChunkProgress(metadata: CachedDocumentAnalysisMetadata) {
+    const chunks = metadata.chunks || createPageChunks(metadata.totalPages, metadata.pageSize);
+    const completedChunks = chunks.filter((chunk) => chunk.status === "completed").length;
+    const totalIssues = chunks.reduce((sum, chunk) => sum + (chunk.issueCount || 0), 0);
+    const failed = chunks.some((chunk) => chunk.status === "failed");
+    const analyzing = chunks.find((chunk) => chunk.status === "analyzing");
+    const status =
+      completedChunks === chunks.length
+        ? "completed"
+        : analyzing
+          ? "analyzing"
+          : completedChunks > 0
+            ? "partial"
+            : failed
+              ? "failed"
+              : "idle";
+
+    return {
+      documentId: metadata.documentId,
+      fileHash: metadata.fileHash,
+      totalPages: metadata.totalPages,
+      pageSize: metadata.pageSize,
+      totalChunks: metadata.totalChunks,
+      completedChunks,
+      currentChunkIndex: analyzing?.chunkIndex ?? null,
+      status,
+      totalIssues,
+      updatedAt: metadata.updatedAt,
+    };
+  }
+
+  private updateMetadataFromChunks(
+    metadata: CachedDocumentAnalysisMetadata,
+    chunks: PageChunk[]
+  ): CachedDocumentAnalysisMetadata {
+    const completedChunks = chunks.filter((chunk) => chunk.status === "completed").length;
+    const totalIssues = chunks.reduce((sum, chunk) => sum + (chunk.issueCount || 0), 0);
+    const failed = chunks.some((chunk) => chunk.status === "failed");
+    return {
+      ...metadata,
+      chunks,
+      completedChunks,
+      totalIssues,
+      status: completedChunks === chunks.length ? "completed" : failed ? "failed" : "partial",
+      updatedAt: nowIso(),
+    };
+  }
+
+  private async saveChunkMetadata(metadata: CachedDocumentAnalysisMetadata) {
+    if (!this.analysisCacheStore) {
+      throw new Error("Analysis cache store is not configured");
+    }
+    await this.analysisCacheStore.saveChunkMetadata(metadata);
+  }
+
+  async createAnalysisSession(input: {
+    documentId: string;
+    request: AnalyzeConsistencyRequest;
+    pageSize?: number;
+  }): Promise<ChunkAnalysisSession> {
+    if (!this.analysisCacheStore) {
+      throw new Error("Analysis cache store is not configured");
+    }
+
+    const session = await this.requireSession(input.documentId);
+    const effectiveRequest: AnalyzeConsistencyRequest = {
+      ...input.request,
+      maxAnnotatedIssues: input.request.maxAnnotatedIssues ?? input.request.maxIssues,
+      maxReturnedIssues: input.request.maxReturnedIssues ?? Number.MAX_SAFE_INTEGER,
+      useCache: input.request.useCache ?? true,
+      forceReanalyze: input.request.forceReanalyze ?? false,
+      annotateFromCache: false,
+    };
+    const descriptor = await this.buildChunkCacheDescriptor(session, effectiveRequest);
+    const pageSize = Math.max(1, Number(input.pageSize || 20));
+
+    const existing = input.request.forceReanalyze
+      ? null
+      : await this.analysisCacheStore.getChunkMetadata(descriptor.cacheKey);
+    if (existing) {
+      return {
+        documentId: session.documentId,
+        fileHash: descriptor.fileHash,
+        fileName: session.originalFileName,
+        totalPages: existing.totalPages,
+        pageSize: existing.pageSize,
+        totalChunks: existing.totalChunks,
+        status: existing.status === "completed" ? "completed" : existing.status === "failed" ? "failed" : "partial",
+        chunks: existing.chunks || createPageChunks(existing.totalPages, existing.pageSize),
+        metadata: existing,
+      };
+    }
+
+    const paged = await this.readPagedBlocks(session);
+    const chunks = createPageChunks(paged.totalPages, pageSize);
+    const now = nowIso();
+    const metadata: CachedDocumentAnalysisMetadata = {
+      documentId: session.documentId,
+      fileHash: descriptor.fileHash,
+      fileName: session.originalFileName,
+      totalPages: paged.totalPages,
+      pageSize,
+      totalChunks: chunks.length,
+      completedChunks: 0,
+      status: "partial",
+      totalIssues: 0,
+      createdAt: now,
+      updatedAt: now,
+      cacheKey: descriptor.cacheKey,
+      chunks,
+    };
+    await this.saveChunkMetadata(metadata);
+
+    return {
+      documentId: session.documentId,
+      fileHash: descriptor.fileHash,
+      fileName: session.originalFileName,
+      totalPages: metadata.totalPages,
+      pageSize,
+      totalChunks: metadata.totalChunks,
+      status: "created",
+      chunks,
+      metadata,
+    };
+  }
+
+  async getChunkMetadataByFileHash(fileHash: string) {
+    if (!this.analysisCacheStore) return null;
+    return this.analysisCacheStore.findChunkMetadataByFileHash(fileHash);
+  }
+
+  async getChunkByFileHash(fileHash: string, chunkIndex: number) {
+    if (!this.analysisCacheStore) return null;
+    const metadata = await this.analysisCacheStore.findChunkMetadataByFileHash(fileHash);
+    if (!metadata?.cacheKey) return null;
+    return this.analysisCacheStore.getChunk(metadata.cacheKey, chunkIndex);
+  }
+
+  async getChunksByFileHash(fileHash: string) {
+    if (!this.analysisCacheStore) return [];
+    const metadata = await this.analysisCacheStore.findChunkMetadataByFileHash(fileHash);
+    if (!metadata?.cacheKey) return [];
+    return this.analysisCacheStore.getAllChunks(metadata.cacheKey);
+  }
+
+  async clearChunkAnalysisByFileHash(fileHash: string) {
+    if (!this.analysisCacheStore) return;
+    const metadata = await this.analysisCacheStore.findChunkMetadataByFileHash(fileHash);
+    if (metadata?.cacheKey) {
+      await this.analysisCacheStore.clearChunkAnalysis(metadata.cacheKey);
+    }
+  }
+
+  async getAnalysisStatus(documentId: string, request: AnalyzeConsistencyRequest) {
+    if (!this.analysisCacheStore) {
+      throw new Error("Analysis cache store is not configured");
+    }
+    const session = await this.requireSession(documentId);
+    const descriptor = await this.buildChunkCacheDescriptor(session, request);
+    const metadata = await this.analysisCacheStore.getChunkMetadata(descriptor.cacheKey);
+    if (!metadata) return null;
+    const chunks = metadata.chunks || createPageChunks(metadata.totalPages, metadata.pageSize);
+    return {
+      ...this.buildChunkProgress(metadata),
+      chunks,
+    };
+  }
+
+  async saveChunkFromApi(input: {
+    documentId: string;
+    request: AnalyzeConsistencyRequest;
+    chunk: CachedChunkAnalysis;
+  }) {
+    if (!this.analysisCacheStore) {
+      throw new Error("Analysis cache store is not configured");
+    }
+    const session = await this.requireSession(input.documentId);
+    const descriptor = await this.buildChunkCacheDescriptor(session, input.request);
+    await this.analysisCacheStore.saveChunk(descriptor.cacheKey, input.chunk);
+    const metadata =
+      (await this.analysisCacheStore.getChunkMetadata(descriptor.cacheKey)) ||
+      (await this.createAnalysisSession({
+        documentId: input.documentId,
+        request: input.request,
+      })).metadata;
+    const chunks = metadata.chunks || createPageChunks(metadata.totalPages, metadata.pageSize);
+    const nextChunks = chunks.map((chunk) =>
+      chunk.chunkIndex === input.chunk.chunkIndex
+        ? {
+            ...chunk,
+            status: input.chunk.status,
+            issueCount: input.chunk.issues.length,
+            errorMessage: input.chunk.errorMessage,
+          }
+        : chunk
+    );
+    const nextMetadata = this.updateMetadataFromChunks(metadata, nextChunks);
+    await this.saveChunkMetadata(nextMetadata);
+    return input.chunk;
+  }
+
+  async annotateChunk(input: {
+    documentId: string;
+    request: AnalyzeConsistencyRequest;
+    chunk: CachedChunkAnalysis;
+  }) {
+    const session = await this.requireSession(input.documentId);
+    const reviewedPath = createReviewedPath(session);
+    const todos: string[] = [];
+    const issues = input.chunk.issues.map((issue) => cloneJson(issue));
+
+    const mutationResult = await withSuperDocDocument(session.originalPath, async (doc) => {
+      const rawBlocks = await readDocumentBlocks(doc);
+      const pageMap = await buildDocxPageMap(session.originalPath, rawBlocks);
+      const blocks = applyPageMapToBlocks(rawBlocks, pageMap);
+      const annotationResult = await annotateIssuesInDoc({
+        doc,
+        documentId: input.documentId,
+        issues,
+        blocks,
+        request: input.request,
+        todos,
+      });
+
+      await doc.save({
+        out: reviewedPath,
+        force: true,
+      });
+
+      return annotationResult;
+    });
+
+    const annotatedIds = new Set(mutationResult.annotatedIssueIds);
+    const annotationResults: AnnotationApplyResult[] = issues.map((issue) => ({
+      issueId: issue.id,
+      status: annotatedIds.has(issue.id)
+        ? "applied"
+        : issue.location.target
+          ? "skipped"
+          : "range_not_found",
+      reason: annotatedIds.has(issue.id)
+        ? undefined
+        : issue.location.target
+          ? "Không tạo được comment/highlight cho lỗi này."
+          : "Không tìm thấy vị trí chính xác trong tài liệu.",
+    }));
+
+    session.issues = issues;
+    session.annotatedIssueIds = mutationResult.annotatedIssueIds;
+    session.comments = mutationResult.comments;
+    session.changes = mutationResult.changes;
+    session.reviewedPath = reviewedPath;
+    session.activeIssueWindow = {
+      startIndex: input.chunk.chunkIndex,
+      count: 1,
+      endIndex: input.chunk.chunkIndex + 1,
+      totalIssues: input.chunk.issues.length,
+      issueIds: issues.map((issue) => issue.id),
+      reviewedFileName: path.basename(reviewedPath),
+      createdAt: nowIso(),
+    };
+    session.history.push(
+      createHistory(
+        "commented",
+        `Annotated chunk ${input.chunk.chunkIndex + 1} pages ${input.chunk.startPage}-${input.chunk.endPage}.`
+      )
+    );
+    await this.store.save(session);
+
+    const savedChunk: CachedChunkAnalysis = {
+      ...input.chunk,
+      issues,
+      annotationResults,
+    };
+    if (this.analysisCacheStore) {
+      const descriptor = await this.buildChunkCacheDescriptor(session, input.request);
+      await this.analysisCacheStore.saveChunk(descriptor.cacheKey, savedChunk);
+    }
+
+    return {
+      session,
+      chunk: savedChunk,
+      annotationResults,
+      reviewedFileUrl: path.basename(reviewedPath),
+      todos,
+    };
+  }
+
+  async analyzeChunk(input: {
+    documentId: string;
+    request: AnalyzeConsistencyRequest;
+    chunkIndex?: number;
+    pageSize?: number;
+    retry?: boolean;
+  }) {
+    if (!this.analysisCacheStore) {
+      throw new Error("Analysis cache store is not configured");
+    }
+
+    const session = await this.requireSession(input.documentId);
+    const effectiveRequest: AnalyzeConsistencyRequest = {
+      ...input.request,
+      maxIssues: input.request.maxIssues || DEFAULT_MAX_ISSUES,
+      maxAnnotatedIssues: input.request.maxAnnotatedIssues ?? input.request.maxIssues,
+      maxReturnedIssues: input.request.maxReturnedIssues ?? Number.MAX_SAFE_INTEGER,
+      useCache: input.request.useCache ?? true,
+      forceReanalyze: input.request.forceReanalyze ?? false,
+      annotateFromCache: false,
+    };
+    const descriptor = await this.buildChunkCacheDescriptor(session, effectiveRequest);
+    const analysisSession = await this.createAnalysisSession({
+      documentId: input.documentId,
+      request: effectiveRequest,
+      pageSize: input.pageSize,
+    });
+    let metadata = analysisSession.metadata;
+    let chunks = metadata.chunks || analysisSession.chunks;
+    const requestedChunk = typeof input.chunkIndex === "number"
+      ? chunks.find((chunk) => chunk.chunkIndex === input.chunkIndex)
+      : chunks.find((chunk) => chunk.status !== "completed");
+    if (!requestedChunk) {
+      return {
+        metadata,
+        chunk: null,
+        progress: this.buildChunkProgress(metadata),
+        reviewedFileUrl: session.reviewedPath ? path.basename(session.reviewedPath) : null,
+      };
+    }
+
+    const cached = await this.analysisCacheStore.getChunk(descriptor.cacheKey, requestedChunk.chunkIndex);
+    if (cached?.status === "completed" && !input.retry && !effectiveRequest.forceReanalyze) {
+      const annotated = await this.annotateChunk({
+        documentId: input.documentId,
+        request: effectiveRequest,
+        chunk: cached,
+      });
+      return {
+        metadata,
+        chunk: annotated.chunk,
+        progress: this.buildChunkProgress(metadata),
+        reviewedFileUrl: path.basename(createReviewedPath(session)),
+      };
+    }
+
+    chunks = chunks.map((chunk) =>
+      chunk.chunkIndex === requestedChunk.chunkIndex
+        ? { ...chunk, status: "analyzing", errorMessage: undefined }
+        : chunk
+    );
+    metadata = this.updateMetadataFromChunks(metadata, chunks);
+    await this.saveChunkMetadata(metadata);
+
+    try {
+      const contextMemory = (await this.getContext(input.documentId)) || (await this.buildContext(input.documentId));
+      const paged = await this.readPagedBlocks(session);
+      const chunkBlocks = paged.blocks.filter((block) => {
+        const page = block.page ?? 1;
+        return page >= requestedChunk.startPage && page <= requestedChunk.endPage;
+      });
+      const pipelineResult = await runConsistencyPipelineDetailed({
+        documentId: input.documentId,
+        blocks: chunkBlocks,
+        contextMemory,
+        request: effectiveRequest,
+      });
+
+      const issues = pipelineResult.allIssues.map((issue, index) => ({
+        ...issue,
+        id: `chunk_${requestedChunk.chunkIndex}_issue_${String(index + 1).padStart(4, "0")}`,
+        documentId: input.documentId,
+        chunkIndex: requestedChunk.chunkIndex,
+        pageNumber:
+          chunkBlocks.find((block) => block.blockId === issue.location.blockId)?.page ??
+          requestedChunk.startPage,
+      }));
+      const savedChunk: CachedChunkAnalysis = {
+        documentId: input.documentId,
+        fileHash: descriptor.fileHash,
+        fileName: session.originalFileName,
+        chunkIndex: requestedChunk.chunkIndex,
+        startPage: requestedChunk.startPage,
+        endPage: requestedChunk.endPage,
+        analyzedAt: nowIso(),
+        status: "completed",
+        issues,
+      };
+      await this.analysisCacheStore.saveChunk(descriptor.cacheKey, savedChunk);
+
+      chunks = chunks.map((chunk) =>
+        chunk.chunkIndex === requestedChunk.chunkIndex
+          ? { ...chunk, status: "completed", issueCount: issues.length, errorMessage: undefined }
+          : chunk
+      );
+      metadata = this.updateMetadataFromChunks(metadata, chunks);
+      await this.saveChunkMetadata(metadata);
+
+      const annotated = await this.annotateChunk({
+        documentId: input.documentId,
+        request: effectiveRequest,
+        chunk: savedChunk,
+      });
+      session.history.push(
+        createHistory(
+          "analyzed",
+          `Analyzed chunk ${requestedChunk.chunkIndex + 1}/${chunks.length} pages ${requestedChunk.startPage}-${requestedChunk.endPage} and found ${issues.length} issues.`
+        )
+      );
+      await this.store.save(session);
+
+      return {
+        metadata,
+        chunk: annotated.chunk,
+        progress: this.buildChunkProgress(metadata),
+        reviewedFileUrl: path.basename(createReviewedPath(session)),
+      };
+    } catch (error: any) {
+      const failedChunk: CachedChunkAnalysis = {
+        documentId: input.documentId,
+        fileHash: descriptor.fileHash,
+        fileName: session.originalFileName,
+        chunkIndex: requestedChunk.chunkIndex,
+        startPage: requestedChunk.startPage,
+        endPage: requestedChunk.endPage,
+        analyzedAt: nowIso(),
+        status: "failed",
+        issues: [],
+        errorMessage: error?.message || String(error),
+      };
+      await this.analysisCacheStore.saveChunk(descriptor.cacheKey, failedChunk);
+      chunks = chunks.map((chunk) =>
+        chunk.chunkIndex === requestedChunk.chunkIndex
+          ? {
+              ...chunk,
+              status: "failed",
+              issueCount: 0,
+              errorMessage: failedChunk.errorMessage,
+            }
+          : chunk
+      );
+      metadata = this.updateMetadataFromChunks(metadata, chunks);
+      await this.saveChunkMetadata(metadata);
+      return {
+        metadata,
+        chunk: failedChunk,
+        progress: this.buildChunkProgress(metadata),
+        reviewedFileUrl: session.reviewedPath ? path.basename(session.reviewedPath) : null,
+      };
+    }
+  }
+
   async ensureReviewedCopy(session: DocumentSession) {
     const reviewedPath = createReviewedPath(session);
     await mkdir(path.dirname(reviewedPath), { recursive: true });
@@ -849,6 +1352,7 @@ export class DocumentReviewService {
       hasMore: start + pageSize < filtered.length,
       annotatedCount,
       unannotatedCount: session.issues.length - annotatedCount,
+      activeIssueWindow: session.activeIssueWindow,
     };
   }
 
@@ -930,6 +1434,113 @@ export class DocumentReviewService {
     return { session, todos };
   }
 
+  async annotateIssueWindow(input: {
+    documentId: string;
+    mode: ReviewMode;
+    startIndex?: number;
+    count?: number;
+  }) {
+    const session = await this.requireSession(input.documentId);
+    const count = Math.max(1, Math.min(1000, Number(input.count || DEFAULT_ANNOTATION_BATCH_SIZE)));
+    const totalIssues = session.issues.length;
+    const startIndex = Math.max(0, Math.min(Number(input.startIndex || 0), Math.max(totalIssues - 1, 0)));
+    const endIndex = Math.min(startIndex + count, totalIssues);
+    const windowIssues = session.issues
+      .slice(startIndex, endIndex)
+      .filter((issue) => issue.status !== "applied" && issue.status !== "ignored");
+    const reviewedPath = createReviewedPath(session);
+    const todos: string[] = [];
+
+    session.issues.forEach(clearTransientAnnotation);
+    session.annotatedIssueIds = [];
+    session.comments = [];
+    session.changes = [];
+
+    if (windowIssues.length > 0) {
+      const mutationResult = await withSuperDocDocument(session.originalPath, async (doc) => {
+        const blocks = await readDocumentBlocks(doc);
+        const annotationResult = await annotateIssuesInDoc({
+          doc,
+          documentId: input.documentId,
+          issues: windowIssues,
+          blocks,
+          request: {
+            ...DEFAULT_ANALYZE_REQUEST,
+            mode: input.mode,
+            maxIssues: windowIssues.length,
+            maxAnnotatedIssues: windowIssues.length,
+            maxReturnedIssues: Number.MAX_SAFE_INTEGER,
+            debugTrace: false,
+            annotateFromCache: true,
+          },
+          todos,
+        });
+
+        await doc.save({
+          out: reviewedPath,
+          force: true,
+        });
+
+        return annotationResult;
+      });
+
+      session.annotatedIssueIds = mutationResult.annotatedIssueIds;
+      session.comments = mutationResult.comments;
+      session.changes = mutationResult.changes;
+    } else {
+      await copyFile(session.originalPath, reviewedPath);
+    }
+
+    const activeIssueWindow: IssueAnnotationWindow = {
+      startIndex,
+      count: endIndex - startIndex,
+      endIndex,
+      totalIssues,
+      issueIds: session.issues.slice(startIndex, endIndex).map((issue) => issue.id),
+      reviewedFileName: path.basename(reviewedPath),
+      createdAt: nowIso(),
+    };
+
+    session.reviewedPath = reviewedPath;
+    session.activeIssueWindow = activeIssueWindow;
+    if (session.analysisSummary) {
+      session.analysisSummary = {
+        ...session.analysisSummary,
+        selectedIssues: session.annotatedIssueIds.length,
+        annotatedIssues: session.annotatedIssueIds.length,
+        returnedIssues: session.issues.length,
+      };
+    }
+    session.history.push(
+      createHistory(
+        "commented",
+        `Opened annotation batch ${startIndex + 1}-${endIndex} with ${session.annotatedIssueIds.length} issues in reviewed-consistency.docx.`
+      )
+    );
+    await writeJsonFile(this.getAllIssuesPath(input.documentId), session.issues);
+    await this.store.save(session);
+    return { session, todos, activeIssueWindow };
+  }
+
+  async openIssueWindow(input: {
+    documentId: string;
+    issueId: string;
+    mode: ReviewMode;
+    count?: number;
+  }) {
+    const session = await this.requireSession(input.documentId);
+    const issueIndex = session.issues.findIndex((issue) => issue.id === input.issueId);
+    if (issueIndex < 0) throw new Error("Issue not found");
+    const count = Math.max(1, Math.min(1000, Number(input.count || DEFAULT_ANNOTATION_BATCH_SIZE)));
+    const startIndex = Math.floor(issueIndex / count) * count;
+    return this.annotateIssueWindow({
+      documentId: input.documentId,
+      mode: input.mode,
+      startIndex,
+      count,
+    });
+  }
+
   async runReview(input: RunReviewInput) {
     return this.runConsistencyAnalysis({
       documentId: input.documentId,
@@ -967,7 +1578,9 @@ export class DocumentReviewService {
   }) {
     const reviewedPath = await this.ensureReviewedCopy(session);
     const todos: string[] = [
-      "Đã dùng kết quả phân tích đã lưu cho file này. Backend chỉ annotate lại batch đầu vào DOCX hiện tại.",
+      request.annotateFromCache === false
+        ? "Đã dùng kết quả phân tích đã lưu cho file này. Danh sách lỗi đã hiện ngay; hãy mở từng batch 500 lỗi để nạp comment/highlight vào DOCX."
+        : "Đã dùng kết quả phân tích đã lưu cho file này. Backend chỉ annotate lại batch đầu vào DOCX hiện tại.",
     ];
     const contextMemory = cacheEntry.contextMemory
       ? { ...cloneJson(cacheEntry.contextMemory), documentId: session.documentId }
@@ -979,6 +1592,214 @@ export class DocumentReviewService {
       await writeJsonFile(this.getContextPath(session.documentId), contextMemory);
       await writeJsonFile(this.getGlossaryPath(session.documentId), contextMemory.glossary);
       await writeJsonFile(this.getFormatRulesPath(session.documentId), contextMemory.formatRules);
+    }
+
+    if (request.annotateFromCache === false) {
+      const issues = cacheEntry.issues.map((issue, index) =>
+        stripIssueAnnotation(issue, session.documentId, index)
+      );
+      const durationMs = Date.now() - startedAt;
+      const cachedBlocksAnalyzed =
+        cacheEntry.trace?.stages.inputBlocks.blocks ||
+        cacheEntry.trace?.summary.detectedByDetector ||
+        0;
+      const summary = buildSummaryFromIssues(issues, 0, request, cachedBlocksAnalyzed, {
+        cacheHit: true,
+        cacheKey,
+        cachedAt,
+        analysisDurationMs: durationMs,
+        skippedAnalysisBecauseCacheHit: true,
+      });
+      analysisTrace = cacheEntry.trace ? cloneJson(cacheEntry.trace) : undefined;
+      if (traceEnabled) {
+        const baseTrace: AnalysisTraceArtifact = analysisTrace || {
+            documentId: session.documentId,
+            createdAt: nowIso(),
+            request: {
+              checks: [...request.checks],
+              mode: request.mode,
+              useLLM: request.useLLM,
+              useRuleEngine: request.useRuleEngine,
+              maxIssues: request.maxIssues,
+              maxAnnotatedIssues: request.maxAnnotatedIssues ?? request.maxIssues,
+              maxReturnedIssues: request.maxReturnedIssues ?? Number.MAX_SAFE_INTEGER,
+              debugTrace: true,
+              useCache: request.useCache,
+              forceReanalyze: request.forceReanalyze,
+              annotateFromCache: request.annotateFromCache,
+            },
+            summary: {
+              detectedByDetector: issues.length,
+              afterDedup: issues.length,
+              afterSelection: 0,
+              annotatedInDocx: 0,
+              returnedToUi: issues.length,
+              rangeNotFound: 0,
+              droppedByBudget: issues.length,
+              duplicatesRemoved: 0,
+              resolvedExact: 0,
+              resolvedFuzzy: 0,
+              resolvedAmbiguous: 0,
+              resolvedNotFound: 0,
+              commentCreated: 0,
+              highlightApplied: 0,
+              trackedChangeCreated: 0,
+              skippedAnnotation: 0,
+              confirmedErrorCount: summary.confirmedErrorCount,
+              needsReviewCount: summary.needsReviewCount,
+              detectorBySource: {
+                rule_engine: issues.filter((issue) => issue.source === "rule_engine").length,
+                llm: issues.filter((issue) => issue.source === "llm").length,
+                hybrid: issues.filter((issue) => issue.source === "hybrid").length,
+              },
+            },
+            stages: {
+              inputBlocks: { blocks: cachedBlocksAnalyzed, uniqueTemplates: 0, representativeChunks: 0 },
+              detectorOutput: {
+                ruleIssues: issues.filter((issue) => issue.source === "rule_engine").length,
+                dictionarySuspicionIssues: issues.filter((issue) => issue.source === "hybrid").length,
+                llmIssues: issues.filter((issue) => issue.source === "llm").length,
+                mergedIssues: issues.length,
+                bySource: {
+                  rule_engine: issues.filter((issue) => issue.source === "rule_engine").length,
+                  llm: issues.filter((issue) => issue.source === "llm").length,
+                  hybrid: issues.filter((issue) => issue.source === "hybrid").length,
+                },
+                needsReviewCount: summary.needsReviewCount,
+                confirmedErrorCount: summary.confirmedErrorCount,
+              },
+              postPipeline: {
+                beforeDedup: issues.length,
+                afterDedup: issues.length,
+                afterSelection: 0,
+                duplicatesRemoved: 0,
+                droppedByBudget: issues.length,
+              },
+              rangeResolution: { exact: 0, fuzzy: 0, ambiguous: 0, notFound: 0 },
+              annotation: {
+                commentCreated: 0,
+                highlightApplied: 0,
+                trackedChangeCreated: 0,
+                annotatedInDocx: 0,
+                skippedAnnotation: 0,
+              },
+              responsePayload: { returnedToUi: issues.length },
+            },
+            issues: [],
+          };
+        analysisTrace = {
+          ...baseTrace,
+          documentId: session.documentId,
+          request: {
+            ...baseTrace.request,
+            maxAnnotatedIssues: request.maxAnnotatedIssues ?? request.maxIssues,
+            annotateFromCache: false,
+          },
+          cache: {
+            cacheHit: true,
+            cacheKey,
+            cachedAt,
+            forceReanalyze: false,
+            skippedAnalysisBecauseCacheHit: true,
+          },
+          summary: {
+            ...baseTrace.summary,
+            detectedByDetector: issues.length,
+            afterDedup: issues.length,
+            afterSelection: 0,
+            annotatedInDocx: 0,
+            returnedToUi: issues.length,
+            droppedByBudget: issues.length,
+            cacheHit: true,
+            cacheKey,
+            cachedAt,
+            forceReanalyze: false,
+          },
+          stages: {
+            ...baseTrace.stages,
+            postPipeline: {
+              ...baseTrace.stages.postPipeline,
+              afterDedup: issues.length,
+              afterSelection: 0,
+              droppedByBudget: issues.length,
+            },
+            annotation: {
+              ...baseTrace.stages.annotation,
+              commentCreated: 0,
+              highlightApplied: 0,
+              trackedChangeCreated: 0,
+              annotatedInDocx: 0,
+            },
+            responsePayload: { returnedToUi: issues.length },
+          },
+          issues: issues.map((issue, index) => ({
+            traceId: `cache_list_${String(index + 1).padStart(4, "0")}`,
+            issueId: issue.id,
+            wrong: issue.wrong,
+            suggestion: issue.suggestion,
+            type: issue.type,
+            source: issue.source,
+            confidence: issue.confidence,
+            status: issue.status,
+            blockId: issue.location.blockId,
+            path: issue.location.path,
+            returnedToUi: true,
+            dropReason: "not_loaded_into_annotation_batch",
+            events: [
+              {
+                stage: "post_pipeline",
+                decision: "cache_hit_list_ready",
+                detail: "Issue is available in UI/session; open an annotation batch to add DOCX comments/highlights.",
+                createdAt: nowIso(),
+              },
+              {
+                stage: "response_payload",
+                decision: "returned_to_ui",
+                createdAt: nowIso(),
+              },
+            ],
+          })),
+        };
+      }
+
+      session.issues = issues;
+      session.annotatedIssueIds = [];
+      session.comments = [];
+      session.changes = [];
+      session.reviewedPath = reviewedPath;
+      session.allIssuesPath = this.getAllIssuesPath(session.documentId);
+      session.activeIssueWindow = null;
+      session.traceEnabled = traceEnabled;
+      session.tracePath = traceEnabled ? this.getTracePath(session.documentId) : undefined;
+      session.analysisSummary = summary;
+      session.traceSummary = analysisTrace?.summary;
+      session.cacheHit = true;
+      session.cacheKey = cacheKey;
+      session.cachedAt = cachedAt;
+      session.analysisDurationMs = durationMs;
+      session.skippedAnalysisBecauseCacheHit = true;
+      await writeJsonFile(session.allIssuesPath, session.issues);
+      if (traceEnabled && analysisTrace && session.tracePath) {
+        await writeJsonFile(session.tracePath, analysisTrace);
+      }
+      session.history.push(
+        createHistory(
+          "analyzed",
+          `Loaded ${session.issues.length} cached issues without opening an annotation batch.`
+        )
+      );
+      await this.store.save(session);
+
+      return {
+        session,
+        contextMemory,
+        todos,
+        summary,
+        traceEnabled,
+        traceSummary: analysisTrace?.summary,
+        trace: analysisTrace,
+        cacheInfo: this.buildCacheInfo(session),
+      };
     }
 
     const mutationResult = await withSuperDocDocument(session.originalPath, async (doc) => {
@@ -1115,7 +1936,7 @@ export class DocumentReviewService {
             path: issue.location.path,
             returnedToUi: true,
             dropped: index >= annotationResult.annotatedIssueIds.length,
-            dropReason: index >= annotationResult.annotatedIssueIds.length ? "trimmed_by_max_issues" : undefined,
+            dropReason: index >= annotationResult.annotatedIssueIds.length ? "not_loaded_into_annotation_batch" : undefined,
             events: [
               {
                 stage: "post_pipeline",
@@ -1184,6 +2005,7 @@ export class DocumentReviewService {
     session.changes = mutationResult.changes;
     session.reviewedPath = reviewedPath;
     session.allIssuesPath = this.getAllIssuesPath(session.documentId);
+    session.activeIssueWindow = undefined;
     session.traceEnabled = traceEnabled;
     session.tracePath = traceEnabled ? this.getTracePath(session.documentId) : undefined;
     session.analysisSummary = mutationResult.summary;
@@ -1200,7 +2022,7 @@ export class DocumentReviewService {
     session.history.push(
       createHistory(
         "analyzed",
-        `Loaded ${session.issues.length} cached issues and annotated ${session.annotatedIssueIds.length} issues in reviewed-consistency.docx.`
+        `Loaded ${session.issues.length} cached issues and annotated ${session.annotatedIssueIds.length} active batch issues in reviewed-consistency.docx.`
       )
     );
     await this.store.save(session);
@@ -1229,7 +2051,7 @@ export class DocumentReviewService {
       maxReturnedIssues: request.maxReturnedIssues ?? Number.MAX_SAFE_INTEGER,
       useCache: request.useCache ?? true,
       forceReanalyze: request.forceReanalyze ?? false,
-      annotateFromCache: request.annotateFromCache ?? true,
+      annotateFromCache: request.annotateFromCache ?? false,
       debugTrace: traceEnabled,
     };
     const cacheDescriptor = await this.buildCacheDescriptor(session, effectiveRequest);
@@ -1239,13 +2061,25 @@ export class DocumentReviewService {
       effectiveRequest.useCache !== false &&
       effectiveRequest.forceReanalyze !== true
     ) {
-      const cached = await this.analysisCacheStore.get(cacheDescriptor.cacheKey);
+      const cached =
+        (await this.analysisCacheStore.get(cacheDescriptor.cacheKey)) ||
+        (await this.analysisCacheStore.findByFileHash(cacheDescriptor.fileHash, (metadata) => {
+          const sameChecks =
+            [...metadata.checks].sort().join(",") === [...effectiveRequest.checks].sort().join(",");
+          return (
+            sameChecks &&
+            metadata.mode === effectiveRequest.mode &&
+            metadata.useLLM === effectiveRequest.useLLM &&
+            metadata.useRuleEngine === effectiveRequest.useRuleEngine &&
+            metadata.analysisEngineVersion === cacheDescriptor.analysisEngineVersion
+          );
+        }));
       if (cached && cached.issues.length > 0) {
         return this.runConsistencyAnalysisFromCache({
           session,
           request: effectiveRequest,
           cacheEntry: cached,
-          cacheKey: cacheDescriptor.cacheKey,
+          cacheKey: cached.metadata.cacheKey,
           cachedAt: cached.metadata.updatedAt || cached.metadata.createdAt,
           startedAt,
         });
@@ -1280,7 +2114,9 @@ export class DocumentReviewService {
         }
       });
       const rawCacheIssues = sanitizeIssuesForCache(pipelineResult.allIssues);
-      const annotateTargets = pipelineResult.selectedIssues;
+      const annotateTargets = effectiveRequest.annotateFromCache === false
+        ? []
+        : pipelineResult.selectedIssues;
       const annotationResult = await annotateIssuesInDoc({
         doc,
         documentId,
@@ -1306,6 +2142,35 @@ export class DocumentReviewService {
 
       traceCollector?.recordResponseIssues(pipelineResult.allIssues);
       analysisTrace = traceCollector?.buildArtifact();
+      if (analysisTrace && effectiveRequest.annotateFromCache === false) {
+        analysisTrace = {
+          ...analysisTrace,
+          summary: {
+            ...analysisTrace.summary,
+            afterSelection: 0,
+            annotatedInDocx: 0,
+            droppedByBudget: pipelineResult.allIssues.length,
+            commentCreated: 0,
+            highlightApplied: 0,
+            trackedChangeCreated: 0,
+          },
+          stages: {
+            ...analysisTrace.stages,
+            postPipeline: {
+              ...analysisTrace.stages.postPipeline,
+              afterSelection: 0,
+              droppedByBudget: pipelineResult.allIssues.length,
+            },
+            annotation: {
+              ...analysisTrace.stages.annotation,
+              commentCreated: 0,
+              highlightApplied: 0,
+              trackedChangeCreated: 0,
+              annotatedInDocx: 0,
+            },
+          },
+        };
+      }
 
       await doc.save({
         out: reviewedPath,
@@ -1328,6 +2193,7 @@ export class DocumentReviewService {
     session.changes = mutationResult.changes;
     session.reviewedPath = reviewedPath;
     session.allIssuesPath = this.getAllIssuesPath(documentId);
+    session.activeIssueWindow = undefined;
     session.traceEnabled = traceEnabled;
     session.tracePath = traceEnabled ? this.getTracePath(documentId) : undefined;
     session.analysisSummary = analysisSummary;
@@ -1376,7 +2242,7 @@ export class DocumentReviewService {
 
     if (analysisSummary && analysisSummary.detectedIssues > analysisSummary.selectedIssues) {
       todos.push(
-        `Phát hiện ${analysisSummary.detectedIssues.toLocaleString("vi-VN")} lỗi trên ${analysisSummary.blocksAnalyzed.toLocaleString("vi-VN")} đoạn, gồm ${analysisSummary.confirmedErrorCount.toLocaleString("vi-VN")} lỗi chắc chắn và ${analysisSummary.needsReviewCount.toLocaleString("vi-VN")} mục cần rà soát. Toàn bộ lỗi đã được giữ trong session/UI; hiện mới annotate ${analysisSummary.annotatedIssues.toLocaleString("vi-VN")} lỗi đầu vào DOCX do giới hạn annotate. Hãy dùng "Annotate thêm 500 lỗi" hoặc "Annotate tất cả lỗi" nếu cần.`
+        `Phát hiện ${analysisSummary.detectedIssues.toLocaleString("vi-VN")} lỗi trên ${analysisSummary.blocksAnalyzed.toLocaleString("vi-VN")} đoạn, gồm ${analysisSummary.confirmedErrorCount.toLocaleString("vi-VN")} lỗi chắc chắn và ${analysisSummary.needsReviewCount.toLocaleString("vi-VN")} mục cần rà soát. Toàn bộ lỗi đã được giữ trong session/UI; DOCX chỉ nạp comment/highlight theo batch 500 lỗi khi người dùng mở batch.`
       );
     }
 
@@ -1389,7 +2255,7 @@ export class DocumentReviewService {
     session.history.push(createHistory(
       "analyzed",
       analysisSummary && analysisSummary.detectedIssues > analysisSummary.selectedIssues
-        ? `Ran consistency analysis and found ${analysisSummary.detectedIssues} issues. Annotated ${analysisSummary.annotatedIssues} issues in reviewed-consistency.docx.`
+        ? `Ran consistency analysis and found ${analysisSummary.detectedIssues} issues. Annotated ${analysisSummary.annotatedIssues} active batch issues in reviewed-consistency.docx.`
         : `Ran consistency analysis and found ${session.issues.length} issues.`
     ));
 

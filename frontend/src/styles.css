@@ -501,6 +501,105 @@ a {
   border-bottom: 1px solid var(--line);
 }
 
+.chunkAnalysisPanel {
+  display: grid;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.chunkAnalysisSummary {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.chunkAnalysisSummary > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.chunkAnalysisSummary strong {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.chunkAnalysisSummary span,
+.currentChunkSummary {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.chunkProgressTrack {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+}
+
+.chunkProgressTrack span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 180ms ease;
+}
+
+.chunkNavigation {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.chunkButton {
+  display: grid;
+  gap: 3px;
+  min-width: 118px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-soft);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.chunkButton span {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.chunkButton strong {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.chunkButton.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.chunkButton-completed strong {
+  color: var(--success);
+}
+
+.chunkButton-failed strong {
+  color: var(--danger);
+}
+
+.chunkButton-analyzing strong {
+  color: var(--accent);
+}
+
+.chunkButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
 .superdocToolbarMount {
   min-height: 48px;
   padding: 6px 8px;
@@ -664,8 +763,8 @@ a {
 .reviewSidebar {
   min-height: 0;
   overflow: hidden;
-  display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   background: var(--panel);
 }
 
@@ -748,7 +847,7 @@ a {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px;
-  margin: 14px 18px 12px;
+  margin: 14px 18px 10px;
   padding: 6px;
   background: var(--panel-soft);
   border-radius: 16px;
@@ -788,6 +887,7 @@ a {
 
 .reviewPane {
   min-height: 0;
+  flex: 1 1 auto;
   overflow: hidden;
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--panel-soft) 78%, white 22%) 0%, var(--panel) 100%);
@@ -838,6 +938,7 @@ a {
 
 .reviewCard p,
 .reviewCard small {
+  display: block;
   margin: 0;
   color: var(--muted);
   line-height: 1.5;
@@ -1007,6 +1108,24 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.issueJumpRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.issueJumpInput {
+  min-width: 130px;
+  flex: 1;
+  min-height: 34px;
+  border-radius: 12px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink);
+  padding: 0 12px;
 }
 
 .reviewPager {
@@ -1298,6 +1417,47 @@ a {
   color: var(--ink);
 }
 
+.issueRailBatchBar,
+.issueRailBatchFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 72%, var(--panel-soft) 28%);
+}
+
+.issueRailBatchBar .miniBtn,
+.issueRailBatchFooter .miniBtn {
+  flex: 1 1 auto;
+  justify-content: center;
+  min-width: 96px;
+}
+
+.issueRailBatchFooter {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  box-shadow: 0 -10px 20px rgba(15, 23, 42, 0.06);
+}
+
+.issueRailBatchFooter .mutedText {
+  width: 100%;
+  text-align: center;
+}
+
+.issueRailNotice {
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+  background: color-mix(in srgb, var(--accent-soft) 48%, var(--panel) 52%);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 .issueCommentsFallbackCard h3 {
   font-size: 14px;
 }
@@ -1364,23 +1524,40 @@ a {
 }
 
 .filterStrip {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  padding: 0 18px 14px;
-  align-items: stretch;
+  display: flex;
+  gap: 8px;
+  padding: 0 18px 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  flex: 0 0 auto;
 }
 
 .reviewSelectRow {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  padding: 0 18px 14px;
+  display: flex;
+  gap: 8px;
+  padding: 0 18px 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  flex: 0 0 auto;
+}
+
+.reviewSelectRow .topSelect {
+  min-width: 124px;
+  max-width: 156px;
+  height: 40px;
+  padding-inline: 10px;
+  font-size: 13px;
+  text-overflow: ellipsis;
 }
 
 .filterChip {
-  width: 100%;
-  min-height: 58px;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 112px;
+  max-width: 148px;
+  min-height: 44px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1389,9 +1566,9 @@ a {
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--panel) 84%, white 16%) 0%, var(--panel-soft) 100%);
   color: var(--ink);
-  border-radius: 18px;
-  padding: 10px 12px;
-  font-size: 13px;
+  border-radius: 14px;
+  padding: 8px 10px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.35;
   text-align: center;
@@ -1405,7 +1582,7 @@ a {
 }
 
 .filterChip strong {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.2;
 }
 
@@ -1540,20 +1717,26 @@ a {
   }
 
   .filterStrip {
-    grid-template-columns: 1fr;
-  }
-
-  .reviewSelectRow {
-    grid-template-columns: 1fr;
     margin-left: 14px;
     margin-right: 14px;
     padding-left: 0;
     padding-right: 0;
   }
 
+  .reviewSelectRow {
+    margin-left: 14px;
+    margin-right: 14px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .reviewSelectRow .topSelect {
+    min-width: 132px;
+  }
+
   .tabButton,
   .filterChip {
-    white-space: normal;
+    white-space: nowrap;
   }
 }
 

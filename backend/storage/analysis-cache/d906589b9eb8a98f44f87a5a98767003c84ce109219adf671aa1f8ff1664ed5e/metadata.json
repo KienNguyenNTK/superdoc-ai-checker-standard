@@ -1,0 +1,27 @@
+{
+  "cacheKey": "d906589b9eb8a98f44f87a5a98767003c84ce109219adf671aa1f8ff1664ed5e",
+  "fileHash": "f221214b6112b8c3fdfe450b44170616ac458fafa810810340b21ee9400a9139",
+  "originalFileName": "file-test-sai-chinh-ta-15-trang (1).docx",
+  "createdAt": "2026-05-07T09:40:55.951Z",
+  "updatedAt": "2026-05-07T09:40:55.952Z",
+  "totalIssues": 434,
+  "checks": [
+    "spelling",
+    "format",
+    "terminology",
+    "translation",
+    "tone",
+    "entity",
+    "date_number"
+  ],
+  "mode": "comment_and_highlight",
+  "useLLM": true,
+  "useRuleEngine": true,
+  "checkConfigHash": "e549154a8e08270a03401bd0c84483d7daca445b312f2771e33ca0914cbf2d4e",
+  "dictionaryVersion": "dictionary-v1",
+  "dictionaryHash": "7038bc252206e43b84f016b6126f751bba4f91f1680ba1d138252d4cd48540d0",
+  "promptVersion": "prompt-v1",
+  "promptHash": "cdd57b06db4c3e93310cc1732acd17508fd130586b2a33dc96a11dcd5c89bf77",
+  "analysisEngineVersion": "v1",
+  "sourceDocumentId": "doc_b5aa3b7d"
+}

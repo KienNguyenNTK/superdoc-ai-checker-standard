@@ -17,6 +17,7 @@ import type {
   CommentRecord,
   HistoryRecord,
   Issue,
+  IssueAnnotationWindow,
   IssueFilter,
   ReviewTab,
 } from "../../types";
@@ -30,6 +31,7 @@ type Props = {
   cacheInfo?: AnalysisCacheInfo | null;
   issues: Issue[];
   annotatedIssues?: Issue[];
+  activeIssueWindow?: IssueAnnotationWindow | null;
   comments: CommentRecord[];
   changes: ChangeRecord[];
   history: HistoryRecord[];
@@ -39,6 +41,7 @@ type Props = {
   onApplyIssue: (issue: Issue) => void;
   onIgnoreIssue: (issue: Issue) => void;
   onAnnotateIssue?: (issue: Issue) => void;
+  onOpenIssueBatch?: (startIndex: number, count?: number) => void;
   onAnnotateMore?: () => void;
   onAnnotateAll?: () => void;
   onExportAllIssues?: () => void;
@@ -115,6 +118,7 @@ export function ReviewSidebar({
   cacheInfo,
   issues,
   annotatedIssues = [],
+  activeIssueWindow,
   comments,
   changes,
   history,
@@ -124,6 +128,7 @@ export function ReviewSidebar({
   onApplyIssue,
   onIgnoreIssue,
   onAnnotateIssue,
+  onOpenIssueBatch,
   onAnnotateMore,
   onAnnotateAll,
   onExportAllIssues,
@@ -134,7 +139,9 @@ export function ReviewSidebar({
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [page, setPage] = useState(1);
+  const [jumpIssueNumber, setJumpIssueNumber] = useState("");
   const pageSize = 200;
+  const batchSize = 500;
   const filteredIssues = useMemo(
     () =>
       deferredIssues.filter((issue) => {
@@ -171,6 +178,14 @@ export function ReviewSidebar({
   const totalIssueCount = analysisSummary?.detectedIssues ?? issues.length;
   const annotatedCount = analysisSummary?.annotatedIssues ?? annotatedIssues.length;
   const unannotatedCount = Math.max(totalIssueCount - annotatedCount, 0);
+  const activeWindowStart = activeIssueWindow ? activeIssueWindow.startIndex + 1 : 0;
+  const activeWindowEnd = activeIssueWindow ? activeIssueWindow.endIndex : 0;
+  const activeWindowIds = useMemo(
+    () => new Set(activeIssueWindow?.issueIds ?? []),
+    [activeIssueWindow]
+  );
+  const nextBatchStart = activeIssueWindow?.endIndex ?? 0;
+  const previousBatchStart = Math.max(0, (activeIssueWindow?.startIndex ?? 0) - batchSize);
 
   useEffect(() => {
     setPage(1);
@@ -274,7 +289,10 @@ export function ReviewSidebar({
                   <span>Đang xem: {filteredIssues.length.toLocaleString("vi-VN")}</span>
                 </div>
                 <span>
-                  Toàn bộ lỗi đã được giữ trong danh sách. Một phần chưa hiển thị comment/highlight trong DOCX vì đang giới hạn annotate.
+                  Toàn bộ lỗi đã được giữ trong danh sách. Chỉ batch đang mở mới được nạp comment/highlight vào DOCX để tránh làm SuperDoc quá tải.
+                </span>
+                <span>
+                  Batch DOCX hiện tại: {activeIssueWindow ? `${activeWindowStart.toLocaleString("vi-VN")}-${activeWindowEnd.toLocaleString("vi-VN")}` : "chưa mở batch"} / {totalIssueCount.toLocaleString("vi-VN")} lỗi.
                 </span>
                 {cacheInfo?.cacheHit ? (
                   <span>
@@ -282,10 +300,33 @@ export function ReviewSidebar({
                   </span>
                 ) : null}
                 <div className="reviewSummaryActions">
-                  {onAnnotateMore ? <button type="button" className="miniBtn accent" onClick={onAnnotateMore}>Annotate thêm 500 lỗi</button> : null}
-                  {onAnnotateAll ? <button type="button" className="miniBtn" onClick={onAnnotateAll}>Annotate tất cả lỗi</button> : null}
+                  {onOpenIssueBatch ? <button type="button" className="miniBtn accent" onClick={() => onOpenIssueBatch(0, batchSize)}>Mở batch 1-500</button> : null}
+                  {onOpenIssueBatch ? <button type="button" className="miniBtn" disabled={!activeIssueWindow || activeIssueWindow.startIndex <= 0} onClick={() => onOpenIssueBatch(previousBatchStart, batchSize)}>Batch trước</button> : null}
+                  {onAnnotateMore ? <button type="button" className="miniBtn" disabled={nextBatchStart >= totalIssueCount} onClick={onAnnotateMore}>Batch sau</button> : null}
+                  {onAnnotateAll ? <button type="button" className="miniBtn ghost" onClick={onAnnotateAll}>Annotate tất cả lỗi</button> : null}
                   {onExportAllIssues ? <button type="button" className="miniBtn ghost" onClick={onExportAllIssues}>Export all issues JSON</button> : null}
                 </div>
+                {onOpenIssueBatch ? (
+                  <form
+                    className="issueJumpRow"
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                      const issueNumber = Math.max(1, Math.min(totalIssueCount, Number(jumpIssueNumber || 1)));
+                      const startIndex = Math.floor((issueNumber - 1) / batchSize) * batchSize;
+                      onOpenIssueBatch(startIndex, batchSize);
+                    }}
+                  >
+                    <input
+                      className="issueJumpInput"
+                      inputMode="numeric"
+                      value={jumpIssueNumber}
+                      onChange={(event) => setJumpIssueNumber(event.target.value.replace(/\D/g, ""))}
+                      placeholder="Nhảy tới lỗi #"
+                      aria-label="Nhảy tới số thứ tự lỗi"
+                    />
+                    <button type="submit" className="miniBtn">Mở batch</button>
+                  </form>
+                ) : null}
               </div>
             ) : null}
             {analysisSummary && unannotatedCount === 0 ? (
@@ -336,7 +377,7 @@ export function ReviewSidebar({
                     <span>{labelIssueConfidence(issue.confidence)}</span>
                     <span>{labelIssueSeverity(issue.severity)}</span>
                     <span className={`cardStatus ${isAnnotatedIssue(issue) ? "cardStatus-annotated" : "cardStatus-unannotated"}`}>
-                      {getAnnotationLabel(issue)}
+                      {activeWindowIds.has(issue.id) ? getAnnotationLabel(issue) : "Chưa nạp vào DOCX"}
                     </span>
                     <span className={`cardStatus cardStatus-${issue.status}`}>
                       {labelIssueStatus(issue.status)}
@@ -366,13 +407,21 @@ export function ReviewSidebar({
                             ? vi.review.applied
                             : vi.review.apply}
                       </button>
-                    ) : onAnnotateIssue && !["applied", "ignored"].includes(issue.status) ? (
+                    ) : activeWindowIds.has(issue.id) && onAnnotateIssue && !["applied", "ignored"].includes(issue.status) ? (
                       <button
                         className="miniBtn accent"
                         onClick={() => onAnnotateIssue(issue)}
                         disabled={applyingIssueId === issue.id}
                       >
                         {applyingIssueId === issue.id ? "Đang annotate..." : "Annotate lỗi này"}
+                      </button>
+                    ) : onOpenIssueBatch && !["applied", "ignored"].includes(issue.status) ? (
+                      <button
+                        className="miniBtn accent"
+                        onClick={() => onFocusIssue(issue)}
+                        disabled={applyingIssueId === issue.id}
+                      >
+                        {applyingIssueId === issue.id ? "Đang mở batch..." : "Mở batch chứa lỗi này"}
                       </button>
                     ) : null}
                     <button

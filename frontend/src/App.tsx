@@ -1,10 +1,13 @@
 import { startTransition, useMemo, useRef, useState } from "react";
 import {
   analyzeDocument,
+  analyzeDocumentChunk,
+  annotateIssueBatch,
   annotateIssues,
   applyHighConfidence,
   applyIssue,
   buildContext,
+  createAnalysisSession,
   focusIssue,
   getAnalysisTrace,
   getApiHealth,
@@ -13,6 +16,7 @@ import {
   getPrompt,
   ignoreIssue,
   listPrompts,
+  openIssueWindow,
   resetPrompt,
   runAgent,
   runAiCommand,
@@ -21,12 +25,17 @@ import {
   updateGlossary,
   uploadDocument,
 } from "./lib/api";
+import type { ChunkAnalyzeBody } from "./lib/api";
 import type {
   AnalysisSummary,
   AnalysisCacheInfo,
+  AnalysisProgress,
+  AnalysisSessionResponse,
   AnalysisTraceArtifact,
   AnalysisTraceSummary,
   AgentOption,
+  CachedChunkAnalysis,
+  CachedDocumentAnalysisMetadata,
   ChangeRecord,
   ClientTraceEvent,
   CommentRecord,
@@ -34,8 +43,10 @@ import type {
   DocumentMode,
   HistoryRecord,
   Issue,
+  IssueAnnotationWindow,
   IssueLocation,
   IssueFilter,
+  PageChunk,
   PromptTemplate,
   ReviewMode,
   ReviewResponse,
@@ -59,6 +70,8 @@ import { TraceDebugPanel } from "./components/review/TraceDebugPanel";
 
 const TOOLBAR_ID = "superdoc-toolbar-surface";
 const COMMENTS_ID = "superdoc-comments-surface";
+const ISSUE_RAIL_BATCH_SIZE = 500;
+const ANALYSIS_PAGE_SIZE = 20;
 
 const AGENTS: AgentOption[] = [
   {
@@ -105,6 +118,26 @@ const AGENTS: AgentOption[] = [
   },
 ];
 
+function buildChunkRequest(
+  mode: ReviewMode,
+  traceEnabled: boolean,
+  options: { forceReanalyze?: boolean; useCache?: boolean; chunkIndex?: number; retry?: boolean } = {}
+): ChunkAnalyzeBody {
+  return {
+    mode,
+    checks: ["spelling", "format", "terminology", "translation", "tone", "entity", "date_number"],
+    debugTrace: traceEnabled,
+    useCache: options.useCache ?? true,
+    forceReanalyze: Boolean(options.forceReanalyze),
+    pageSize: ANALYSIS_PAGE_SIZE,
+    chunkIndex: options.chunkIndex,
+    retry: options.retry,
+    maxIssues: 5000,
+    maxAnnotatedIssues: 5000,
+    maxReturnedIssues: Number.MAX_SAFE_INTEGER,
+  };
+}
+
 function mergeResponse(
   previous: {
     comments: CommentRecord[];
@@ -117,6 +150,7 @@ function mergeResponse(
     traceSummary?: AnalysisTraceSummary | null;
     traceFileUrl?: string | null;
     cacheInfo?: AnalysisCacheInfo | null;
+    activeIssueWindow?: IssueAnnotationWindow | null;
   },
   next: ReviewResponse
 ) {
@@ -134,17 +168,31 @@ function mergeResponse(
     traceSummary: nextTraceEnabled ? next.traceSummary || previous.traceSummary || null : null,
     traceFileUrl: nextTraceEnabled ? next.traceFileUrl || previous.traceFileUrl || null : null,
     cacheInfo: next.cacheInfo || previous.cacheInfo || null,
+    activeIssueWindow: Object.prototype.hasOwnProperty.call(next, "activeIssueWindow")
+      ? next.activeIssueWindow ?? null
+      : previous.activeIssueWindow || null,
   };
 }
 
 function buildTraceInsightLabel(
   traceSummary: AnalysisTraceSummary | null,
-  clientEvents: ClientTraceEvent[]
+  clientEvents: ClientTraceEvent[],
+  activeIssueWindow?: IssueAnnotationWindow | null
 ) {
   if (!traceSummary) return null;
+  if (activeIssueWindow) {
+    return `Trace: batch ${(activeIssueWindow.startIndex + 1).toLocaleString("vi-VN")}-${activeIssueWindow.endIndex.toLocaleString("vi-VN")} đã nạp vào DOCX / ${activeIssueWindow.totalIssues.toLocaleString("vi-VN")}`;
+  }
   const focusFailures = clientEvents.filter((event) => event.decision === "focus_display_failed").length;
+  if (
+    traceSummary.returnedToUi > 0 &&
+    traceSummary.annotatedInDocx === 0 &&
+    traceSummary.droppedByBudget >= traceSummary.returnedToUi
+  ) {
+    return `Trace: ${traceSummary.returnedToUi.toLocaleString("vi-VN")} issue sẵn sàng, chưa mở batch DOCX`;
+  }
   if (traceSummary.droppedByBudget > 0) {
-    return `Trace: ${traceSummary.droppedByBudget.toLocaleString("vi-VN")} chưa annotate do giới hạn`;
+    return `Trace: ${traceSummary.droppedByBudget.toLocaleString("vi-VN")} issue chưa nạp vào batch DOCX`;
   }
   if (traceSummary.rangeNotFound > 0) {
     return `Trace: ${traceSummary.rangeNotFound.toLocaleString("vi-VN")} lỗi không map được vị trí`;
@@ -168,6 +216,7 @@ export default function App() {
   const [modelName, setModelName] = useState("gpt-4o-mini");
   const [issues, setIssues] = useState<Issue[]>([]);
   const [annotatedIssues, setAnnotatedIssues] = useState<Issue[]>([]);
+  const [issueRailStartIndex, setIssueRailStartIndex] = useState(0);
   const [comments, setComments] = useState<CommentRecord[]>([]);
   const [changes, setChanges] = useState<ChangeRecord[]>([]);
   const [history, setHistory] = useState<HistoryRecord[]>([]);
@@ -176,11 +225,18 @@ export default function App() {
   const [traceSummary, setTraceSummary] = useState<AnalysisTraceSummary | null>(null);
   const [traceFileUrl, setTraceFileUrl] = useState<string | null>(null);
   const [cacheInfo, setCacheInfo] = useState<AnalysisCacheInfo | null>(null);
+  const [analysisMetadata, setAnalysisMetadata] = useState<CachedDocumentAnalysisMetadata | null>(null);
+  const [analysisProgress, setAnalysisProgress] = useState<AnalysisProgress | null>(null);
+  const [pageChunks, setPageChunks] = useState<PageChunk[]>([]);
+  const [activeChunkIndex, setActiveChunkIndex] = useState<number | null>(null);
+  const [issuesByChunk, setIssuesByChunk] = useState<Record<number, Issue[]>>({});
+  const [activeIssueWindow, setActiveIssueWindow] = useState<IssueAnnotationWindow | null>(null);
   const [traceData, setTraceData] = useState<AnalysisTraceArtifact | null>(null);
   const [traceLoading, setTraceLoading] = useState(false);
   const [clientTraceEvents, setClientTraceEvents] = useState<ClientTraceEvent[]>([]);
   const [hasReviewResult, setHasReviewResult] = useState(false);
   const [applyingIssueId, setApplyingIssueId] = useState<string | null>(null);
+  const [loadingIssueBatch, setLoadingIssueBatch] = useState(false);
   const [pendingFocusLocation, setPendingFocusLocation] = useState<IssueLocation | null>(null);
   const [loading, setLoading] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -285,8 +341,8 @@ export default function App() {
       : `${totalSeconds.toFixed(2)} giây`;
   }, [analysisElapsedMs, isAnalyzing, lastAnalysisDurationMs]);
   const traceInsightLabel = useMemo(
-    () => buildTraceInsightLabel(traceSummary, clientTraceEvents),
-    [clientTraceEvents, traceSummary]
+    () => buildTraceInsightLabel(traceSummary, clientTraceEvents, activeIssueWindow),
+    [activeIssueWindow, clientTraceEvents, traceSummary]
   );
 
   async function refreshContext(documentId: string) {
@@ -306,6 +362,7 @@ export default function App() {
         setChanges([]);
         setHistory([]);
         setAnnotatedIssues([]);
+        setIssueRailStartIndex(0);
         setAnalysisSummary(null);
         setHasReviewResult(false);
         setTodoNotes([]);
@@ -314,10 +371,34 @@ export default function App() {
         setTraceFileUrl(null);
         setTraceData(null);
         setCacheInfo(null);
+        setAnalysisMetadata(null);
+        setAnalysisProgress(null);
+        setPageChunks([]);
+        setActiveChunkIndex(null);
+        setIssuesByChunk({});
+        setActiveIssueWindow(null);
         setClientTraceEvents([]);
         setTraceEnabled(true);
         setDocumentVersion((value) => value + 1);
       });
+      const session = await createAnalysisSession(
+        uploaded.documentId,
+        buildChunkRequest(reviewMode, traceEnabled, { useCache: true })
+      );
+      applyAnalysisSessionState(session);
+      const completedChunk = session.chunks.find((chunk) => chunk.status === "completed");
+      if (completedChunk) {
+        const response = await analyzeDocumentChunk(
+          uploaded.documentId,
+          buildChunkRequest(reviewMode, traceEnabled, {
+            useCache: true,
+            chunkIndex: completedChunk.chunkIndex,
+          })
+        );
+        applyChunkState(response);
+        setRightPanel("review");
+        setReviewPanelOpen(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -336,6 +417,7 @@ export default function App() {
         traceSummary,
         traceFileUrl,
         cacheInfo,
+        activeIssueWindow,
       }, next);
       setIssues(merged.issues);
       setAnnotatedIssues(merged.annotatedIssues);
@@ -347,6 +429,10 @@ export default function App() {
       setTraceSummary(merged.traceSummary);
       setTraceFileUrl(merged.traceFileUrl);
       setCacheInfo(merged.cacheInfo);
+      setActiveIssueWindow(merged.activeIssueWindow);
+      if (merged.activeIssueWindow) {
+        setIssueRailStartIndex(merged.activeIssueWindow.startIndex);
+      }
       if (!merged.traceEnabled) {
         setTraceData(null);
       }
@@ -361,6 +447,54 @@ export default function App() {
       stage: "client",
       decision: "apply_review_state",
       detail: `response issues=${next.issues?.length ?? 0}, summary selected=${next.summary?.selectedIssues ?? "n/a"}, traceEnabled=${String(next.traceEnabled ?? false)}`,
+    });
+  }
+
+  function applyAnalysisSessionState(session: AnalysisSessionResponse) {
+    startTransition(() => {
+      setAnalysisMetadata(session.metadata);
+      setAnalysisProgress(session.progress);
+      setPageChunks(session.chunks);
+      setCacheInfo((current) => current || null);
+    });
+  }
+
+  function applyChunkState(response: {
+    metadata: CachedDocumentAnalysisMetadata;
+    chunk: CachedChunkAnalysis | null;
+    progress: AnalysisProgress;
+    reviewedFileUrl?: string | null;
+    activeIssueWindow?: IssueAnnotationWindow | null;
+    issues: Issue[];
+    annotatedIssues?: Issue[];
+  }) {
+    startTransition(() => {
+      setAnalysisMetadata(response.metadata);
+      setAnalysisProgress(response.progress);
+      setPageChunks(response.metadata.chunks || []);
+      if (response.chunk) {
+        setActiveChunkIndex(response.chunk.chunkIndex);
+        setIssues(response.chunk.issues);
+        setAnnotatedIssues(response.annotatedIssues || response.chunk.issues);
+        setIssuesByChunk((current) => ({
+          ...current,
+          [response.chunk!.chunkIndex]: response.chunk!.issues,
+        }));
+        setHasReviewResult(true);
+        setActiveIssueWindow(response.activeIssueWindow ?? {
+          startIndex: response.chunk.chunkIndex,
+          count: 1,
+          endIndex: response.chunk.chunkIndex + 1,
+          totalIssues: response.chunk.issues.length,
+          issueIds: response.chunk.issues.map((issue) => issue.id),
+          reviewedFileName: response.reviewedFileUrl || undefined,
+          createdAt: new Date().toISOString(),
+        });
+      }
+      if (response.reviewedFileUrl) {
+        setDocumentUrl(`${response.reviewedFileUrl}?v=${Date.now()}`);
+        setDocumentVersion((value) => value + 1);
+      }
     });
   }
 
@@ -398,25 +532,33 @@ export default function App() {
     setAnalysisElapsedMs(0);
     setLastAnalysisDurationMs(null);
     try {
-      const response = await analyzeDocument(currentDocument.documentId, {
-        mode: reviewMode,
-        checks: ["spelling", "format", "terminology", "translation", "tone", "entity", "date_number"],
-        highlightColor: "yellow",
-        debugTrace: traceEnabled,
-        useCache: options.useCache ?? true,
-        forceReanalyze: Boolean(options.forceReanalyze),
-        annotateFromCache: true,
-      });
-      applyReviewState(response);
-      if (response.traceEnabled) {
-        await refreshTrace(currentDocument.documentId).catch(() => undefined);
-        setRightPanel("trace");
-        setReviewPanelOpen(true);
-      } else {
-        setTraceData(null);
+      const session = await createAnalysisSession(
+        currentDocument.documentId,
+        buildChunkRequest(reviewMode, traceEnabled, options)
+      );
+      applyAnalysisSessionState(session);
+      setRightPanel("review");
+      setReviewPanelOpen(true);
+
+      const chunksToAnalyze = session.chunks.filter((chunk) =>
+        options.forceReanalyze ? true : chunk.status !== "completed"
+      );
+      const queue = chunksToAnalyze.length > 0 ? chunksToAnalyze : session.chunks;
+
+      for (const chunk of queue) {
+        const response = await analyzeDocumentChunk(
+          currentDocument.documentId,
+          buildChunkRequest(reviewMode, traceEnabled, {
+            ...options,
+            chunkIndex: chunk.chunkIndex,
+            retry: chunk.status === "failed",
+          })
+        );
+        applyChunkState(response);
       }
       setHasReviewResult(true);
       setActiveTab("issues");
+      setRightPanel("review");
     } finally {
       const finishedAt = Date.now();
       setIsAnalyzing(false);
@@ -468,6 +610,62 @@ export default function App() {
       setRightPanel("review");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function openIssueBatchAt(startIndex: number, count = ISSUE_RAIL_BATCH_SIZE) {
+    if (!currentDocument) throw new Error("No document is loaded");
+    setLoadingIssueBatch(true);
+    try {
+      const response = await annotateIssueBatch(currentDocument.documentId, {
+        mode: reviewMode,
+        startIndex,
+        count,
+      });
+      pushClientTraceEvent({
+        stage: "client",
+        decision: "opened_issue_batch",
+        detail: `startIndex=${startIndex}, count=${count}, annotated=${response.annotatedIssues?.length ?? 0}`,
+      });
+      return response;
+    } finally {
+      setLoadingIssueBatch(false);
+    }
+  }
+
+  async function handleOpenIssueBatch(startIndex: number, count = ISSUE_RAIL_BATCH_SIZE) {
+    if (!currentDocument) return;
+    setLoading(true);
+    try {
+      const response = await openIssueBatchAt(startIndex, count);
+      applyReviewState(response);
+      setHasReviewResult(true);
+      setActiveTab("issues");
+      setRightPanel("review");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleOpenChunk(chunkIndex: number, retry = false) {
+    if (!currentDocument) return;
+    setLoadingIssueBatch(true);
+    try {
+      const response = await analyzeDocumentChunk(
+        currentDocument.documentId,
+        buildChunkRequest(reviewMode, traceEnabled, {
+          useCache: true,
+          chunkIndex,
+          retry,
+        })
+      );
+      applyChunkState(response);
+      setHasReviewResult(true);
+      setActiveTab("issues");
+      setRightPanel("review");
+      setReviewPanelOpen(true);
+    } finally {
+      setLoadingIssueBatch(false);
     }
   }
 
@@ -549,6 +747,33 @@ export default function App() {
 
   async function handleFocusIssue(issue: Issue) {
     if (!currentDocument) return;
+    const isInActiveWindow = Boolean(activeIssueWindow?.issueIds.includes(issue.id));
+    if (!isInActiveWindow && issues.length > 0) {
+      setApplyingIssueId(issue.id);
+      try {
+        const response = await openIssueWindow(currentDocument.documentId, issue.id, {
+          mode: reviewMode,
+          count: 500,
+        });
+        const annotatedIssue = response.annotatedIssues?.find((candidate) => candidate.id === issue.id);
+        const fullIssue = response.issues.find((candidate) => candidate.id === issue.id);
+        const focusLocation = response.focusIssueLocation || annotatedIssue?.location || fullIssue?.location || issue.location;
+        setPendingFocusLocation(focusLocation);
+        applyReviewState(response);
+        setHasReviewResult(true);
+        setActiveTab("issues");
+        setRightPanel("review");
+        pushClientTraceEvent({
+          stage: "client",
+          decision: "opened_issue_batch_for_focus",
+          detail: `issueId=${issue.id}`,
+          issueId: issue.id,
+        });
+        return;
+      } finally {
+        setApplyingIssueId(null);
+      }
+    }
     const focusData = await focusIssue(currentDocument.documentId, issue.id);
     const ok = await workspaceRef.current?.focusIssue(focusData.location);
     pushClientTraceEvent({
@@ -593,6 +818,11 @@ export default function App() {
   }
 
   const traceAvailable = Boolean(traceSummary || traceFileUrl || traceData);
+  const issueRailIssues = useMemo(() => {
+    if (activeChunkIndex !== null) return issuesByChunk[activeChunkIndex] || issues;
+    if (activeIssueWindow && annotatedIssues.length > 0) return annotatedIssues;
+    return [];
+  }, [activeChunkIndex, activeIssueWindow, annotatedIssues, issues, issuesByChunk]);
 
   const appVersionLabel = pkg.version ? `v${pkg.version}` : undefined;
 
@@ -661,6 +891,75 @@ export default function App() {
         <div className="editorSurface">
           <DocumentToolbar toolbarId={TOOLBAR_ID} />
 
+          {currentDocument && analysisMetadata ? (
+            <section className="chunkAnalysisPanel">
+              <div className="chunkAnalysisSummary">
+                <div>
+                  <strong>{analysisMetadata.fileName}</strong>
+                  <span>
+                    {analysisMetadata.totalPages.toLocaleString("vi-VN")} trang • {analysisMetadata.totalChunks.toLocaleString("vi-VN")} phần • mỗi phần {analysisMetadata.pageSize} trang
+                  </span>
+                </div>
+                <div>
+                  <strong>
+                    {analysisProgress?.completedChunks ?? analysisMetadata.completedChunks}/{analysisMetadata.totalChunks} phần
+                  </strong>
+                  <span>
+                    {analysisProgress?.status === "completed"
+                      ? "Đã phân tích xong toàn bộ tài liệu"
+                      : isAnalyzing
+                        ? `Đang phân tích${analysisProgress?.currentChunkIndex !== null && analysisProgress?.currentChunkIndex !== undefined ? `: phần ${analysisProgress.currentChunkIndex + 1}` : ""}`
+                        : analysisMetadata.completedChunks > 0
+                          ? "Có thể xem kết quả đã phân tích hoặc tiếp tục"
+                          : "Sẵn sàng phân tích theo từng phần"}
+                  </span>
+                </div>
+              </div>
+              <div className="chunkProgressTrack" aria-label="Tiến độ phân tích theo phần">
+                <span
+                  style={{
+                    width: `${Math.min(
+                      100,
+                      Math.round(((analysisProgress?.completedChunks ?? analysisMetadata.completedChunks) / Math.max(1, analysisMetadata.totalChunks)) * 100)
+                    )}%`,
+                  }}
+                />
+              </div>
+              <div className="chunkNavigation" aria-label="Chọn phần tài liệu">
+                {pageChunks.map((chunk) => {
+                  const isActive = activeChunkIndex === chunk.chunkIndex;
+                  const disabled = chunk.status === "pending" || chunk.status === "analyzing";
+                  return (
+                    <button
+                      type="button"
+                      key={chunk.chunkIndex}
+                      className={`chunkButton chunkButton-${chunk.status} ${isActive ? "active" : ""}`}
+                      disabled={disabled || loadingIssueBatch}
+                      onClick={() => void handleOpenChunk(chunk.chunkIndex, chunk.status === "failed")}
+                      title={chunk.errorMessage}
+                    >
+                      <span>Trang {chunk.startPage}-{chunk.endPage}</span>
+                      <strong>
+                        {chunk.status === "completed"
+                          ? `${(chunk.issueCount || 0).toLocaleString("vi-VN")} lỗi`
+                          : chunk.status === "failed"
+                            ? "Thử lại"
+                            : chunk.status === "analyzing"
+                              ? "Đang phân tích"
+                              : "Chờ"}
+                      </strong>
+                    </button>
+                  );
+                })}
+              </div>
+              {activeChunkIndex !== null ? (
+                <div className="currentChunkSummary">
+                  Đang xem trang {pageChunks[activeChunkIndex]?.startPage}-{pageChunks[activeChunkIndex]?.endPage}: {(issuesByChunk[activeChunkIndex]?.length ?? issues.length).toLocaleString("vi-VN")} lỗi trong phần này.
+                </div>
+              ) : null}
+            </section>
+          ) : null}
+
           <div className="workspaceMain">
             <section className="editorColumn">
               <div className="editorStack">
@@ -672,11 +971,24 @@ export default function App() {
                   commentsElementId={COMMENTS_ID}
                   documentVersion={documentVersion}
                   applyingIssueId={applyingIssueId}
-                  issues={annotatedIssues}
+                  issues={issueRailIssues}
                   totalIssueCount={issues.length}
+                  chunkMode={activeChunkIndex !== null}
+                  issueRailStartIndex={issueRailStartIndex}
+                  issueRailBatchSize={ISSUE_RAIL_BATCH_SIZE}
+                  activeIssueWindow={activeIssueWindow}
+                  issueBatchLoading={loadingIssueBatch}
                   onFocusIssue={handleFocusIssue}
                   onApplyIssue={handleApplyIssue}
                   onIgnoreIssue={handleIgnoreIssue}
+                  onOpenIssueBatch={(startIndex, count) => void handleOpenIssueBatch(startIndex, count)}
+                  onRailWindowChange={(startIndex) => {
+                    setActiveIssueWindow(null);
+                    setAnnotatedIssues([]);
+                    setIssueRailStartIndex(startIndex);
+                    setDocumentUrl(currentDocument?.originalFileUrl ?? documentUrl);
+                    setDocumentVersion((value) => value + 1);
+                  }}
                   onOpenAllIssues={() => {
                     setRightPanel("review");
                     setActiveTab("issues");
@@ -726,6 +1038,7 @@ export default function App() {
             cacheInfo={cacheInfo}
             issues={issues}
             annotatedIssues={annotatedIssues}
+            activeIssueWindow={activeIssueWindow}
             comments={comments}
             changes={changes}
             history={history}
@@ -735,8 +1048,9 @@ export default function App() {
             onApplyIssue={handleApplyIssue}
             onIgnoreIssue={handleIgnoreIssue}
             onAnnotateIssue={handleAnnotateIssue}
-            onAnnotateMore={() => void handleAnnotateMore(500)}
-            onAnnotateAll={() => void handleAnnotateAll()}
+            onOpenIssueBatch={(startIndex, count) => void handleOpenIssueBatch(startIndex, count)}
+            onAnnotateMore={() => void handleOpenIssueBatch(activeIssueWindow?.endIndex ?? 0, 500)}
+            onAnnotateAll={activeChunkIndex === null ? () => void handleAnnotateAll() : undefined}
             onExportAllIssues={() => {
               if (!currentDocument) return;
               window.open(getExportUrl(currentDocument.documentId, "report-json"), "_blank");

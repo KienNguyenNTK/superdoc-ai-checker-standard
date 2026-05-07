@@ -68,6 +68,8 @@ export type IssueLocation = {
 export type Issue = {
   id: string;
   documentId: string;
+  chunkIndex?: number;
+  pageNumber?: number;
   wrong: string;
   suggestion: string;
   reason: string;
@@ -372,12 +374,25 @@ export type ReviewResponse = {
   traceSummary?: AnalysisTraceSummary;
   traceFileUrl?: string | null;
   reviewedFileUrl?: string | null;
+  activeIssueWindow?: IssueAnnotationWindow | null;
   message?: string;
   todos?: string[];
   context?: DocumentContextMemory;
   cacheInfo?: AnalysisCacheInfo;
   appliedIssueId?: string;
   appliedIssueLocation?: IssueLocation;
+  focusIssueId?: string;
+  focusIssueLocation?: IssueLocation;
+};
+
+export type IssueAnnotationWindow = {
+  startIndex: number;
+  count: number;
+  endIndex: number;
+  totalIssues: number;
+  issueIds: string[];
+  reviewedFileName?: string;
+  createdAt: string;
 };
 
 export type TraceResponse = {
@@ -396,6 +411,7 @@ export type IssueListResponse = {
   hasMore: boolean;
   annotatedCount: number;
   unannotatedCount: number;
+  activeIssueWindow?: IssueAnnotationWindow | null;
 };
 
 export type AnalysisCacheInfo = {
@@ -407,6 +423,98 @@ export type AnalysisCacheInfo = {
   totalIssues: number;
   annotatedIssues: number;
   unannotatedIssues: number;
+};
+
+export type PageChunkStatus = "pending" | "analyzing" | "completed" | "failed";
+
+export type PageChunk = {
+  chunkIndex: number;
+  startPage: number;
+  endPage: number;
+  status: PageChunkStatus;
+  issueCount?: number;
+  errorMessage?: string;
+};
+
+export type AnalysisStatus =
+  | "idle"
+  | "analyzing"
+  | "partial"
+  | "completed"
+  | "failed"
+  | "paused";
+
+export type AnalysisProgress = {
+  documentId: string;
+  fileHash: string;
+  totalPages: number;
+  pageSize: number;
+  totalChunks: number;
+  completedChunks: number;
+  currentChunkIndex: number | null;
+  status: AnalysisStatus;
+  totalIssues: number;
+  updatedAt: string;
+};
+
+export type AnnotationApplyResult = {
+  issueId: string;
+  status: "applied" | "range_not_found" | "skipped" | "failed";
+  reason?: string;
+};
+
+export type CachedChunkAnalysis = {
+  documentId: string;
+  fileHash: string;
+  fileName: string;
+  chunkIndex: number;
+  startPage: number;
+  endPage: number;
+  analyzedAt: string;
+  status: "completed" | "failed";
+  issues: Issue[];
+  errorMessage?: string;
+  annotationResults?: AnnotationApplyResult[];
+};
+
+export type CachedDocumentAnalysisMetadata = {
+  documentId: string;
+  fileHash: string;
+  fileName: string;
+  totalPages: number;
+  pageSize: number;
+  totalChunks: number;
+  completedChunks: number;
+  status: "partial" | "completed" | "failed";
+  totalIssues: number;
+  createdAt: string;
+  updatedAt: string;
+  cacheKey?: string;
+  chunks?: PageChunk[];
+};
+
+export type AnalysisSessionResponse = {
+  documentId: string;
+  fileHash: string;
+  fileName: string;
+  totalPages: number;
+  pageSize: number;
+  totalChunks: number;
+  status: "created" | "partial" | "completed" | "failed";
+  chunks: PageChunk[];
+  metadata: CachedDocumentAnalysisMetadata;
+  progress: AnalysisProgress;
+};
+
+export type AnalyzeChunkResponse = {
+  documentId: string;
+  metadata: CachedDocumentAnalysisMetadata;
+  chunk: CachedChunkAnalysis | null;
+  progress: AnalysisProgress;
+  reviewedFileUrl?: string | null;
+  activeIssueWindow?: IssueAnnotationWindow | null;
+  issues: Issue[];
+  annotatedIssues?: Issue[];
 };
 
 export type FocusIssueResponse = {

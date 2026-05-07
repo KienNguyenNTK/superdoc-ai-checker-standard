@@ -1,0 +1,27 @@
+{
+  "cacheKey": "9e46f199ba7c4c81548e0a13a55c36d555f92254f577c0bba1eb379c91f4aacb",
+  "fileHash": "f4fd3f9be84e96d6507e9a845fe6de0777bb734893a28c252880bb941c603fe9",
+  "originalFileName": "file-test-sai-chinh-ta.docx",
+  "createdAt": "2026-05-07T09:39:30.719Z",
+  "updatedAt": "2026-05-07T09:39:30.719Z",
+  "totalIssues": 28,
+  "checks": [
+    "spelling",
+    "format",
+    "terminology",
+    "translation",
+    "tone",
+    "entity",
+    "date_number"
+  ],
+  "mode": "comment_and_highlight",
+  "useLLM": true,
+  "useRuleEngine": true,
+  "checkConfigHash": "e549154a8e08270a03401bd0c84483d7daca445b312f2771e33ca0914cbf2d4e",
+  "dictionaryVersion": "dictionary-v1",
+  "dictionaryHash": "7038bc252206e43b84f016b6126f751bba4f91f1680ba1d138252d4cd48540d0",
+  "promptVersion": "prompt-v1",
+  "promptHash": "cdd57b06db4c3e93310cc1732acd17508fd130586b2a33dc96a11dcd5c89bf77",
+  "analysisEngineVersion": "v1",
+  "sourceDocumentId": "doc_3c415a6a"
+}

@@ -145,7 +145,7 @@ export function AppTopBar({
           {!isAnalyzing && traceSummary ? (
             <button
               type="button"
-              className={`analysisTracePill ${traceInsightLabel?.includes("chưa annotate") || traceInsightLabel?.includes("không") ? "warning" : ""}`}
+              className={`analysisTracePill ${traceInsightLabel?.includes("không") || traceInsightLabel?.includes("lỗi") ? "warning" : ""}`}
               onClick={onOpenTracePanel}
               disabled={!traceAvailable}
             >

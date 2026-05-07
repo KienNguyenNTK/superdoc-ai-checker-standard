@@ -76,7 +76,7 @@ function normalizeAnalyzeRequest(body: any): AnalyzeConsistencyRequest {
     debugTrace: body?.debugTrace !== false,
     useCache: body?.useCache !== false,
     forceReanalyze: Boolean(body?.forceReanalyze),
-    annotateFromCache: body?.annotateFromCache !== false,
+    annotateFromCache: body?.annotateFromCache === true,
   };
 }
 
@@ -198,7 +198,7 @@ export function createApp() {
         debugTrace: req.body?.debugTrace !== false,
         useCache: req.body?.useCache !== false,
         forceReanalyze: Boolean(req.body?.forceReanalyze),
-        annotateFromCache: req.body?.annotateFromCache !== false,
+        annotateFromCache: req.body?.annotateFromCache === true,
       });
 
       return res.json({
@@ -220,6 +220,7 @@ export function createApp() {
         reviewedFileUrl: result.session.reviewedPath
           ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
           : null,
+        activeIssueWindow: result.session.activeIssueWindow ?? null,
       });
     } catch (error: any) {
       return res.status(500).json({
@@ -256,10 +257,178 @@ export function createApp() {
         reviewedFileUrl: result.session.reviewedPath
           ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
           : null,
+        activeIssueWindow: result.session.activeIssueWindow ?? null,
       });
     } catch (error: any) {
       return res.status(500).json({
         error: "Lỗi khi kiểm tra consistency",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.post("/api/documents/:documentId/analysis-session", async (req, res) => {
+    try {
+      const session = await reviewService.createAnalysisSession({
+        documentId: req.params.documentId,
+        request: normalizeAnalyzeRequest(req.body),
+        pageSize: Number(req.body?.pageSize || 20),
+      });
+
+      return res.json({
+        documentId: session.documentId,
+        fileHash: session.fileHash,
+        fileName: session.fileName,
+        totalPages: session.totalPages,
+        pageSize: session.pageSize,
+        totalChunks: session.totalChunks,
+        status: session.status,
+        chunks: session.chunks,
+        metadata: session.metadata,
+        progress: {
+          documentId: session.documentId,
+          fileHash: session.fileHash,
+          totalPages: session.totalPages,
+          pageSize: session.pageSize,
+          totalChunks: session.totalChunks,
+          completedChunks: session.metadata.completedChunks,
+          currentChunkIndex: null,
+          status: session.metadata.status === "completed" ? "completed" : session.metadata.completedChunks > 0 ? "partial" : "idle",
+          totalIssues: session.metadata.totalIssues,
+          updatedAt: session.metadata.updatedAt,
+        },
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không tạo được phiên phân tích theo chunk",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.post("/api/documents/:documentId/analyze-chunk", async (req, res) => {
+    try {
+      const result = await reviewService.analyzeChunk({
+        documentId: req.params.documentId,
+        request: normalizeAnalyzeRequest(req.body),
+        chunkIndex: typeof req.body?.chunkIndex === "number" ? req.body.chunkIndex : undefined,
+        pageSize: Number(req.body?.pageSize || 20),
+        retry: Boolean(req.body?.retry),
+      });
+
+      return res.json({
+        documentId: req.params.documentId,
+        metadata: result.metadata,
+        chunk: result.chunk,
+        progress: result.progress,
+        reviewedFileUrl: result.reviewedFileUrl
+          ? getFileUrl(req.params.documentId, result.reviewedFileUrl)
+          : null,
+        activeIssueWindow: result.chunk
+          ? {
+              startIndex: result.chunk.chunkIndex,
+              count: 1,
+              endIndex: result.chunk.chunkIndex + 1,
+              totalIssues: result.chunk.issues.length,
+              issueIds: result.chunk.issues.map((issue) => issue.id),
+              reviewedFileName: result.reviewedFileUrl ?? undefined,
+              createdAt: new Date().toISOString(),
+            }
+          : null,
+        issues: result.chunk?.issues ?? [],
+        annotatedIssues: result.chunk?.issues.filter((issue) => result.chunk?.annotationResults?.some((item) => item.issueId === issue.id && item.status === "applied")) ?? [],
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không phân tích được chunk",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.get("/api/documents/by-hash/:fileHash/analysis-metadata", async (req, res) => {
+    try {
+      const metadata = await reviewService.getChunkMetadataByFileHash(req.params.fileHash);
+      if (!metadata) return res.status(404).json({ error: "Không tìm thấy metadata phân tích" });
+      return res.json(metadata);
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không lấy được metadata phân tích",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.get("/api/documents/by-hash/:fileHash/chunks", async (req, res) => {
+    try {
+      return res.json({ chunks: await reviewService.getChunksByFileHash(req.params.fileHash) });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không lấy được danh sách chunk",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.get("/api/documents/by-hash/:fileHash/chunks/:chunkIndex", async (req, res) => {
+    try {
+      const chunk = await reviewService.getChunkByFileHash(
+        req.params.fileHash,
+        Number(req.params.chunkIndex)
+      );
+      if (!chunk) return res.status(404).json({ error: "Không tìm thấy chunk" });
+      return res.json(chunk);
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không lấy được chunk",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.put("/api/documents/:documentId/chunks/:chunkIndex", async (req, res) => {
+    try {
+      const chunk = await reviewService.saveChunkFromApi({
+        documentId: req.params.documentId,
+        request: normalizeAnalyzeRequest(req.body?.request || req.body),
+        chunk: {
+          ...req.body,
+          documentId: req.params.documentId,
+          chunkIndex: Number(req.params.chunkIndex),
+        },
+      });
+      return res.json(chunk);
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không lưu được chunk",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.get("/api/documents/:documentId/analysis-status", async (req, res) => {
+    try {
+      const status = await reviewService.getAnalysisStatus(
+        req.params.documentId,
+        normalizeAnalyzeRequest(req.query)
+      );
+      if (!status) return res.status(404).json({ error: "Chưa có phiên phân tích" });
+      return res.json(status);
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không lấy được trạng thái phân tích",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.delete("/api/documents/by-hash/:fileHash/analysis", async (req, res) => {
+    try {
+      await reviewService.clearChunkAnalysisByFileHash(req.params.fileHash);
+      return res.json({ ok: true });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không xóa được cache phân tích",
         detail: error?.message || String(error),
       });
     }
@@ -403,6 +572,7 @@ export function createApp() {
         summary: result.session.analysisSummary,
         cacheInfo: reviewService.buildCacheInfo(result.session),
         todos: result.todos,
+        activeIssueWindow: result.session.activeIssueWindow ?? null,
         reviewedFileUrl: result.session.reviewedPath
           ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
           : null,
@@ -410,6 +580,71 @@ export function createApp() {
     } catch (error: any) {
       return res.status(500).json({
         error: "Không annotate thêm được issue",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.post("/api/documents/:documentId/issues/annotation-batch", async (req, res) => {
+    try {
+      const result = await reviewService.annotateIssueWindow({
+        documentId: req.params.documentId,
+        mode: jsonModeFromInput(req.body?.mode),
+        startIndex: typeof req.body?.startIndex === "number" ? req.body.startIndex : 0,
+        count: typeof req.body?.count === "number" ? req.body.count : 500,
+      });
+      return res.json({
+        ok: true,
+        issues: result.session.issues,
+        annotatedIssues: result.session.issues.filter((issue) => result.session.annotatedIssueIds?.includes(issue.id)),
+        comments: result.session.comments,
+        changes: result.session.changes,
+        history: result.session.history,
+        summary: result.session.analysisSummary,
+        cacheInfo: reviewService.buildCacheInfo(result.session),
+        todos: result.todos,
+        activeIssueWindow: result.activeIssueWindow,
+        reviewedFileUrl: result.session.reviewedPath
+          ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
+          : null,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không mở được batch annotate",
+        detail: error?.message || String(error),
+      });
+    }
+  });
+
+  app.post("/api/documents/:documentId/issues/:issueId/open-window", async (req, res) => {
+    try {
+      const result = await reviewService.openIssueWindow({
+        documentId: req.params.documentId,
+        issueId: req.params.issueId,
+        mode: jsonModeFromInput(req.body?.mode),
+        count: typeof req.body?.count === "number" ? req.body.count : 500,
+      });
+      const issue = result.session.issues.find((candidate) => candidate.id === req.params.issueId);
+      return res.json({
+        ok: true,
+        issues: result.session.issues,
+        annotatedIssues: result.session.issues.filter((candidate) => result.session.annotatedIssueIds?.includes(candidate.id)),
+        comments: result.session.comments,
+        changes: result.session.changes,
+        history: result.session.history,
+        summary: result.session.analysisSummary,
+        cacheInfo: reviewService.buildCacheInfo(result.session),
+        todos: result.todos,
+        activeIssueWindow: result.activeIssueWindow,
+        focusIssueId: issue?.id,
+        focusIssueLocation: issue?.location,
+        reviewedFileUrl: result.session.reviewedPath
+          ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
+          : null,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        error: "Không mở được batch chứa issue",
         detail: error?.message || String(error),
       });
     }
@@ -426,6 +661,7 @@ export function createApp() {
         todos: result.todos,
         appliedIssueId: req.params.issueId,
         appliedIssueLocation: result.session.issues.find((candidate) => candidate.id === req.params.issueId)?.location,
+        activeIssueWindow: result.session.activeIssueWindow ?? null,
         reviewedFileUrl: result.session.reviewedPath
           ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
           : null,
@@ -447,6 +683,7 @@ export function createApp() {
         annotatedIssues: result.session.issues.filter((issue) => result.session.annotatedIssueIds?.includes(issue.id)),
         changes: result.session.changes,
         todos: result.todos,
+        activeIssueWindow: result.session.activeIssueWindow ?? null,
         reviewedFileUrl: result.session.reviewedPath
           ? getFileUrl(result.session.documentId, path.basename(result.session.reviewedPath))
           : null,

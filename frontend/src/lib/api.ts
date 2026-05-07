@@ -1,6 +1,10 @@
 import type {
   ApiHealth,
+  AnalysisSessionResponse,
   AnalysisTraceArtifact,
+  AnalyzeChunkResponse,
+  CachedChunkAnalysis,
+  CachedDocumentAnalysisMetadata,
   DocumentContextMemory,
   FocusIssueResponse,
   GlossaryEntry,
@@ -87,6 +91,69 @@ export async function analyzeDocument(
     ...data,
     reviewedFileUrl: absolutize(data.reviewedFileUrl),
   };
+}
+
+export type ChunkAnalyzeBody = {
+  mode: ReviewMode;
+  checks?: Array<
+    "spelling" | "format" | "terminology" | "translation" | "tone" | "entity" | "date_number"
+  >;
+  maxIssues?: number;
+  maxAnnotatedIssues?: number;
+  maxReturnedIssues?: number;
+  useLLM?: boolean;
+  useRuleEngine?: boolean;
+  debugTrace?: boolean;
+  useCache?: boolean;
+  forceReanalyze?: boolean;
+  pageSize?: number;
+  chunkIndex?: number;
+  retry?: boolean;
+};
+
+export async function createAnalysisSession(
+  documentId: string,
+  body: ChunkAnalyzeBody
+): Promise<AnalysisSessionResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/analysis-session`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return readJson<AnalysisSessionResponse>(response);
+}
+
+export async function analyzeDocumentChunk(
+  documentId: string,
+  body: ChunkAnalyzeBody
+): Promise<AnalyzeChunkResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/analyze-chunk`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await readJson<AnalyzeChunkResponse>(response);
+  return {
+    ...data,
+    reviewedFileUrl: absolutize(data.reviewedFileUrl),
+  };
+}
+
+export async function getAnalysisMetadataByHash(fileHash: string) {
+  const response = await fetch(`${API_BASE_URL}/api/documents/by-hash/${fileHash}/analysis-metadata`);
+  return readJson<CachedDocumentAnalysisMetadata>(response);
+}
+
+export async function getAnalysisChunksByHash(fileHash: string) {
+  const response = await fetch(`${API_BASE_URL}/api/documents/by-hash/${fileHash}/chunks`);
+  return readJson<{ chunks: CachedChunkAnalysis[] }>(response);
+}
+
+export async function getAnalysisChunkByHash(fileHash: string, chunkIndex: number) {
+  const response = await fetch(
+    `${API_BASE_URL}/api/documents/by-hash/${fileHash}/chunks/${chunkIndex}`
+  );
+  return readJson<CachedChunkAnalysis>(response);
 }
 
 export async function buildContext(documentId: string) {
@@ -192,6 +259,44 @@ export async function annotateIssues(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
+
+  const data = await readJson<ReviewResponse>(response);
+  return {
+    ...data,
+    reviewedFileUrl: absolutize(data.reviewedFileUrl),
+  };
+}
+
+export async function annotateIssueBatch(
+  documentId: string,
+  body: { mode: ReviewMode; startIndex?: number; count?: number }
+) {
+  const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/issues/annotation-batch`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  const data = await readJson<ReviewResponse>(response);
+  return {
+    ...data,
+    reviewedFileUrl: absolutize(data.reviewedFileUrl),
+  };
+}
+
+export async function openIssueWindow(
+  documentId: string,
+  issueId: string,
+  body: { mode: ReviewMode; count?: number }
+) {
+  const response = await fetch(
+    `${API_BASE_URL}/api/documents/${documentId}/issues/${issueId}/open-window`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }
+  );
 
   const data = await readJson<ReviewResponse>(response);
   return {

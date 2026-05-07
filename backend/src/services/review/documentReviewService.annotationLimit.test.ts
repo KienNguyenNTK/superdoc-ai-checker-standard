@@ -51,6 +51,7 @@ test("runConsistencyAnalysis keeps all detected issues but only annotates the co
         maxAnnotatedIssues: 1000,
         maxReturnedIssues: Number.MAX_SAFE_INTEGER,
         debugTrace: true,
+        annotateFromCache: true,
       },
     });
 
@@ -60,6 +61,17 @@ test("runConsistencyAnalysis keeps all detected issues but only annotates the co
     assert.equal(result.summary?.returnedIssues, result.session.issues.length);
     assert.equal(result.trace?.summary.annotatedInDocx, 1000);
     assert.equal(result.trace?.summary.returnedToUi, result.session.issues.length);
+
+    const batch = await service.annotateIssueWindow({
+      documentId,
+      mode: "comment_and_highlight",
+      startIndex: 500,
+      count: 500,
+    });
+    assert.equal(batch.session.issues.length, result.session.issues.length);
+    assert.equal(batch.activeIssueWindow.startIndex, 500);
+    assert.equal(batch.activeIssueWindow.count, 500);
+    assert.equal(batch.session.annotatedIssueIds?.length, 500);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

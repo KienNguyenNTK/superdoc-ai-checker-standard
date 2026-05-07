@@ -64,3 +64,55 @@ test("FileAnalysisCacheStore saves and loads full cached issue lists", async () 
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("FileAnalysisCacheStore saves chunk metadata and chunk results independently", async () => {
+  const root = mkdtempSync(path.join(tmpdir(), "superdoc-analysis-chunk-cache-"));
+
+  try {
+    const store = new FileAnalysisCacheStore(root);
+    const metadata = {
+      documentId: "doc_chunked",
+      fileHash: "file_hash_chunked",
+      fileName: "large.docx",
+      totalPages: 40,
+      pageSize: 20,
+      totalChunks: 2,
+      completedChunks: 1,
+      status: "partial" as const,
+      totalIssues: 1,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      cacheKey: "chunk_cache_key",
+      chunks: [
+        { chunkIndex: 0, startPage: 1, endPage: 20, status: "completed" as const, issueCount: 1 },
+        { chunkIndex: 1, startPage: 21, endPage: 40, status: "pending" as const, issueCount: 0 },
+      ],
+    };
+    const chunk = {
+      documentId: "doc_chunked",
+      fileHash: "file_hash_chunked",
+      fileName: "large.docx",
+      chunkIndex: 0,
+      startPage: 1,
+      endPage: 20,
+      analyzedAt: new Date().toISOString(),
+      status: "completed" as const,
+      issues: [createIssue(0)],
+    };
+
+    await store.saveChunkMetadata(metadata);
+    await store.saveChunk(metadata.cacheKey, chunk);
+
+    const loadedMetadata = await store.findChunkMetadataByFileHash(metadata.fileHash);
+    const loadedChunk = await store.getChunk(metadata.cacheKey, 0);
+    const allChunks = await store.getAllChunks(metadata.cacheKey);
+
+    assert.equal(loadedMetadata?.cacheKey, metadata.cacheKey);
+    assert.equal(loadedMetadata?.completedChunks, 1);
+    assert.equal(loadedChunk?.issues.length, 1);
+    assert.equal(allChunks.length, 1);
+    assert.equal(allChunks[0]?.chunkIndex, 0);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
